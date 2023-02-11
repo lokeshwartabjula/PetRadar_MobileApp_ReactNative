@@ -14,6 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-PetRadarFT-PetRadarFTTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-PetRadarFT-PetRadarFTTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		81DDF54229977C6400FBFDC8 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 81DDF54129977C6400FBFDC8 /* Config.xcconfig */; };
 		81F43741299715B600BF8E15 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81F43731299715B600BF8E15 /* Fontisto.ttf */; };
 		81F43742299715B600BF8E15 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81F43731299715B600BF8E15 /* Fontisto.ttf */; };
 		81F43743299715B600BF8E15 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81F43732299715B600BF8E15 /* Octicons.ttf */; };
@@ -74,6 +75,7 @@
 		5B7EB9410499542E8C5724F5 /* Pods-PetRadarFT-PetRadarFTTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetRadarFT-PetRadarFTTests.debug.xcconfig"; path = "Target Support Files/Pods-PetRadarFT-PetRadarFTTests/Pods-PetRadarFT-PetRadarFTTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-PetRadarFT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PetRadarFT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PetRadarFT/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81DDF54129977C6400FBFDC8 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		81F43731299715B600BF8E15 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		81F43732299715B600BF8E15 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		81F43733299715B600BF8E15 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				81DDF54129977C6400FBFDC8 /* Config.xcconfig */,
 				13B07FAE1A68108700A75B9A /* PetRadarFT */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PetRadarFTTests */,
@@ -345,6 +348,7 @@
 				81F43743299715B600BF8E15 /* Octicons.ttf in Resources */,
 				81F43749299715B600BF8E15 /* FontAwesome5_Brands.ttf in Resources */,
 				81F4374D299715B600BF8E15 /* AntDesign.ttf in Resources */,
+				81DDF54229977C6400FBFDC8 /* Config.xcconfig in Resources */,
 				81F4375F299715B600BF8E15 /* MaterialIcons.ttf in Resources */,
 				81F43753299715B600BF8E15 /* FontAwesome5_Solid.ttf in Resources */,
 				81F4374B299715B600BF8E15 /* MaterialCommunityIcons.ttf in Resources */,
@@ -638,6 +642,7 @@
 		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81DDF54129977C6400FBFDC8 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -710,6 +715,7 @@
 		};
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81DDF54129977C6400FBFDC8 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
