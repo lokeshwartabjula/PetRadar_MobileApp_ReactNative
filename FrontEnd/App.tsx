@@ -1,14 +1,13 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import Config from 'react-native-config';
 
 interface Props { }
 
 const App: React.FC<Props> = (props: Props) => {
   return (
     <SafeAreaView style={styles.container}>
-      <AntDesign name={'customerservice'} size={40} />
-      <Text>App.tsx</Text>
+      <Text>App.tsx {Config.BASE_URL}</Text>
     </SafeAreaView>
   )
 }

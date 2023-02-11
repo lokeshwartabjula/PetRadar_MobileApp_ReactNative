@@ -3,7 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "react-native run-android --mode devDebug",
+    "androidClient": "react-native run-android --mode clientDebug",
+    "androidProd": "react-native run-android --mode prodDebug",
+    "androidBuildDebug": "cd android && ./gradlew clean && ./gradlew assembleDevRelease",
+    "androidBuildClient": "cd android && ./gradlew clean && ./gradlew assembleClientRelease",
+    "androidBuildProd": "cd android && ./gradlew clean && ./gradlew assembleProdRelease",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
