@@ -14,7 +14,7 @@ build:
     paths:
       - target
   tags:
-    - grad
+    - dalfcs_gitlab_docker_ci
 
 test:
   stage: test
@@ -30,12 +30,12 @@ test:
     - echo "Pipeline test started"
     - mvn verify
   tags:
-    - grad
+    - dalfcs_gitlab_docker_ci
 
 deploy_dev:
   stage: deploy
   tags:
-    - grad
+    - dalfcs_gitlab_docker_ci
   artifacts:
     paths:
       - target
@@ -52,7 +52,7 @@ deploy_dev:
 deploy_release:
   stage: deploy
   tags:
-    - grad
+    - dalfcs_gitlab_docker_ci
   artifacts:
     paths:
       - target
