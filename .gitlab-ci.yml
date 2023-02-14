@@ -14,7 +14,7 @@ build:
     paths:
       - target
   tags:
-    - ugrad
+    - grad
 
 test:
   stage: test
@@ -30,12 +30,12 @@ test:
     - echo "Pipeline test started"
     - mvn verify
   tags:
-    - ugrad
+    - grad
 
 deploy_dev:
   stage: deploy
   tags:
-    - ugrad
+    - grad
   artifacts:
     paths:
       - target
@@ -52,7 +52,7 @@ deploy_dev:
 deploy_release:
   stage: deploy
   tags:
-    - ugrad
+    - grad
   artifacts:
     paths:
       - target
