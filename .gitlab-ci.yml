@@ -10,7 +10,6 @@ build:
     - cd BackEnd
     - echo "Building the pipeline"
     - mvn eclipse:eclipse
-    - mvn install
     - mvn clean -DskipTests
   artifacts:
     paths:
