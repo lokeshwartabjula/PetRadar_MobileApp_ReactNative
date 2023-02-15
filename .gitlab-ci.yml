@@ -9,7 +9,7 @@ build:
   script:
     - cd BackEnd
     - echo "Building the pipeline"
-    - mvn eclipse:eclipse
+    # - mvn eclipse:eclipse
     - mvn clean package
   artifacts:
     paths:
