@@ -58,7 +58,6 @@ deploy_release:
     paths:
       - target
   script:
-  before_script:
     - apk update && apk add openssh
     - bash docker_install.sh > /dev/null
     - echo "dbURL=$DATABASE_PROD_URL" > config.properties
