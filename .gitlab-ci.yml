@@ -58,6 +58,9 @@ deploy_release:
     paths:
       - target
   script:
+  before_script:
+    - apk update && apk add openssh
+    - bash docker_install.sh > /dev/null
     - echo "dbURL=$DATABASE_PROD_URL" > config.properties
     - echo "dbUserName=$DATABASE_PROD_USERNAME" >> config.properties
     - echo "dbPassword=$DATABASE_PROD_PASSWORD" >> config.properties
@@ -66,5 +69,3 @@ deploy_release:
     - chmod og-rwx ${DEPLOY_PROD_SSH_KEY}
     - zip -r ${CI_COMMIT_SHORT_SHA}.zip target
     - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_PROD_SSH_KEY}" ${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_PROD_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}.zip"
-  only:
-    - release
