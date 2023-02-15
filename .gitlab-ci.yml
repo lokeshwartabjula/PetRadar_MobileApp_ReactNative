@@ -66,6 +66,6 @@ deploy_release:
     - echo "dbPassword=$DATABASE_PROD_PASSWORD" >> config.properties
     - echo "dbDriver=$DATABASE_DRIVER" >> config.properties
     - echo "Deploying the release pipeline"
-    - chmod og-Rcvf ${DEPLOY_PROD_SSH_KEY}
+    - chmod a+x ${DEPLOY_PROD_SSH_KEY}
     - zip -r ${CI_COMMIT_SHORT_SHA}.zip target
     - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_PROD_SSH_KEY}" ${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_PROD_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}.zip"
