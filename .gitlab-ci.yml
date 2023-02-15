@@ -51,6 +51,7 @@ deploy_dev:
     - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" target/*.jar "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/final_image.jar"
 
 deploy_release:
+  image: docker:stable
   stage: deploy
   tags:
     - dalfcs_gitlab_docker_ci
@@ -58,8 +59,7 @@ deploy_release:
     paths:
       - target
   script:
-    - apt-get update
-    - apt-get install openssh-client
+    - apk update && apk add openssh
     - bash docker_install.sh > /dev/null
     - echo "dbURL=$DATABASE_PROD_URL" > config.properties
     - echo "dbUserName=$DATABASE_PROD_USERNAME" >> config.properties
