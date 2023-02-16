@@ -34,6 +34,7 @@ test:
     - dalfcs_gitlab_docker_ci
 
 deploy_dev:
+  image: docker:stable
   stage: deploy
   tags:
     - dalfcs_gitlab_docker_ci
