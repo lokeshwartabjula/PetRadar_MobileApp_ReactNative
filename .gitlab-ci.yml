@@ -42,6 +42,7 @@ deploy_dev:
       - target
   script:
     - cd BackEnd
+    - apk update && apk add openssh
     - echo "dbURL=$DATABASE_TEST_URL" > config.properties
     - echo "dbUserName=$DATABASE_TEST_USERNAME" >> config.properties
     - echo "dbPassword=$DATABASE_TEST_PASSWORD" >> config.properties
