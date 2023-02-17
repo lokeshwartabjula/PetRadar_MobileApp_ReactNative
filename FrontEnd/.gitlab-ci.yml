@@ -24,13 +24,10 @@ before_script:
   - sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}"
   - sdkmanager "platform-tools"
   - sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}"
-  # - chmod 777 android/gradlew
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   - source ~/.nvm/nvm.sh
   - nvm install 18.12.0
   - nvm use 18.12.0
-  # - curl -o- -L https://yarnpkg.com/install.sh | bash
-  # - export PATH="$HOME/.yarn/bin:$PATH"
 
 stages: # List of stages for jobs, and their order of execution
   - build
@@ -42,8 +39,8 @@ build:
   script:
     - cd FrontEnd/
     - npm install
-    - mkdir android/app/src/main/assets
-    - npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+    # - mkdir android/app/src/main/assets
+    # - npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
     - cd android/ && ./gradlew assembleRelease
   tags:
     - dalfcs_gitlab_docker_ci
