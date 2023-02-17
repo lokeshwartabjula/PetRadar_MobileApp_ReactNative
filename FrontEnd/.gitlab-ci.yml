@@ -57,6 +57,7 @@ test:
   stage: test
   script:
     - cd FrontEnd/
+    - npm install
     - npm run test
 
 deploy:
