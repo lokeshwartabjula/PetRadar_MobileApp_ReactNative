@@ -7,7 +7,8 @@ variables:
 
 # Packages installation before running script
 before_script:
-  - ls
+  - java --version
+  - javac --version
   - apt-get --quiet update --yes
   - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
   - export ANDROID_HOME="${PWD}/android-home"
@@ -32,10 +33,10 @@ before_script:
   - source ~/.nvm/nvm.sh
   - nvm install 18.12.0
   - nvm use 18.12.0
-  # - npm install
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH="$HOME/.yarn/bin:$PATH"
-  # - yarn install
+  - cd FrontEnd/
+  - yarn install
 
 stages: # List of stages for jobs, and their order of execution
   - build
@@ -46,12 +47,14 @@ build:
   stage: build
   script:
     - cd FrontEnd/
-    - yarn install
+    - yarn android
+  tags:
+    - dalfcs_gitlab_docker_ci
     # - cd ios && pod install --repo-update && cd ../
-    - cd android/ && ./gradlew assembleRelease
-  artifacts:
-    paths:
-      - "/android"
+    # - cd android/ && ./gradlew assembleRelease
+  # artifacts:
+  #   paths:
+  #     - "/android"
 
 test:
   stage: test
