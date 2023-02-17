@@ -45,6 +45,7 @@ stages: # List of stages for jobs, and their order of execution
 build:
   stage: build
   script:
+    - cd FrontEnd/
     - yarn install
     # - cd ios && pod install --repo-update && cd ../
     - cd android/ && ./gradlew assembleRelease
