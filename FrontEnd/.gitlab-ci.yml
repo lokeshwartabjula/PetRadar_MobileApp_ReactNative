@@ -5,11 +5,6 @@ variables:
   ANDROID_BUILD_TOOLS: "33.0.0"
   ANDROID_SDK_TOOLS: "9477386"
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - android-home/
-
 # Packages installation before running script
 before_script:
   - apt-get --quiet update --yes
