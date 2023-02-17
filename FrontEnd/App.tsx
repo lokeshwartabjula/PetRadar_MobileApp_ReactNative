@@ -1,13 +1,12 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
-import Config from 'react-native-config';
 
 interface Props { }
 
 const App: React.FC<Props> = (props: Props) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>App.tsx {Config.BASE_URL}</Text>
+      <Text>App.tsx</Text>
     </SafeAreaView>
   )
 }
