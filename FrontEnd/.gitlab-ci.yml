@@ -7,6 +7,7 @@ variables:
 
 # Packages installation before running script
 before_script:
+  - echo $ANDROID_HOME
   - apt-get --quiet update --yes
   - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
   - export ANDROID_HOME="${PWD}/android-home"
@@ -44,7 +45,7 @@ stages: # List of stages for jobs, and their order of execution
 build:
   stage: build
   script:
-    - yarn android
+    - cd android/ && ./gradlew assembleRelease
   tags:
     - dalfcs_gitlab_docker_ci
     # - cd ios && pod install --repo-update && cd ../
