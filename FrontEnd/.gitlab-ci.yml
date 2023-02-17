@@ -41,7 +41,7 @@ build:
   stage: build
   script:
     - cd FrontEnd/
-    - npm ci
+    - npm install
     - cd android/ && ./gradlew assembleRelease
   tags:
     - dalfcs_gitlab_docker_ci
