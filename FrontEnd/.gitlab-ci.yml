@@ -47,11 +47,6 @@ build:
     - cd android/ && ./gradlew assembleRelease
   tags:
     - dalfcs_gitlab_docker_ci
-    # - cd ios && pod install --repo-update && cd ../
-    # - cd android/ && ./gradlew assembleRelease
-  # artifacts:
-  #   paths:
-  #     - "/android"
 
 test:
   stage: test
