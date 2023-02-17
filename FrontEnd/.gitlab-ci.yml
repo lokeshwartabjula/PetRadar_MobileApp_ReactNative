@@ -48,10 +48,10 @@ build:
   stage: build
   script:
     - yarn androidBuildDebug
-  tags:
-    - dalfcs_gitlab_docker_ci
-    # - cd ios && pod install --repo-update && cd ../
-    # - cd android/ && ./gradlew assembleRelease
+  # tags:
+  #   - dalfcs_gitlab_docker_ci
+  # - cd ios && pod install --repo-update && cd ../
+  # - cd android/ && ./gradlew assembleRelease
   # artifacts:
   #   paths:
   #     - "/android"
