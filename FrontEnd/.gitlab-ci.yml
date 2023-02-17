@@ -29,10 +29,8 @@ before_script:
   - source ~/.nvm/nvm.sh
   - nvm install 18.12.0
   - nvm use 18.12.0
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH="$HOME/.yarn/bin:$PATH"
-  - cd FrontEnd/
-  - yarn install
+  # - curl -o- -L https://yarnpkg.com/install.sh | bash
+  # - export PATH="$HOME/.yarn/bin:$PATH"
 
 stages: # List of stages for jobs, and their order of execution
   - build
@@ -42,7 +40,9 @@ stages: # List of stages for jobs, and their order of execution
 build:
   stage: build
   script:
-    - yarn androidBuildDebug
+    - cd FrontEnd/
+    - npm ci
+    - cd android/ && ./gradlew assembleRelease
   tags:
     - dalfcs_gitlab_docker_ci
     # - cd ios && pod install --repo-update && cd ../
