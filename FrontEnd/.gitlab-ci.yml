@@ -5,9 +5,13 @@ variables:
   ANDROID_BUILD_TOOLS: "33.0.0"
   ANDROID_SDK_TOOLS: "9477386"
 
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - android-home/
+
 # Packages installation before running script
 before_script:
-  - echo $ANDROID_HOME
   - apt-get --quiet update --yes
   - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
   - export ANDROID_HOME="${PWD}/android-home"
@@ -25,8 +29,6 @@ before_script:
   - sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}"
   - sdkmanager "platform-tools"
   - sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}"
-  - java --version
-  - javac --version
   # - chmod 777 android/gradlew
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   - source ~/.nvm/nvm.sh
