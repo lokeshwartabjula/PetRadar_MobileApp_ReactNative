@@ -6,7 +6,7 @@ interface Props { }
 const App: React.FC<Props> = (props: Props) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>App.tsx</Text>
+      <Text>App.tsx </Text>
     </SafeAreaView>
   )
 }
