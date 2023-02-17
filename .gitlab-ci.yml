@@ -24,7 +24,7 @@ before_script:
   - sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}"
   - sdkmanager "platform-tools"
   - sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}"
-  - chmod 777 android/gradlew
+  - chmod +x android/gradlew
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   - source ~/.nvm/nvm.sh
   - nvm install 18.12.0
