@@ -7,8 +7,6 @@ variables:
 
 # Packages installation before running script
 before_script:
-  - java --version
-  - javac --version
   - apt-get --quiet update --yes
   - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
   - export ANDROID_HOME="${PWD}/android-home"
@@ -46,7 +44,6 @@ stages: # List of stages for jobs, and their order of execution
 build:
   stage: build
   script:
-    - cd FrontEnd/
     - yarn android
   tags:
     - dalfcs_gitlab_docker_ci
