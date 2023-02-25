@@ -1,7 +1,8 @@
 package com.Group1.PetRadar.Model;
-import java.util.Date;
-import jakarta.persistence.Entity;
+
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 @Component;
 public class Medicalhistory {
