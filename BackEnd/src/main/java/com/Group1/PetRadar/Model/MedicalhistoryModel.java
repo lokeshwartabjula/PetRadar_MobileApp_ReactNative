@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component;
-public class Medicalhistory {
+public class MedicalhistoryModel {
     int medicalHistoryId;
 
     Date vetVisitDate;

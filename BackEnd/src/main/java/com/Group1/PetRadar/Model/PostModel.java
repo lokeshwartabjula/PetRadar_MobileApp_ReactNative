@@ -1,10 +1,10 @@
 package com.Group1.PetRadar.Model;
 import java.util.Date;
-import jakarta.persistence.Entity;
+
 import org.springframework.stereotype.Component;
 
 @Component;
-public class Post {
+public class PostModel {
 
         public int getPostId() {
                 return postId;
