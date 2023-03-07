@@ -3,7 +3,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-@Component;
+@Component
 public class PostModel {
 
         public int getPostId() {

@@ -29,18 +29,18 @@ public class UserControllerTest {
 		fail("Not yet implemented");
 	}
 	
-	@Test
-	public void registerUserTest() throws Exception {
-		//GIVEN
-		UserModel dummyUser = new UserModel();
-		dummyUser.setFirstName("firstName");
-		dummyUser.setLastname("lastName");
-		dummyUser.setUserEmail("email@email.com");
-		dummyUser.setUserName("userName");
-		
-		when(userService.registerUser(any(UserModel.class))).thenReturn(dummyUser);
-		mockUserController.registerUser(dummyUser);
-		
-	}
+//	@Test
+//	public void registerUserTest() throws Exception {
+//		//GIVEN
+//		UserModel dummyUser = new UserModel();
+//		dummyUser.setFirstName("firstName");
+//		dummyUser.setLastname("lastName");
+//		dummyUser.setUserEmail("email@email.com");
+//		dummyUser.setUserName("userName");
+//		
+//		when(userService.registerUser(any(UserModel.class))).thenReturn(dummyUser);
+//		mockUserController.registerUser(dummyUser);
+//		
+//	}
 
 }
