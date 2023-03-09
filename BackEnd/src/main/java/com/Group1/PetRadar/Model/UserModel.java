@@ -1,45 +1,103 @@
 package com.Group1.PetRadar.Model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import org.springframework.stereotype.Component;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-@Component
+@Entity
+@Table(name = "user_model")
 public class UserModel {
-    String userName;
-    String firstName;
-    String lastname;
-    String userEmail;
 
-    public String getUserName() {
-        return userName;
-    }
+    @Id
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int userId;
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    @Column(name = "email")
+    private String email;
 
-    public String getFirstName() {
-        return firstName;
-    }
+    @Column(name = "first_name")
+    private String firstName;
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    @Column(name = "last_name")
+    private String lastName;
+    
+    @Column(name = "profile_url")
+    private String profileUrl;
+    
+    @Column(name = "password")
+    private String password;
+    
 
-    public String getLastname() {
-        return lastname;
-    }
+	
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+	public UserModel(int userId, String email, String firstName, String lastName, String profileUrl, String password) {
+		super();
+		this.userId = userId;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.profileUrl = profileUrl;
+		this.password = password;
+	}
 
-    public String getUserEmail() {
-        return userEmail;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getProfileUrl() {
+		return profileUrl;
+	}
+
+	public void setProfileUrl(String profileUrl) {
+		this.profileUrl = profileUrl;
+	}
+
+	public UserModel() {
+		super();
+	}
+    
+    
+
+
+    
 }
-

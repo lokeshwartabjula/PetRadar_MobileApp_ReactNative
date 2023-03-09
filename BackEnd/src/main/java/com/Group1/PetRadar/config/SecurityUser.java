@@ -5,14 +5,14 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.Group1.PetRadar.Model.User;
+import com.Group1.PetRadar.Model.UserModel;
 
 
 public class SecurityUser implements UserDetails {
 
-    private final User user;
+    private final UserModel user;
 
-    public SecurityUser(User user) {
+    public SecurityUser(UserModel user) {
         this.user = user;
     }
 

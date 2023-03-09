@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.Group1.PetRadar.Model.UserModel;
 import com.Group1.PetRadar.Service.UserService;
 
 @RunWith(MockitoJUnitRunner.class)

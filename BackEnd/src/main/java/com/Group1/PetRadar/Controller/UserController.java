@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Group1.PetRadar.DTO.AuthReqDTO;
 import com.Group1.PetRadar.DTO.JwtRequest;
-import com.Group1.PetRadar.Model.User;
+import com.Group1.PetRadar.Model.UserModel;
 import com.Group1.PetRadar.Service.UserService;
 import com.Group1.PetRadar.protocol.Response;
 
@@ -61,8 +61,24 @@ public class UserController {
 	    }
 	    
 	    @PostMapping("/googleLogin")
-	    public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user) {
-	    	String token = userService.generateToken(user.getEmail());
+	    public ResponseEntity<Response> googleRegisterLogin(@RequestBody UserModel user) throws Exception {
+	    	Boolean isLoginSuccessful = false;
+	    	Response failureResponse = null;
+	    	
+	    	try {
+				isLoginSuccessful = userService.googleLogin(user);
+	    	} catch (Exception e) {
+				// TODO Auto-generated catch block
+				failureResponse = new Response(e.getMessage(),HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name());
+		        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+			}
+
+	    	String token = null;
+	    	if(isLoginSuccessful)
+	    		token = userService.generateToken(user.getEmail());
+	    	else
+	    		throw new Exception("Login is not successful");
+	    	
 	    	
 	        Response response = new Response(token,HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
 	        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
@@ -71,20 +87,51 @@ public class UserController {
 	    
 
 	    @PostMapping("/register")
-	    public ResponseEntity<Response> saveUser(@RequestBody AuthReqDTO authReqDTO) {
+	    public ResponseEntity<Response> saveUser(@RequestBody AuthReqDTO authReqDTO) throws Exception {
 	    	
-	    	String token = userService.generateToken(authReqDTO.getEmail());
+	    	Boolean saveAppUserSuccessful = false;
+	    	Response failureResponse = null;
+	    	
+	    	try {
+				saveAppUserSuccessful = userService.registerAppUser(authReqDTO);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				failureResponse = new Response(e.getMessage(),HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name());
+		        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+			}
+	    	
+	    	String token =null;
+	    	if(saveAppUserSuccessful)
+	    	token = userService.generateToken(authReqDTO.getEmail());
+	    	else
+	    		throw new Exception("Registration not successful. Please try again");
 
 	        Response response = new Response(token,HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
 	        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	    }
 
 	    @PostMapping("/login")
-	    public ResponseEntity<Response> login(@RequestBody AuthReqDTO authReqDTO) {
+	    public ResponseEntity<Response> login(@RequestBody AuthReqDTO authReqDTO) throws Exception {
 //	    	System.out.print(payload.toString());
 	    	// TODO: Check with database and fetch user details
 	    	// TODO: pass that user object to generateToken method and get the token
-	    	String token = userService.generateToken(authReqDTO.getEmail());
+	    	
+	    	Boolean isAppLoginSuccessful = false;
+	    	Response failureResponse = null;
+
+	    	
+	    	try {
+				isAppLoginSuccessful = userService.appLogin(authReqDTO);
+	    	} catch (Exception e) {
+				// TODO Auto-generated catch block
+				failureResponse = new Response(e.getMessage(),HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name());
+		        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+			}
+	    	String token = null;
+	    	if(isAppLoginSuccessful)
+	    	 token = userService.generateToken(authReqDTO.getEmail());
+	    	else
+	    		throw new Exception("Login is not successful. Please try again!");
 	    	
 	        Response response = new Response(token,HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
 	        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
