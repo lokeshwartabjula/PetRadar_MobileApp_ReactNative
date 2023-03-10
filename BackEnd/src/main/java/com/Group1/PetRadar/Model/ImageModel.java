@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import org.springframework.stereotype.Component;
 import java.util.*;
 
-@Component
-public class Image {
+public class ImageModel {
 
     int imageId;
     String imageLink;
