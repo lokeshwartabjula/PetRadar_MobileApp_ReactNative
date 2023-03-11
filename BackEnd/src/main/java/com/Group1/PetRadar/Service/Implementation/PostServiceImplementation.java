@@ -1,9 +1,9 @@
-package com.Group1.PetRadar.Service;
+package com.Group1.PetRadar.Service.Implementation;
 
-import com.Group1.PetRadar.Model.PetprofileModel;
 import com.Group1.PetRadar.Model.PostModel;
-import com.Group1.PetRadar.repository.PetProfileRepository;
-import com.Group1.PetRadar.repository.PostRepository;
+import com.Group1.PetRadar.Repository.PetProfileRepository;
+import com.Group1.PetRadar.Repository.PostRepository;
+import com.Group1.PetRadar.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service

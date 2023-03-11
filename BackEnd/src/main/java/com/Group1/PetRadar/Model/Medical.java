@@ -1,17 +1,13 @@
 package com.Group1.PetRadar.Model;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
+import jakarta.persistence.*;
 import java.util.Date;
 @Entity
-
 @Table(name="Medical_History")
 public class Medical {
 
-    @Id
-    Integer medicalHistoryId;
+    @Id()
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    int medicalHistoryId;
 
     Date vetVisitDate;
 
