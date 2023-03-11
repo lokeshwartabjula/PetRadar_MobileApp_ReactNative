@@ -1,6 +1,5 @@
 package com.Group1.PetRadar.Model;
 
-import jakarta.persistence.Entity;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -42,4 +41,3 @@ public class UserModel {
         this.userEmail = userEmail;
     }
 }
-

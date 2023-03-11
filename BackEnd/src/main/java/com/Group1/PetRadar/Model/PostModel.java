@@ -1,11 +1,11 @@
 package com.Group1.PetRadar.Model;
+
 import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import org.springframework.stereotype.Component;
 
 @Entity()
 public class PostModel {
@@ -43,12 +43,10 @@ public class PostModel {
         }
 
         @Id()
-        @GeneratedValue(strategy= GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.AUTO)
         Integer postId;
         String description;
         Date postDate;
         String location;
 
 }
-
-
