@@ -100,8 +100,4 @@ public class User {
 		return this.pets;
 	}
 
-	// public void setPets(Set<PetprofileModel> pets) {
-	// this.pets = pets;
-	// }
-
 }
