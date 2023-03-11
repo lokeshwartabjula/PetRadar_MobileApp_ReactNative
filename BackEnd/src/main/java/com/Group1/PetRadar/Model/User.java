@@ -1,36 +1,46 @@
 package com.Group1.PetRadar.Model;
-import jakarta.persistence.Column;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Transactional
+@NoArgsConstructor
 @Table(name = "user")
 public class User {
 
-    @Id
-    @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int userId;
+	@Id()
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID userId;
 
-    private String email;
+	private String email;
 
-    private String firstName;
+	private String firstName;
 
-    private String lastName;
-    
-    private String profileUrl;
-    
-    private String password;
-    
+	private String lastName;
 
-	
+	private String profileUrl;
 
-	public User(int userId, String email, String firstName, String lastName, String profileUrl, String password) {
+	private String password;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private Set<PetprofileModel> pets = new HashSet<>();
+
+	public User(String email, String firstName, String lastName, String profileUrl, String password) {
 		super();
-		this.userId = userId;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -46,11 +56,11 @@ public class User {
 		this.password = password;
 	}
 
-	public int getUserId() {
+	public UUID getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(UUID userId) {
 		this.userId = userId;
 	}
 
@@ -85,9 +95,13 @@ public class User {
 	public void setProfileUrl(String profileUrl) {
 		this.profileUrl = profileUrl;
 	}
-    
-    
 
+	public Set<PetprofileModel> getPets() {
+		return this.pets;
+	}
 
-    
+	// public void setPets(Set<PetprofileModel> pets) {
+	// this.pets = pets;
+	// }
+
 }

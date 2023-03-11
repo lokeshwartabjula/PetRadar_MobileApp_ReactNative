@@ -1,21 +1,20 @@
 package com.Group1.PetRadar.Model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.springframework.stereotype.Component;
-import java.util.*;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
 import java.util.Date;
 
-
-@Entity
-@Table(name = "pet_profile_duplicate")
-public class PetprofileModel
-{
-
-
-    @Id
-    public Integer petId;
+@Entity()
+public class PetprofileModel {
+    @Id()
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    int petId;
     String petName;
     String petBreed;
     Date petDob;
@@ -27,6 +26,10 @@ public class PetprofileModel
     Float weightInLbs;
     String petIdentificationMarks;
     String allergies;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    private User user;
 
     public Integer getPetId() {
         return petId;
@@ -124,6 +127,12 @@ public class PetprofileModel
         this.allergies = allergies;
     }
 
+    public User getUser() {
+        return this.user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 }
