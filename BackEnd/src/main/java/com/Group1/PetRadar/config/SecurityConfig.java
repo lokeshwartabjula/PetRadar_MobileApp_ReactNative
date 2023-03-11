@@ -24,7 +24,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.Group1.PetRadar.Service.SecurityUserDetailsService;
+import com.Group1.PetRadar.Service.Implementation.SecurityUserDetailsService;
 import com.Group1.PetRadar.protocol.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,7 +35,6 @@ import jakarta.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-	
 
     @Value("${allow.origin.url}")
     String origin;
@@ -75,9 +74,10 @@ public class SecurityConfig {
     private static class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
         @Override
         public void commence(HttpServletRequest request, HttpServletResponse response,
-                             AuthenticationException authException) throws IOException {
+                AuthenticationException authException) throws IOException {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            Response errorResponse = new Response(List.of(), HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name());
+            Response errorResponse = new Response(List.of(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
             response.getWriter().write(new ObjectMapper().writeValueAsString(errorResponse));
