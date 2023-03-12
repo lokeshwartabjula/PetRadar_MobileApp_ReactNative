@@ -1,14 +1,17 @@
 package com.Group1.PetRadar.Service;
 
+import java.util.UUID;
+
+import com.Group1.PetRadar.DTO.AddPostDTO;
 import com.Group1.PetRadar.Model.PostModel;
 
 public interface PostService {
 
-    PostModel savePost(PostModel postmodel);
+    PostModel savePost(AddPostDTO postmodel);
 
-    PostModel getPostById(int id);
+    PostModel getPostById(UUID id);
 
-    String updatePost(PostModel postmodel);
+    PostModel updatePost(PostModel postmodel);
 
-    String deletePostById(int id);
+    String deletePostById(UUID id);
 }

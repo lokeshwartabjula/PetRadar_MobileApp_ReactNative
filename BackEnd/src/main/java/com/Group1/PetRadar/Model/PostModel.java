@@ -1,21 +1,28 @@
 package com.Group1.PetRadar.Model;
 
 import java.util.Date;
+import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 
 @Entity()
 public class PostModel {
 
-        public Integer getPostId() {
-                return postId;
-        }
+        @Id()
+        @GeneratedValue(strategy = GenerationType.UUID)
+        @JoinColumn(name = "id")
+        UUID postId;
 
-        public void setPostId(int postId) {
-                this.postId = postId;
+        String description;
+        Date postDate;
+        String location;
+
+        public UUID getPostId() {
+                return postId;
         }
 
         public String getDescription() {
@@ -41,12 +48,5 @@ public class PostModel {
         public void setLocation(String location) {
                 this.location = location;
         }
-
-        @Id()
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        Integer postId;
-        String description;
-        Date postDate;
-        String location;
 
 }
