@@ -1,13 +1,17 @@
 package com.Group1.PetRadar.Model;
+
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.UUID;
+
 @Entity
-@Table(name="Medical_History")
-public class Medical {
+@Table(name = "Pet_Medical_History")
+public class MedicalHistory {
 
     @Id()
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    int medicalHistoryId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
+    private UUID medicalRecordId;
 
     Date vetVisitDate;
 
@@ -21,12 +25,8 @@ public class Medical {
 
     String medication;
 
-    public Integer getMedicalHistoryId() {
-        return medicalHistoryId;
-    }
-
-    public void setMedicalHistoryId(Integer medicalHistoryId) {
-        this.medicalHistoryId = medicalHistoryId;
+    public UUID getMedicalRecordId() {
+        return this.medicalRecordId;
     }
 
     public Date getVetVisitDate() {
@@ -75,10 +75,5 @@ public class Medical {
 
     public void setMedication(String medication) {
         this.medication = medication;
-    }
-
-
-    public Object getId() {
-        return null;
     }
 }

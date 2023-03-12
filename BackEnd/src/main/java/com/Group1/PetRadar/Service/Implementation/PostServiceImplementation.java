@@ -1,14 +1,13 @@
 package com.Group1.PetRadar.Service.Implementation;
 
 import com.Group1.PetRadar.Model.PostModel;
-import com.Group1.PetRadar.Repository.PetProfileRepository;
 import com.Group1.PetRadar.Repository.PostRepository;
 import com.Group1.PetRadar.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class PostServiceImplementation implements PostService {
-
 
     @Autowired
     PostRepository postRepository;
@@ -26,19 +25,17 @@ public class PostServiceImplementation implements PostService {
         return m;
     }
 
-
     @Override
     public String updatePost(PostModel postmodel) {
         PostModel existingpost = postRepository.findById(postmodel.getPostId()).orElse(null);
-        if(postmodel.getPostId()!=null)
+        if (postmodel.getPostId() != null)
             existingpost.setPostId(postmodel.getPostId());
-        if(postmodel.getPostDate()!=null)
+        if (postmodel.getPostDate() != null)
             existingpost.setPostDate(postmodel.getPostDate());
-        if(postmodel.getDescription()!=null)
+        if (postmodel.getDescription() != null)
             existingpost.setDescription(postmodel.getDescription());
-        if(postmodel.getLocation()!=null)
+        if (postmodel.getLocation() != null)
             existingpost.setLocation(postmodel.getLocation());
-
 
         postRepository.save(existingpost);
         return "Petprofile updated!";
@@ -49,7 +46,5 @@ public class PostServiceImplementation implements PostService {
         postRepository.deleteById(id);
         return "Petprofile deleted!";
     }
-
-
 
 }
