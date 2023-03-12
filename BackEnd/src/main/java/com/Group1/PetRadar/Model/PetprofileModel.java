@@ -1,6 +1,7 @@
 package com.Group1.PetRadar.Model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -9,12 +10,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity()
 public class PetprofileModel {
     @Id()
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    int petId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @JoinColumn(name = "id")
+    UUID petId;
+
     String petName;
     String petBreed;
     Date petDob;
@@ -31,12 +35,8 @@ public class PetprofileModel {
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
 
-    public Integer getPetId() {
+    public UUID getPetId() {
         return petId;
-    }
-
-    public void setPetId(Integer petId) {
-        this.petId = petId;
     }
 
     public String getPetName() {

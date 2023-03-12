@@ -1,5 +1,7 @@
 package com.Group1.PetRadar.Controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,17 +29,17 @@ public class PetprofileController {
     }
 
     @GetMapping("/get/{id}")
-    public PetprofileModel getPetprofileId(@PathVariable("id") int id) {
+    public PetprofileModel getPetprofileId(@PathVariable("id") UUID id) {
         return petProfileService.getPetprofileById(id);
     }
 
     @PutMapping("/update")
-    public String updatePetprofile(@RequestBody PetprofileModel petprofile) {
+    public PetprofileModel updatePetprofile(@RequestBody PetprofileModel petprofile) {
         return petProfileService.updatePetprofile(petprofile);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deletePetprofileById(@PathVariable("id") int id) {
+    public String deletePetprofileById(@PathVariable("id") UUID id) {
         return petProfileService.deletePetprofileById(id);
     }
 

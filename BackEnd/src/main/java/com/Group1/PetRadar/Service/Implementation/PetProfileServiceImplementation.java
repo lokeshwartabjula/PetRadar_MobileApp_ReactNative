@@ -7,6 +7,8 @@ import com.Group1.PetRadar.Repository.PetProfileRepository;
 import com.Group1.PetRadar.Repository.UserRepository;
 import com.Group1.PetRadar.Service.PetProfileService;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,13 +49,13 @@ public class PetProfileServiceImplementation implements PetProfileService {
     }
 
     @Override
-    public PetprofileModel getPetprofileById(int id) {
+    public PetprofileModel getPetprofileById(UUID id) {
         PetprofileModel m = petprofileRepository.findById(id).orElse(null);
         return m;
     }
 
     @Override
-    public String updatePetprofile(PetprofileModel petprofileModel) {
+    public PetprofileModel updatePetprofile(PetprofileModel petprofileModel) {
         PetprofileModel m = petprofileRepository.findById(petprofileModel.getPetId()).orElse(null);
         if (petprofileModel.getPetName() != null)
             m.setPetName(petprofileModel.getPetName());
@@ -77,13 +79,11 @@ public class PetProfileServiceImplementation implements PetProfileService {
             m.setPetIdentificationMarks(petprofileModel.getPetIdentificationMarks());
         if (petprofileModel.getAllergies() != null)
             m.setAllergies(petprofileModel.getAllergies());
-
-        petprofileRepository.save(m);
-        return "Petprofile updated!";
+        return petprofileRepository.save(m);
     }
 
     @Override
-    public String deletePetprofileById(int id) {
+    public String deletePetprofileById(UUID id) {
         petprofileRepository.deleteById(id);
         return "Petprofile deleted!";
     }
