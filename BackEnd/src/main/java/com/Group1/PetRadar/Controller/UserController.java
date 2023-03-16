@@ -167,4 +167,18 @@ public class UserController {
 		response.setStatus(HttpStatus.ACCEPTED.value());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Response> deleteUserById(@PathVariable String id) {
+		try {
+			userService.deleteUserById(id);
+			Response response = new Response();
+			response.setData("User delete succesfully");
+			response.setMessage(HttpStatus.ACCEPTED.name());
+			response.setStatus(HttpStatus.ACCEPTED.value());
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 }
