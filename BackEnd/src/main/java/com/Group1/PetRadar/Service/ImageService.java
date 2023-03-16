@@ -6,4 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService {
     Image saveImage(MultipartFile file, String type);
+
+    Image save(Image image);
 }

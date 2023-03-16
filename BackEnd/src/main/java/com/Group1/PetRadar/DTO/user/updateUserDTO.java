@@ -10,6 +10,8 @@ public class updateUserDTO {
     private String city;
     private String Pincode;
     private Long mobileNumber;
+    private MultipartFile file;
+    private String imgType;
 
     public String getFirstName() {
         return firstName;
@@ -59,4 +61,19 @@ public class updateUserDTO {
         this.mobileNumber = mobileNumber;
     }
 
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    public String getImgType() {
+        return imgType;
+    }
+
+    public void setImgType(String imgType) {
+        this.imgType = imgType;
+    }
 }

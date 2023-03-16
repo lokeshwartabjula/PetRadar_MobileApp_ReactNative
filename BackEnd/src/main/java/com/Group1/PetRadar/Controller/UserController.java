@@ -3,6 +3,7 @@ package com.Group1.PetRadar.Controller;
 import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
 import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
 import com.Group1.PetRadar.DTO.user.updateUserDTO;
+import com.Group1.PetRadar.utils.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import com.Group1.PetRadar.Service.UserService;
 import com.Group1.PetRadar.protocol.Response;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -138,11 +140,10 @@ public class UserController {
 			@RequestParam("pincode") String pincode,
 			@RequestParam("mobileNumber") String mobileNumber,
 			@RequestParam("userId") String userId,
-			@RequestParam("image") MultipartFile file) {
+			@RequestParam("imgType") String imgType,
+			@RequestParam("image") MultipartFile file) throws IOException {
 
-		System.out.println(firstName + lastName + address + city + pincode + mobileNumber + userId);
 		System.out.println(file.getOriginalFilename());
-
 		updateUserDTO updatedUserDetails = new updateUserDTO();
 		updatedUserDetails.setFirstName(firstName);
 		updatedUserDetails.setLastName(lastName);
@@ -150,6 +151,8 @@ public class UserController {
 		updatedUserDetails.setCity(city);
 		updatedUserDetails.setPincode(pincode);
 		updatedUserDetails.setPhoneNumber(Long.parseLong(mobileNumber));
+		updatedUserDetails.setImgType(imgType);
+		updatedUserDetails.setFile(file);
 
 		User user = userService.updateUser(updatedUserDetails, userId);
 		String token = userService.generateToken(userId);

@@ -1,5 +1,6 @@
 package com.Group1.PetRadar.Service;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
@@ -16,7 +17,7 @@ public interface UserService {
 
 	// int getUserId(String userName);
 
-	User updateUser(updateUserDTO userDetails, String userId);
+	User updateUser(updateUserDTO userDetails, String userId) throws IOException;
 
 	User getUserEmail(String email);
 

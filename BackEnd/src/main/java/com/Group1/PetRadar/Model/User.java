@@ -37,6 +37,10 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private Set<PetprofileModel> pets = new HashSet<>();
 
+	@OneToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "image_id", referencedColumnName = "id")
+	private Image image;
+
 	public UUID getUserId() {
 		return userId;
 	}
@@ -121,4 +125,11 @@ public class User {
 		this.pets = pets;
 	}
 
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
 }
