@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -30,49 +29,100 @@ public class UserController {
 	}
 
 	@PostMapping("/googleLogin")
-	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user) {
-//		"{
-//		""userId"":null,
-//				""email"":""user3@email.com"",
-//				""firstname"" : ""user3first"",
-//				""lastname"" : ""user3last"",
-//				""profileurl"" : ""user3.com"",
-//				""password"":null
-//	}"
-		String token = userService.generateToken(user.getUserId().toString());
+	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user) throws Exception {
+		Boolean isLoginSuccessful = false;
+		Response failureResponse = null;
+
+		try {
+			isLoginSuccessful = userService.googleLogin(user);
+		} catch (Exception e) {
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+		}
+
+		String token = null;
+		if (isLoginSuccessful)
+			token = userService.generateToken(user.getEmail());
+		else
+			throw new Exception("Login is not successful");
+
 		Response response = new Response(token, HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<Response> saveUser(@RequestBody RegisterUserDTO registerUserDTO) {
-		User newUser = userService.saveUser(registerUserDTO);
-		String token = userService.generateToken(newUser.getUserId().toString());
-		Response response = new Response();
-		Map<String,String> data = new HashMap<>();
-		data.put("token",token);
-		data.put("userId",newUser.getUserId().toString());
+	public ResponseEntity<Response> saveUser(@RequestBody AuthReqDTO authReqDTO) throws Exception {
 
-		response.setData(data);
-		response.setMessage(HttpStatus.ACCEPTED.name());
-		response.setStatus(HttpStatus.ACCEPTED.value());
+		Boolean saveAppUserSuccessful = false;
+		Response failureResponse = null;
+
+		try {
+			saveAppUserSuccessful = userService.registerAppUser(authReqDTO);
+		} catch (Exception e) {
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+		}
+
+		String token = null;
+		if (saveAppUserSuccessful)
+			token = userService.generateToken(authReqDTO.getEmail());
+		else
+			throw new Exception("Registration not successful. Please try again");
+
+		Response response = new Response(token, HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+
+		// @PostMapping("/register")
+		// public ResponseEntity<Response> saveUser(@RequestBody RegisterUserDTO
+		// registerUserDTO) {
+		// User newUser = userService.saveUser(registerUserDTO);
+		// String token = userService.generateToken(newUser.getUserId().toString());
+		// Response response = new Response();
+		// Map<String, String> data = new HashMap<>();
+		// data.put("token", token);
+		// data.put("userId", newUser.getUserId().toString());
+		// response.setData(data);
+		// response.setMessage(HttpStatus.ACCEPTED.name());
+		// response.setStatus(HttpStatus.ACCEPTED.value());
+		// return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+		// }
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<Response> login(@RequestBody AuthReqDTO authReqDTO) {
+	public ResponseEntity<Response> login(@RequestBody AuthReqDTO authReqDTO) throws Exception {
 
-		UUID userId = userService.getUserEmail(authReqDTO.getEmail());
-		String token = userService.generateToken(userId.toString());
-		Response response = new Response();
-		Map<String,String> data = new HashMap<>();
-		data.put("token",token);
-		data.put("userId",userId.toString());
+		Boolean isAppLoginSuccessful = false;
+		Response failureResponse = null;
 
-		response.setData(data);
-		response.setMessage(HttpStatus.ACCEPTED.name());
-		response.setStatus(HttpStatus.ACCEPTED.value());
+		try {
+			isAppLoginSuccessful = userService.appLogin(authReqDTO);
+		} catch (Exception e) {
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+		}
+		String token = null;
+		if (isAppLoginSuccessful)
+			token = userService.generateToken(authReqDTO.getEmail());
+		else
+			throw new Exception("Login is not successful. Please try again!");
+
+		Response response = new Response(token, HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+
+		// UUID userId = userService.getUserEmail(authReqDTO.getEmail());
+		// String token = userService.generateToken(userId.toString());
+		// Response response = new Response();
+		// Map<String,String> data = new HashMap<>();
+		// data.put("token",token);
+		// data.put("userId",userId.toString());
+
+		// response.setData(data);
+		// response.setMessage(HttpStatus.ACCEPTED.name());
+		// response.setStatus(HttpStatus.ACCEPTED.value());
+		// return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
 	@PutMapping("/update")
@@ -86,7 +136,7 @@ public class UserController {
 			@RequestParam("userId") String userId,
 			@RequestParam("image") MultipartFile file) {
 
-		System.out.println(firstName+lastName+address+city+pincode+mobileNumber+userId);
+		System.out.println(firstName + lastName + address + city + pincode + mobileNumber + userId);
 		System.out.println(file.getOriginalFilename());
 
 		updateUserDTO updatedUserDetails = new updateUserDTO();
@@ -101,9 +151,9 @@ public class UserController {
 		String token = userService.generateToken(userId);
 
 		Response response = new Response();
-		Map<String,Object> data = new HashMap<>();
-		data.put("token",token);
-		data.put("user",user);
+		Map<String, Object> data = new HashMap<>();
+		data.put("token", token);
+		data.put("user", user);
 		response.setData(data);
 		response.setMessage(HttpStatus.ACCEPTED.name());
 		response.setStatus(HttpStatus.ACCEPTED.value());

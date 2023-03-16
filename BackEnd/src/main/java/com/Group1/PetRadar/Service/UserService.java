@@ -1,7 +1,8 @@
 package com.Group1.PetRadar.Service;
-import java.util.Map;
+
 import java.util.UUID;
 
+import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
 import com.Group1.PetRadar.DTO.user.*;
 import com.Group1.PetRadar.Model.User;
 
@@ -16,4 +17,10 @@ public interface UserService {
 	User updateUser(updateUserDTO userDetails, String userId);
 
 	UUID getUserEmail(String email);
+
+	Boolean googleLogin(User user) throws Exception;
+
+	Boolean appLogin(AuthReqDTO authReqDTO) throws Exception;
+
+	Boolean registerAppUser(AuthReqDTO authReqDTO) throws Exception;
 }
