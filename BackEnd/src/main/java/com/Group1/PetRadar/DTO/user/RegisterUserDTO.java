@@ -1,13 +1,6 @@
-package com.Group1.PetRadar.DTO;
+package com.Group1.PetRadar.DTO.user;
 
 public class RegisterUserDTO {
-    // {
-    // "email":"user3@email.com",
-    // "firstname" : "user3first",
-    // "lastname" : "user3last",
-    // "profileurl" : "https://picsum.photos/200",
-    // "password": "demo"
-    // }
     private String email;
     private String firstname;
     private String lastname;

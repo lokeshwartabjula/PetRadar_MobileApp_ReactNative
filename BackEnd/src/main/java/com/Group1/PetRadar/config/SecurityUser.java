@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.Group1.PetRadar.Model.User;
 
-
 public class SecurityUser implements UserDetails {
 
     private final User user;

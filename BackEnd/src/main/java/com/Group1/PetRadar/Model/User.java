@@ -6,12 +6,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -30,38 +25,20 @@ public class User {
 	private String firstName;
 
 	private String lastName;
-
 	private String profileUrl;
-
+	private String address;
+	private String city;
+	private String pincode;
+	private Long phoneNumber;
+	@JsonIgnore
 	private String password;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private Set<PetprofileModel> pets = new HashSet<>();
 
-	public User(String email, String firstName, String lastName, String profileUrl, String password) {
-		super();
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.profileUrl = profileUrl;
-		this.password = password;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public UUID getUserId() {
 		return userId;
-	}
-
-	public void setUserId(UUID userId) {
-		this.userId = userId;
 	}
 
 	public String getEmail() {
@@ -96,8 +73,52 @@ public class User {
 		this.profileUrl = profileUrl;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+
+	public Long getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(Long phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public Set<PetprofileModel> getPets() {
-		return this.pets;
+		return pets;
+	}
+
+	public void setPets(Set<PetprofileModel> pets) {
+		this.pets = pets;
 	}
 
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Group1.PetRadar.DTO.AddPetMedicalRecordDTO;
+import com.Group1.PetRadar.DTO.medicalRecord.AddPetMedicalRecordDTO;
 import com.Group1.PetRadar.Model.MedicalHistory;
 import com.Group1.PetRadar.Service.MedicalRecordService;
 

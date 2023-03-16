@@ -1,6 +1,6 @@
 package com.Group1.PetRadar.Service.Implementation;
 
-import com.Group1.PetRadar.DTO.AddPetMedicalRecordDTO;
+import com.Group1.PetRadar.DTO.medicalRecord.AddPetMedicalRecordDTO;
 import com.Group1.PetRadar.Model.MedicalHistory;
 import com.Group1.PetRadar.Repository.MedicalRecordRepository;
 import com.Group1.PetRadar.Service.MedicalRecordService;

@@ -1,4 +1,4 @@
-package com.Group1.PetRadar.DTO;
+package com.Group1.PetRadar.DTO.medicalRecord;
 
 import java.util.Date;
 import java.util.UUID;
