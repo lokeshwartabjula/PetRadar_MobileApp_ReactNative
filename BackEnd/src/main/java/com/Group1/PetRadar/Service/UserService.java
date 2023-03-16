@@ -22,6 +22,8 @@ public interface UserService {
 
 	User findById(String id) throws Exception;
 
+	Boolean deleteUserById(String id) throws Exception;
+
 	Boolean googleLogin(User user) throws Exception;
 
 	Boolean appLogin(AuthReqDTO authReqDTO) throws Exception;

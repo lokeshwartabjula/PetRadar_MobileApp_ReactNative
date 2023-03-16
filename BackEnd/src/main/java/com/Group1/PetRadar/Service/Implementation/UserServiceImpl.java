@@ -257,4 +257,15 @@ public class UserServiceImpl implements UserService {
             throw new Exception("Unable to fetch the user Details");
         }
     }
+
+    public Boolean deleteUserById(String id) throws Exception {
+        try {
+            userRepository.deleteById(UUID.fromString(id));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Unable to Delete the user");
+        }
+    }
+
 }
