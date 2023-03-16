@@ -1,19 +1,17 @@
 package com.Group1.PetRadar.Controller;
 
+import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
+import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
+import com.Group1.PetRadar.DTO.user.updateUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
-import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Service.UserService;
 import com.Group1.PetRadar.protocol.Response;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,20 +31,22 @@ public class UserController {
 
 	@PostMapping("/googleLogin")
 	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user) {
-		String token = userService.generateToken(user.getEmail());
+//		"{
+//		""userId"":null,
+//				""email"":""user3@email.com"",
+//				""firstname"" : ""user3first"",
+//				""lastname"" : ""user3last"",
+//				""profileurl"" : ""user3.com"",
+//				""password"":null
+//	}"
+		String token = userService.generateToken(user.getUserId().toString());
 		Response response = new Response(token, HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
 	@PostMapping("/register")
 	public ResponseEntity<Response> saveUser(@RequestBody RegisterUserDTO registerUserDTO) {
-		User newUser = new User(
-				registerUserDTO.getEmail(),
-				registerUserDTO.getFirstname(),
-				registerUserDTO.getLastname(),
-				registerUserDTO.getProfileurl(),
-				registerUserDTO.getPassword());
-		newUser = userService.saveUser(newUser);
+		User newUser = userService.saveUser(registerUserDTO);
 		String token = userService.generateToken(newUser.getUserId().toString());
 		Response response = new Response();
 		Map<String,String> data = new HashMap<>();
@@ -75,16 +75,35 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
-	@PostMapping("/update")
-	public ResponseEntity<Response> update(@RequestBody updateUserDTO userDetails) {
+	@PutMapping("/update")
+	public ResponseEntity<Response> update(
+			@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName,
+			@RequestParam("address") String address,
+			@RequestParam("city") String city,
+			@RequestParam("pincode") String pincode,
+			@RequestParam("mobileNumber") String mobileNumber,
+			@RequestParam("userId") String userId,
+			@RequestParam("image") MultipartFile file) {
 
-		UUID userId = userService.getUserEmail(authReqDTO.getEmail());
-		String token = userService.generateToken(userId.toString());
+		System.out.println(firstName+lastName+address+city+pincode+mobileNumber+userId);
+		System.out.println(file.getOriginalFilename());
+
+		updateUserDTO updatedUserDetails = new updateUserDTO();
+		updatedUserDetails.setFirstName(firstName);
+		updatedUserDetails.setLastName(lastName);
+		updatedUserDetails.setAddress(address);
+		updatedUserDetails.setCity(city);
+		updatedUserDetails.setPincode(pincode);
+		updatedUserDetails.setPhoneNumber(Long.parseLong(mobileNumber));
+
+		User user = userService.updateUser(updatedUserDetails, userId);
+		String token = userService.generateToken(userId);
+
 		Response response = new Response();
-		Map<String,String> data = new HashMap<>();
+		Map<String,Object> data = new HashMap<>();
 		data.put("token",token);
-		data.put("userId",userId.toString());
-
+		data.put("user",user);
 		response.setData(data);
 		response.setMessage(HttpStatus.ACCEPTED.name());
 		response.setStatus(HttpStatus.ACCEPTED.value());

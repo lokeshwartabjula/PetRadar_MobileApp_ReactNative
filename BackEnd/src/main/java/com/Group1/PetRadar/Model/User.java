@@ -30,8 +30,11 @@ public class User {
 	private String firstName;
 
 	private String lastName;
-
 	private String profileUrl;
+	private String address;
+	private String city;
+	private String pincode;
+	private Long phoneNumber;
 
 	private String password;
 
@@ -39,29 +42,8 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private Set<PetprofileModel> pets = new HashSet<>();
 
-	public User(String email, String firstName, String lastName, String profileUrl, String password) {
-		super();
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.profileUrl = profileUrl;
-		this.password = password;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public UUID getUserId() {
 		return userId;
-	}
-
-	public void setUserId(UUID userId) {
-		this.userId = userId;
 	}
 
 	public String getEmail() {
@@ -96,8 +78,52 @@ public class User {
 		this.profileUrl = profileUrl;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+
+	public Long getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(Long phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public Set<PetprofileModel> getPets() {
-		return this.pets;
+		return pets;
+	}
+
+	public void setPets(Set<PetprofileModel> pets) {
+		this.pets = pets;
 	}
 
 }

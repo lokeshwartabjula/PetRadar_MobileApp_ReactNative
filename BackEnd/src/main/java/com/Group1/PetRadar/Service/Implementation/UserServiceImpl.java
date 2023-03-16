@@ -1,10 +1,13 @@
 package com.Group1.PetRadar.Service.Implementation;
 
+import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
+import com.Group1.PetRadar.DTO.user.updateUserDTO;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.UserRepository;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.Group1.PetRadar.Service.UserService;
@@ -50,10 +53,14 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public User saveUser(User user) {
-        User UserEncode = new User(user.getEmail(), user.getFirstName(), user.getLastName(), user.getProfileUrl(),
-                passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(UserEncode);
+    public User saveUser(RegisterUserDTO registerUserDTO) {
+        User newUser = new User();
+        newUser.setEmail(registerUserDTO.getEmail());
+        newUser.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
+        newUser.setFirstName(registerUserDTO.getFirstname());
+        newUser.setLastName(registerUserDTO.getLastname());
+        newUser.setProfileUrl(registerUserDTO.getProfileurl());
+        return userRepository.save(newUser);
     }
 
     @Override
@@ -72,6 +79,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UUID getUserEmail(String email) {
         return userRepository.findByEmail(email).get().getUserId();
+    }
+
+    public User updateUser(updateUserDTO userDetails, String userId) {
+        System.out.println(userId);
+        User user = userRepository.findById(UUID.fromString(userId)).get();
+        user.setFirstName(userDetails.getFirstName());
+        user.setLastName(userDetails.getLastName());
+        user.setAddress(userDetails.getAddress());
+        user.setCity(userDetails.getCity());
+        user.setPincode(userDetails.getPincode());
+        user.setPhoneNumber(userDetails.getMobileNumber());
+        userRepository.save(user);
+        return user;
     }
 
 }
