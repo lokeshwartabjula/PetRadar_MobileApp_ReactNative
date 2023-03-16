@@ -66,28 +66,24 @@ public class UserController {
 		}
 
 		String token = null;
-		if (saveAppUserSuccessful)
+		User user = null;
+		Response response = new Response();
+
+		if (saveAppUserSuccessful) {
+			user = userService.getUserEmail(authReqDTO.getEmail());
 			token = userService.generateToken(authReqDTO.getEmail());
-		else
+			Map<String, Object> data = new HashMap<>();
+			data.put("token", token);
+			data.put("user", user);
+
+			response.setData(data);
+			response.setMessage(HttpStatus.ACCEPTED.name());
+			response.setStatus(HttpStatus.ACCEPTED.value());
+		} else
 			throw new Exception("Registration not successful. Please try again");
 
-		Response response = new Response(token, HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 
-		// @PostMapping("/register")
-		// public ResponseEntity<Response> saveUser(@RequestBody RegisterUserDTO
-		// registerUserDTO) {
-		// User newUser = userService.saveUser(registerUserDTO);
-		// String token = userService.generateToken(newUser.getUserId().toString());
-		// Response response = new Response();
-		// Map<String, String> data = new HashMap<>();
-		// data.put("token", token);
-		// data.put("userId", newUser.getUserId().toString());
-		// response.setData(data);
-		// response.setMessage(HttpStatus.ACCEPTED.name());
-		// response.setStatus(HttpStatus.ACCEPTED.value());
-		// return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
-		// }
 	}
 
 	@PostMapping("/login")
@@ -104,12 +100,20 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
 		}
 		String token = null;
-		if (isAppLoginSuccessful)
+		Response response = new Response();
+		if (isAppLoginSuccessful) {
+			User user = userService.getUserEmail(authReqDTO.getEmail());
 			token = userService.generateToken(authReqDTO.getEmail());
-		else
+			Map<String, Object> data = new HashMap<>();
+			data.put("token", token);
+			data.put("user", user);
+
+			response.setData(data);
+			response.setMessage(HttpStatus.ACCEPTED.name());
+			response.setStatus(HttpStatus.ACCEPTED.value());
+		} else
 			throw new Exception("Login is not successful. Please try again!");
 
-		Response response = new Response(token, HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 
 		// UUID userId = userService.getUserEmail(authReqDTO.getEmail());

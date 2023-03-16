@@ -6,12 +6,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -35,7 +30,7 @@ public class User {
 	private String city;
 	private String pincode;
 	private Long phoneNumber;
-
+	@JsonIgnore
 	private String password;
 
 	@JsonIgnore

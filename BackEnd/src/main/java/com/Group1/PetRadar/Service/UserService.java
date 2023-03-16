@@ -18,7 +18,7 @@ public interface UserService {
 
 	User updateUser(updateUserDTO userDetails, String userId);
 
-	UUID getUserEmail(String email);
+	User getUserEmail(String email);
 
 	Boolean googleLogin(User user) throws Exception;
 

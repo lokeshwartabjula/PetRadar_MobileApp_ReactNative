@@ -96,8 +96,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UUID getUserEmail(String email) {
-        return userRepository.findByEmail(email).get().getUserId();
+    public User getUserEmail(String email) {
+        return userRepository.findByEmail(email).get();
     }
 
     public User updateUser(updateUserDTO userDetails, String userId) {
@@ -172,7 +172,7 @@ public class UserServiceImpl implements UserService {
             isUserFound = false;
         }
 
-        if (foundUser.getUserId()!= null && foundUser.getUserId().toString().length() > 0)
+        if (foundUser.getUserId() != null && foundUser.getUserId().toString().length() > 0)
             isUserFound = true;
 
         if (foundUser.getProfileUrl() != null)
@@ -181,7 +181,7 @@ public class UserServiceImpl implements UserService {
         if (isGoogleUser) {
             throw new Exception("Please login through google as you have already registered through app");
         } else {
-            if (foundUser.getPassword().equalsIgnoreCase(passwordEncoder.encode(authReqDTO.getPassword())))
+            if (passwordEncoder.matches(authReqDTO.getPassword(), foundUser.getPassword()))
                 return true;
             else
                 throw new Exception("Incorrect Password. Please try again");
@@ -219,7 +219,7 @@ public class UserServiceImpl implements UserService {
             isUserFound = false;
         }
 
-        if (foundUser.getUserId()!=null && foundUser.getUserId().toString().length() > 0)
+        if (foundUser.getUserId() != null && foundUser.getUserId().toString().length() > 0)
             isUserFound = true;
 
         if (foundUser.getProfileUrl() != null)
