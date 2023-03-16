@@ -5,7 +5,9 @@ public class Response {
 	private Object data;
 	private int status;
 	private String message;
-	
+
+	public Response(){}
+
 	public Response(Object data, int status, String message) {
         this.data = data;
         this.status = status;

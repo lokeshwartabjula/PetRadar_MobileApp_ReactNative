@@ -1,4 +1,4 @@
-package com.Group1.PetRadar.DTO;
+package com.Group1.PetRadar.DTO.auth;
 
 public class AuthRespDTO {
 	

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Group1.PetRadar.DTO.AddPostDTO;
+import com.Group1.PetRadar.DTO.post.AddPostDTO;
 import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Service.PostService;
 

@@ -2,7 +2,7 @@ package com.Group1.PetRadar.Service;
 
 import java.util.UUID;
 
-import com.Group1.PetRadar.DTO.AddPetDTO;
+import com.Group1.PetRadar.DTO.pet.AddPetDTO;
 import com.Group1.PetRadar.Model.PetprofileModel;
 
 public interface PetProfileService {

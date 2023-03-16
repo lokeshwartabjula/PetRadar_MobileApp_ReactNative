@@ -1,6 +1,6 @@
 package com.Group1.PetRadar.Service.Implementation;
 
-import com.Group1.PetRadar.DTO.AddPostDTO;
+import com.Group1.PetRadar.DTO.post.AddPostDTO;
 import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Repository.PostRepository;
 import com.Group1.PetRadar.Service.PostService;

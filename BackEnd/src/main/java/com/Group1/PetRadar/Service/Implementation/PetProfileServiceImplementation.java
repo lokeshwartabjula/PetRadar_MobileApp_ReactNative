@@ -1,6 +1,6 @@
 package com.Group1.PetRadar.Service.Implementation;
 
-import com.Group1.PetRadar.DTO.AddPetDTO;
+import com.Group1.PetRadar.DTO.pet.AddPetDTO;
 import com.Group1.PetRadar.Model.PetprofileModel;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.PetProfileRepository;
