@@ -28,6 +28,22 @@ public class UserController {
 		return "Never give up!!";
 	}
 
+	@GetMapping("/{id}")
+	public ResponseEntity<Response> getUserById(@PathVariable String id) {
+		try {
+			User user = userService.findById(id);
+			Map<String, Object> data = new HashMap<>();
+			data.put("user", user);
+			Response response = new Response();
+			response.setData(data);
+			response.setMessage(HttpStatus.ACCEPTED.name());
+			response.setStatus(HttpStatus.ACCEPTED.value());
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 	@PostMapping("/googleLogin")
 	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user) throws Exception {
 		Boolean isLoginSuccessful = false;
@@ -115,18 +131,6 @@ public class UserController {
 			throw new Exception("Login is not successful. Please try again!");
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
-
-		// UUID userId = userService.getUserEmail(authReqDTO.getEmail());
-		// String token = userService.generateToken(userId.toString());
-		// Response response = new Response();
-		// Map<String,String> data = new HashMap<>();
-		// data.put("token",token);
-		// data.put("userId",userId.toString());
-
-		// response.setData(data);
-		// response.setMessage(HttpStatus.ACCEPTED.name());
-		// response.setStatus(HttpStatus.ACCEPTED.value());
-		// return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
 	@PutMapping("/update")
