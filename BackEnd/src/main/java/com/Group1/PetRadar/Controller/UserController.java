@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Group1.PetRadar.DTO.AuthReqDTO;
-import com.Group1.PetRadar.DTO.RegisterUserDTO;
+import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
+import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Service.UserService;
 import com.Group1.PetRadar.protocol.Response;
@@ -61,6 +61,22 @@ public class UserController {
 
 	@PostMapping("/login")
 	public ResponseEntity<Response> login(@RequestBody AuthReqDTO authReqDTO) {
+
+		UUID userId = userService.getUserEmail(authReqDTO.getEmail());
+		String token = userService.generateToken(userId.toString());
+		Response response = new Response();
+		Map<String,String> data = new HashMap<>();
+		data.put("token",token);
+		data.put("userId",userId.toString());
+
+		response.setData(data);
+		response.setMessage(HttpStatus.ACCEPTED.name());
+		response.setStatus(HttpStatus.ACCEPTED.value());
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+	}
+
+	@PostMapping("/update")
+	public ResponseEntity<Response> update(@RequestBody updateUserDTO userDetails) {
 
 		UUID userId = userService.getUserEmail(authReqDTO.getEmail());
 		String token = userService.generateToken(userId.toString());
