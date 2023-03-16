@@ -244,4 +244,17 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    public User findById(String id) throws Exception {
+        try {
+            User user = null;
+            if (!userRepository.existsById(UUID.fromString(id))) {
+                throw new Exception("User not found");
+            }
+            user = userRepository.findById(UUID.fromString(id)).get();
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Unable to fetch the user Details");
+        }
+    }
 }

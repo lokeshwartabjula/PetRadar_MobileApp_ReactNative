@@ -20,6 +20,8 @@ public interface UserService {
 
 	User getUserEmail(String email);
 
+	User findById(String id) throws Exception;
+
 	Boolean googleLogin(User user) throws Exception;
 
 	Boolean appLogin(AuthReqDTO authReqDTO) throws Exception;
