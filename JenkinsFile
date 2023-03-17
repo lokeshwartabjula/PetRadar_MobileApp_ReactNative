@@ -1,0 +1,79 @@
+def projectName = ""
+def branchName1 = "asdasd"
+def branchName2 = "master"
+def dirName = "${projectName}"
+def osUser = "ubuntu"
+def ipAddr = ""
+def agentName = ""
+
+pipeline {
+    options {
+        buildDiscarder(logRotator(numToKeepStr: "7"))
+    }
+    agent any
+    environment {
+        HOME = '.'
+    }
+    stages {
+        stage("Build")
+        {
+            steps
+            {
+                sh "cd /"
+                sh "ls"
+                dir('BackEnd') {
+                     sh '''#!/bin/bash
+                        curl -s https://get.sdkman.io | bash
+                        source "/home/csci5308vm1/.sdkman/bin/sdkman-init.sh"
+                        sdk install springboot
+                        sdk install maven
+                        sdk help
+                        mvn compile
+                        mvn package'''
+                }
+            }
+        }
+
+        stage("Test")
+        {
+            steps
+            {
+                script {
+                    sh "cd /"
+                    sh "ls"
+                    dir('BackEnd') {
+                    sh '''#!/bin/bash
+                        curl -s https://get.sdkman.io | bash
+                        source "/home/csci5308vm1/.sdkman/bin/sdkman-init.sh"
+                        mvn test'''
+                    }
+                }
+            }
+        }
+
+        stage("Deploy")
+        {
+            steps
+            {
+                script {
+                    dir('BackEnd') {
+                        echo "Deploying the application"
+                        echo "Copying the guided version"
+                        sh "cp target/PetRadar-0.0.1-SNAPSHOT.jar /var/petRadarBuilds"
+                        sh "cp pm2-script.sh /var/petRadarBuilds"
+                        sh '''#!/bin/sh
+                              echo "RESTARTING ALL"
+                              sudo pm2 restart all
+                              echo "ALL RESTARTED"
+                        '''
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
