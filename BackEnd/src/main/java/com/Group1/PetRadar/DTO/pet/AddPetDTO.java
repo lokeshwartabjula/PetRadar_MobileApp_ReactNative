@@ -16,14 +16,14 @@ public class AddPetDTO {
     private Float weightInLbs;
     private String petIdentificationMarks;
     private String allergies;
-    private UUID userId;
+    private String userId;
 
     public AddPetDTO() {
     }
 
     public AddPetDTO(String petName, String petBreed, Date petDob, String petCategory, Integer petQrImageId,
             String gender, String bio, Float petHeightInCms, Float weightInLbs, String petIdentificationMarks,
-            String allergies, UUID userId) {
+            String allergies, String userId) {
         this.petName = petName;
         this.petBreed = petBreed;
         this.petDob = petDob;
@@ -129,10 +129,10 @@ public class AddPetDTO {
     }
 
     public UUID getUserId() {
-        return this.userId;
+        return UUID.fromString(this.userId);
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
