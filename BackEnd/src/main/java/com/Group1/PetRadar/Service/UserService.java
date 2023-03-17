@@ -16,7 +16,7 @@ public interface UserService {
 
 	// int getUserId(String userName);
 
-	User updateUser(updateUserDTO userDetails, String userId);
+	User updateUser(updateUserDTO userDetails, String userId) throws Exception;
 
 	User getUserEmail(String email);
 
