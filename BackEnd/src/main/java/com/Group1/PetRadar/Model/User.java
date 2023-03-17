@@ -1,6 +1,7 @@
 package com.Group1.PetRadar.Model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -34,8 +35,8 @@ public class User {
 	private String password;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	private Set<PetprofileModel> pets = new HashSet<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PetprofileModel> pets;
 
 	public UUID getUserId() {
 		return userId;
@@ -113,11 +114,11 @@ public class User {
 		this.password = password;
 	}
 
-	public Set<PetprofileModel> getPets() {
+	public List<PetprofileModel> getPets() {
 		return pets;
 	}
 
-	public void setPets(Set<PetprofileModel> pets) {
+	public void setPets(List<PetprofileModel> pets) {
 		this.pets = pets;
 	}
 

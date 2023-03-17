@@ -31,7 +31,7 @@ public class PetprofileModel {
     String petIdentificationMarks;
     String allergies;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
 
