@@ -25,7 +25,7 @@ public class UserController {
 	// For Testing only
 	@GetMapping("/message")
 	public String home() {
-		return "Never give up!!";
+		return "Jack sparrow is herererer!!";
 	}
 
 	@GetMapping("/{id}")
