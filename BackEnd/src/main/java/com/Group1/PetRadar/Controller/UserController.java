@@ -30,18 +30,22 @@ public class UserController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Response> getUserById(@PathVariable String id) {
+		Response failureResponse = null;
+		User user = null;
 		try {
-			User user = userService.findById(id);
-			Map<String, Object> data = new HashMap<>();
-			data.put("user", user);
-			Response response = new Response();
-			response.setData(data);
-			response.setMessage(HttpStatus.ACCEPTED.name());
-			response.setStatus(HttpStatus.ACCEPTED.value());
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+			user = userService.findById(id);
 		} catch (Exception e) {
-			return ResponseEntity.notFound().build();
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
 		}
+		Map<String, Object> data = new HashMap<>();
+		data.put("user", user);
+		Response response = new Response();
+		response.setData(data);
+		response.setMessage(HttpStatus.ACCEPTED.name());
+		response.setStatus(HttpStatus.ACCEPTED.value());
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
 	@PostMapping("/googleLogin")
@@ -155,9 +159,17 @@ public class UserController {
 		updatedUserDetails.setPincode(pincode);
 		updatedUserDetails.setPhoneNumber(Long.parseLong(mobileNumber));
 
-		User user = userService.updateUser(updatedUserDetails, userId);
-		String token = userService.generateToken(userId);
-
+		Response failureResponse = null;
+		User user = null;
+		String token = null;
+		try {
+			user = userService.updateUser(updatedUserDetails, userId);
+			token = userService.generateToken(userId);
+		} catch (Exception e) {
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+		}
 		Response response = new Response();
 		Map<String, Object> data = new HashMap<>();
 		data.put("token", token);
@@ -171,7 +183,15 @@ public class UserController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Response> deleteUserById(@PathVariable String id) {
 		try {
-			userService.deleteUserById(id);
+			Response failureResponse = null;
+			User user = null;
+			try {
+				userService.deleteUserById(id);
+			} catch (Exception e) {
+				failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+						HttpStatus.UNAUTHORIZED.name());
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+			}
 			Response response = new Response();
 			response.setData("User delete succesfully");
 			response.setMessage(HttpStatus.ACCEPTED.name());

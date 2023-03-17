@@ -100,17 +100,22 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email).get();
     }
 
-    public User updateUser(updateUserDTO userDetails, String userId) {
-        System.out.println(userId);
-        User user = userRepository.findById(UUID.fromString(userId)).get();
-        user.setFirstName(userDetails.getFirstName());
-        user.setLastName(userDetails.getLastName());
-        user.setAddress(userDetails.getAddress());
-        user.setCity(userDetails.getCity());
-        user.setPincode(userDetails.getPincode());
-        user.setPhoneNumber(userDetails.getMobileNumber());
-        userRepository.save(user);
-        return user;
+    public User updateUser(updateUserDTO userDetails, String userId) throws Exception {
+        try {
+            System.out.println(userId);
+            User user = userRepository.findById(UUID.fromString(userId)).get();
+            user.setFirstName(userDetails.getFirstName());
+            user.setLastName(userDetails.getLastName());
+            user.setAddress(userDetails.getAddress());
+            user.setCity(userDetails.getCity());
+            user.setPincode(userDetails.getPincode());
+            user.setPhoneNumber(userDetails.getMobileNumber());
+            userRepository.save(user);
+            return user;
+        } catch (Exception e) {
+            throw new Exception("Please enter valid data");
+        }
+
     }
 
     @Override
