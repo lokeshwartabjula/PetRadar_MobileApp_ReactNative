@@ -17,9 +17,13 @@ public interface UserService {
 
 	// int getUserId(String userName);
 
-	User updateUser(updateUserDTO userDetails, String userId) throws IOException;
+	User updateUser(updateUserDTO userDetails, String userId) throws Exception;
 
 	User getUserEmail(String email);
+
+	User findById(String id) throws Exception;
+
+	Boolean deleteUserById(String id) throws Exception;
 
 	Boolean googleLogin(User user) throws Exception;
 

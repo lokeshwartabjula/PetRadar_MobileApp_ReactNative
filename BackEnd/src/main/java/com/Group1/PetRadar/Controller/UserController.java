@@ -30,6 +30,26 @@ public class UserController {
 		return "Never give up!!";
 	}
 
+	@GetMapping("/{id}")
+	public ResponseEntity<Response> getUserById(@PathVariable String id) {
+		Response failureResponse = null;
+		User user = null;
+		try {
+			user = userService.findById(id);
+		} catch (Exception e) {
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put("user", user);
+		Response response = new Response();
+		response.setData(data);
+		response.setMessage(HttpStatus.ACCEPTED.name());
+		response.setStatus(HttpStatus.ACCEPTED.value());
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+	}
+
 	@PostMapping("/googleLogin")
 	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user) throws Exception {
 		Boolean isLoginSuccessful = false;
@@ -117,18 +137,6 @@ public class UserController {
 			throw new Exception("Login is not successful. Please try again!");
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
-
-		// UUID userId = userService.getUserEmail(authReqDTO.getEmail());
-		// String token = userService.generateToken(userId.toString());
-		// Response response = new Response();
-		// Map<String,String> data = new HashMap<>();
-		// data.put("token",token);
-		// data.put("userId",userId.toString());
-
-		// response.setData(data);
-		// response.setMessage(HttpStatus.ACCEPTED.name());
-		// response.setStatus(HttpStatus.ACCEPTED.value());
-		// return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
 	@PutMapping("/update")
@@ -154,9 +162,17 @@ public class UserController {
 		updatedUserDetails.setImgType(imgType);
 		updatedUserDetails.setFile(file);
 
-		User user = userService.updateUser(updatedUserDetails, userId);
-		String token = userService.generateToken(userId);
-
+		Response failureResponse = null;
+		User user = null;
+		String token = null;
+		try {
+			user = userService.updateUser(updatedUserDetails, userId);
+			token = userService.generateToken(userId);
+		} catch (Exception e) {
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+		}
 		Response response = new Response();
 		Map<String, Object> data = new HashMap<>();
 		data.put("token", token);
@@ -165,5 +181,27 @@ public class UserController {
 		response.setMessage(HttpStatus.ACCEPTED.name());
 		response.setStatus(HttpStatus.ACCEPTED.value());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Response> deleteUserById(@PathVariable String id) {
+		try {
+			Response failureResponse = null;
+			User user = null;
+			try {
+				userService.deleteUserById(id);
+			} catch (Exception e) {
+				failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+						HttpStatus.UNAUTHORIZED.name());
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+			}
+			Response response = new Response();
+			response.setData("User delete succesfully");
+			response.setMessage(HttpStatus.ACCEPTED.name());
+			response.setStatus(HttpStatus.ACCEPTED.value());
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }

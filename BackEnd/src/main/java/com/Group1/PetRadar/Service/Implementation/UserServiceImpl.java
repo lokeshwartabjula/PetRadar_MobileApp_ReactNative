@@ -95,25 +95,33 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email).get();
     }
 
-    public User updateUser(updateUserDTO userDetails, String userId) throws IOException {
-        System.out.println(userId);
-        User user = userRepository.findById(UUID.fromString(userId)).get();
-        user.setFirstName(userDetails.getFirstName());
-        user.setLastName(userDetails.getLastName());
-        user.setAddress(userDetails.getAddress());
-        user.setCity(userDetails.getCity());
-        user.setPincode(userDetails.getPincode());
-        user.setPhoneNumber(userDetails.getMobileNumber());
-        
-        MultipartFile file = userDetails.getFile();
-        Image image = new Image();
-        image.setName(file.getOriginalFilename());
-        image.setPath("user/image");
-        image.setImageData(file.getBytes());
-        image = imageRepository.save(image);
-        user.setImage(image);
-        userRepository.save(user);
-        return user;
+    public User updateUser(updateUserDTO userDetails, String userId) throws Exception {
+        try {
+            System.out.println(userId);
+            User user = userRepository.findById(UUID.fromString(userId)).get();
+            user.setFirstName(userDetails.getFirstName());
+            user.setLastName(userDetails.getLastName());
+            user.setAddress(userDetails.getAddress());
+            user.setCity(userDetails.getCity());
+            user.setPincode(userDetails.getPincode());
+            user.setPhoneNumber(userDetails.getMobileNumber());
+
+            
+            MultipartFile file = userDetails.getFile();
+            Image image = new Image();
+            image.setName(file.getOriginalFilename());
+            image.setPath("user/image");
+            image.setImageData(file.getBytes());
+            image = imageRepository.save(image);
+            user.setImage(image);
+            userRepository.save(user);
+            return user;
+            userRepository.save(user);
+            return user;
+        } catch (Exception e) {
+            throw new Exception("Please enter valid data");
+        }
+
     }
 
     @Override
@@ -245,6 +253,30 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
+    }
+
+    public User findById(String id) throws Exception {
+        try {
+            User user = null;
+            if (!userRepository.existsById(UUID.fromString(id))) {
+                throw new Exception("User not found");
+            }
+            user = userRepository.findById(UUID.fromString(id)).get();
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Unable to fetch the user Details");
+        }
+    }
+
+    public Boolean deleteUserById(String id) throws Exception {
+        try {
+            userRepository.deleteById(UUID.fromString(id));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Unable to Delete the user");
+        }
     }
 
 }
