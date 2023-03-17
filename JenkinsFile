@@ -65,7 +65,7 @@ pipeline {
                         sh "cp pm2-script.sh /var/petRadarBuilds"
                         sh '''#!/bin/sh
                               echo "RESTARTING ALL"
-                              sudo pm2 restart all
+                              pm2 restart all
                               echo "ALL RESTARTED"
                         '''
                     }
