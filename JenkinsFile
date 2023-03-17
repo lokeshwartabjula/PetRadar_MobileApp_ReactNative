@@ -45,6 +45,8 @@ pipeline {
                     sh "ls"
                     dir('BackEnd') {
                     sh '''#!/bin/bash
+                        curl -s https://get.sdkman.io | bash
+                        source "/home/csci5308vm1/.sdkman/bin/sdkman-init.sh"
                         mvn test'''
                     }
                 }
