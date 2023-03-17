@@ -62,10 +62,13 @@ pipeline {
                         echo "Deploying the application"
                         echo "Copying the guided version"
                         sh "cp target/PetRadar-0.0.1-SNAPSHOT.jar /var/petRadarBuilds"
+                        sh "chmod +x /var/petRadarBuilds/pm2-script.sh"
                         sh "cp pm2-script.sh /var/petRadarBuilds"
                         sh '''#!/bin/sh
                               echo "RESTARTING ALL"
-                              BUILD_ID=dontKillMe pm2 start /var/petRadarBuilds/pm2-script.sh
+                              pm2 status
+                              pm2 delete all
+                              pm2 start /var/petRadarBuilds/pm2-script.sh
                               pm2 status
                               echo "ALL RESTARTED"
                         '''
