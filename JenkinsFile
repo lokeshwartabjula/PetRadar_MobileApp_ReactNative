@@ -66,6 +66,7 @@ pipeline {
                         sh '''#!/bin/sh
                               echo "RESTARTING ALL"
                               pm2 restart all
+                              pm2 startup
                               pm2 status
                               echo "ALL RESTARTED"
                         '''
