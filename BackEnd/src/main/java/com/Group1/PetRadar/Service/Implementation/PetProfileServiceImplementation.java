@@ -6,26 +6,27 @@ import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.PetProfileRepository;
 import com.Group1.PetRadar.Repository.UserRepository;
 import com.Group1.PetRadar.Service.PetProfileService;
-
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.util.UUID;
-
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import javax.imageio.ImageIO;
 
 @Service
 public class PetProfileServiceImplementation implements PetProfileService {
-
     @Autowired
     PetProfileRepository petprofileRepository;
-
     @Autowired
     UserRepository userRepository;
 
     @Override
     public PetprofileModel savePetProfile(AddPetDTO petDetails) {
-        System.out.println(petDetails.getUserId());
-        System.out.println(userRepository.findById(petDetails.getUserId()));
-        System.out.println(userRepository.findById(petDetails.getUserId()).get());
         User user = userRepository.findById(petDetails.getUserId()).get();
         PetprofileModel newPet = new PetprofileModel();
 
@@ -34,7 +35,6 @@ public class PetProfileServiceImplementation implements PetProfileService {
         newPet.setPetBreed(petDetails.getPetBreed());
         newPet.setPetDob(petDetails.getPetDob());
         newPet.setPetCategory(petDetails.getPetCategory());
-        newPet.setPetQrImageId(petDetails.getPetQrImageId());
         newPet.setGender(petDetails.getGender());
         newPet.setBio(petDetails.getBio());
         newPet.setPetHeightInCms(petDetails.getPetHeightInCms());
@@ -42,10 +42,20 @@ public class PetProfileServiceImplementation implements PetProfileService {
         newPet.setWeightInLbs(petDetails.getWeightInLbs());
         newPet.setAllergies(petDetails.getAllergies());
         newPet.setUser(user);
+        newPet = petprofileRepository.save(newPet);
 
-        // PetprofileModel data =
-        return petprofileRepository.save(newPet);
-        // return data;
+        try {
+            BufferedImage QrData = generateQRCodeImage(newPet.getPetId().toString());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(QrData, "jpeg", baos);
+            byte[] byteData = baos.toByteArray();
+            newPet.setPetQrImage(byteData);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        newPet = petprofileRepository.save(newPet);
+        return newPet;
     }
 
     @Override
@@ -65,8 +75,8 @@ public class PetProfileServiceImplementation implements PetProfileService {
             m.setPetDob(petprofileModel.getPetDob());
         if (petprofileModel.getPetCategory() != null)
             m.setPetCategory(petprofileModel.getPetCategory());
-        if (petprofileModel.getPetQrImageId() != null)
-            m.setPetQrImageId(petprofileModel.getPetQrImageId());
+        if (petprofileModel.getPetQrImage() != null)
+            m.setPetQrImage(petprofileModel.getPetQrImage());
         if (petprofileModel.getGender() != null)
             m.setGender(petprofileModel.getGender());
         if (petprofileModel.getBio() != null)
@@ -88,4 +98,14 @@ public class PetProfileServiceImplementation implements PetProfileService {
         return "Petprofile deleted!";
     }
 
+    public static BufferedImage generateQRCodeImage(String barcodeText) throws Exception {
+        QRCodeWriter barcodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = null;
+        try {
+            bitMatrix = barcodeWriter.encode(barcodeText, BarcodeFormat.QR_CODE, 75, 75);
+        } catch (WriterException e) {
+            throw new RuntimeException(e);
+        }
+        return MatrixToImageWriter.toBufferedImage(bitMatrix);
+    }
 }
