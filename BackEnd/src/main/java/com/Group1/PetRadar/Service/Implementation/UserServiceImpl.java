@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
         Boolean isGoogleUser = false;
 
         // check if user is in the db
-        String ifUserExistsQuery = "select * from user_model where email = :email";
+        String ifUserExistsQuery = "select * from user where email = :email";
         MapSqlParameterSource map = new MapSqlParameterSource();
         map.addValue("email", user.getEmail());
         User foundUser = new User();
@@ -135,7 +135,7 @@ public class UserServiceImpl implements UserService {
         } catch (EmptyResultDataAccessException e) {
             isUserFound = false;
         }
-        if (foundUser.getUserId().toString().length() > 0)
+        if (foundUser.getUserId()!=null && foundUser.getUserId().toString().length() > 0)
             isUserFound = true;
 
         // check if password is dummy
@@ -224,7 +224,7 @@ public class UserServiceImpl implements UserService {
             isUserFound = false;
         }
 
-        if (foundUser.getUserId() != null && foundUser.getUserId().toString().length() > 0)
+        if (foundUser.getEmail() != null)
             isUserFound = true;
 
         if (foundUser.getProfileUrl() != null)
