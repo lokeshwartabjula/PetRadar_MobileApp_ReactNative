@@ -62,12 +62,23 @@ public class UserController {
 		}
 
 		String token = null;
-		if (isLoginSuccessful)
+		Response response = new Response();
+
+		if (isLoginSuccessful) {
+			User registeredUser = userService.getUserEmail(user.getEmail());
 			token = userService.generateToken(user.getEmail());
+			Map<String, Object> data = new HashMap<>();
+			data.put("token", token);
+			data.put("user", registeredUser);
+
+			response.setData(data);
+			response.setMessage(HttpStatus.ACCEPTED.name());
+			response.setStatus(HttpStatus.ACCEPTED.value());
+		}
 		else
 			throw new Exception("Login is not successful");
 
-		Response response = new Response(token, HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
+//		Response response = new Response(token, HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
