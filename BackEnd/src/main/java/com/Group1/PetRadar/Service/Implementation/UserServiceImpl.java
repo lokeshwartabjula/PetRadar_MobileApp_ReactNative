@@ -135,17 +135,17 @@ public class UserServiceImpl implements UserService {
         } catch (EmptyResultDataAccessException e) {
             isUserFound = false;
         }
-        if (foundUser.getUserId()!=null && foundUser.getUserId().toString().length() > 0)
+        if (foundUser.getUserId()!=null)
             isUserFound = true;
 
         // check if password is dummy
-        String dummyPassword = passwordEncoder.encode("dummy");
-        if (foundUser.getProfileUrl() != null)
+//        String dummyPassword = passwordEncoder.encode("dummy");
+        if (foundUser.getUserId()!=null&&foundUser.getPassword()==null)
             isGoogleUser = true;
         // If user is not in the db save user
         if (!isUserFound) {
             // save user
-            user.setPassword("dummy");
+            user.setPassword(null);
             saveUser(user);
             return true;
         } else {
