@@ -60,6 +60,11 @@ deploy_release:
   artifacts:
     paths:
       - target
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - mkdir -p ~/.ssh
+    - eval $(ssh-agent -s)
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - apk update && apk add openssh
     # - bash docker_install.sh > /dev/null
@@ -77,7 +82,7 @@ deploy_release:
     - sshpass -p aengooB4oe8raehe ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no csci5308vm1@csci5308vm1.research.cs.dal.ca
     - ssh -o 'StrictHostKeyChecking=no' 'csci5308vm1@csci5308vm1.research.cs.dal.ca'
     - pwd
-    - scp -r -o StrictHostKeyChecking=no -i ${DEPLOY_SSH_KEY} ${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}.zip"
+    - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" ${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}.zip"
     - echo ${DEPLOY_SSH_PASSWORD}
     # - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_PASSWORD}" ${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}.zip"
     - scp ${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}.zip"
