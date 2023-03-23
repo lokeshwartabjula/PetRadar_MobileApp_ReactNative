@@ -9,7 +9,6 @@ public class AddPetDTO {
     private String petBreed;
     private Date petDob;
     private String petCategory;
-    private Integer petQrImageId;
     private String gender;
     private String bio;
     private Float petHeightInCms;
@@ -21,14 +20,13 @@ public class AddPetDTO {
     public AddPetDTO() {
     }
 
-    public AddPetDTO(String petName, String petBreed, Date petDob, String petCategory, Integer petQrImageId,
+    public AddPetDTO(String petName, String petBreed, Date petDob, String petCategory,
             String gender, String bio, Float petHeightInCms, Float weightInLbs, String petIdentificationMarks,
             String allergies, String userId) {
         this.petName = petName;
         this.petBreed = petBreed;
         this.petDob = petDob;
         this.petCategory = petCategory;
-        this.petQrImageId = petQrImageId;
         this.gender = gender;
         this.bio = bio;
         this.petHeightInCms = petHeightInCms;
@@ -70,14 +68,6 @@ public class AddPetDTO {
 
     public void setPetCategory(String petCategory) {
         this.petCategory = petCategory;
-    }
-
-    public Integer getPetQrImageId() {
-        return this.petQrImageId;
-    }
-
-    public void setPetQrImageId(Integer petQrImageId) {
-        this.petQrImageId = petQrImageId;
     }
 
     public String getGender() {

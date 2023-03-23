@@ -1,14 +1,7 @@
 package com.Group1.PetRadar.Model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,20 +11,21 @@ public class PetprofileModel {
     @GeneratedValue(strategy = GenerationType.UUID)
     @JoinColumn(name = "id")
     UUID petId;
-
     String petName;
     String petBreed;
     Date petDob;
     String petCategory;
-    Integer petQrImageId;
+    @Lob
+    @Column(name = "image_bytes", columnDefinition = "BLOB")
+    byte[] petQrImage;
     String gender;
     String bio;
     Float petHeightInCms;
     Float weightInLbs;
     String petIdentificationMarks;
     String allergies;
-
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
 
@@ -71,12 +65,12 @@ public class PetprofileModel {
         this.petCategory = petCategory;
     }
 
-    public Integer getPetQrImageId() {
-        return petQrImageId;
+    public byte[] getPetQrImage() {
+        return petQrImage;
     }
 
-    public void setPetQrImageId(int petQrImageId) {
-        this.petQrImageId = petQrImageId;
+    public byte[] setPetQrImage(byte[] petQrImage) {
+        return this.petQrImage = petQrImage;
     }
 
     public String getGender() {
@@ -134,5 +128,4 @@ public class PetprofileModel {
     public void setUser(User user) {
         this.user = user;
     }
-
 }
