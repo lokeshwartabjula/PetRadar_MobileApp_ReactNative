@@ -15,7 +15,7 @@ build:
     paths:
       - target
   tags:
-    - dalfcs_gitlab_docker_ci
+    - dalfcs_docker_kvm
 
 test:
   stage: test
@@ -31,13 +31,13 @@ test:
     - echo "Pipeline test started"
     - mvn verify
   tags:
-    - dalfcs_gitlab_docker_ci
+    - dalfcs_docker_kvm
 
 deploy_dev:
   image: docker:stable
   stage: deploy
   tags:
-    - dalfcs_gitlab_docker_ci
+    - dalfcs_docker_kvm
   artifacts:
     paths:
       - target
@@ -56,7 +56,7 @@ deploy_release:
   image: docker:stable
   stage: deploy
   tags:
-    - dalfcs_gitlab_docker_ci
+    - dalfcs_docker_kvm
   artifacts:
     paths:
       - target
