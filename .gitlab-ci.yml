@@ -79,7 +79,9 @@ deploy_release:
     - pwd
     - echo ${CI_COMMIT_SHORT_SHA}    
     - echo | ssh-keygen -P '' -t rsa
-    # - chmod og-rwx ${DEPLOY_SSH_KEY}
+    - chmod 600 ${DEPLOY_SSH_KEY}
+    - chmod 700 ~/.ssh
+    - chmod 644 ~/.ssh/authorized_keys
 
     # - sshpass -p aengooB4oe8raehe ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no csci5308vm1@csci5308vm1.research.cs.dal.ca
     # - ssh -o 'StrictHostKeyChecking=no' 'csci5308vm1@csci5308vm1.research.cs.dal.ca'
