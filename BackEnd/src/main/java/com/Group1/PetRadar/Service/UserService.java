@@ -10,6 +10,8 @@ public interface UserService {
 	// public UserModel registerUser(UserModel user) throws Exception;
 	User saveUser(RegisterUserDTO user);
 
+	User saveGoogleUser(User user);
+	
 	User saveUser(User user);
 
 	String generateToken(String tokenSubject);
@@ -24,7 +26,7 @@ public interface UserService {
 
 	Boolean deleteUserById(String id) throws Exception;
 
-	Boolean googleLogin(User user) throws Exception;
+	Boolean googleLogin(User user, Boolean isLogin) throws Exception;
 
 	Boolean appLogin(AuthReqDTO authReqDTO) throws Exception;
 

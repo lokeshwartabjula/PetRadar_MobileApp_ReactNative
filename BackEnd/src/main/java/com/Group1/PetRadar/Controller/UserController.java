@@ -49,12 +49,13 @@ public class UserController {
 	}
 
 	@PostMapping("/googleLogin")
-	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user) throws Exception {
+	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user, @RequestParam Boolean isLogin) throws Exception {
 		Boolean isLoginSuccessful = false;
 		Response failureResponse = null;
 
+//		Boolean isLogin = isLoginFlow=="true"?true:false;
 		try {
-			isLoginSuccessful = userService.googleLogin(user);
+			isLoginSuccessful = userService.googleLogin(user,isLogin);
 		} catch (Exception e) {
 			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
 					HttpStatus.UNAUTHORIZED.name());
