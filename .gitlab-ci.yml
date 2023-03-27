@@ -32,3 +32,4 @@ deploy_dev:
     - echo "dbPassword=$DATABASE_TEST_PASSWORD" >> config.properties
     - echo "dbDriver=$DATABASE_DRIVER" >> config.properties
     - echo "Deploying the development pipeline"
+    - echo config.properties
