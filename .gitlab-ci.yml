@@ -33,4 +33,4 @@ deploy_dev:
     - echo "dbDriver=$DATABASE_DRIVER" >> config.properties
     - echo "Deploying the development pipeline"
     - echo config.properties
-    - ls
+    - cat config.properties
