@@ -46,20 +46,25 @@ public class AwsService {
     }
 
     @Async
-    public void save(final MultipartFile multipartFile) {
+    public String fetchImageUrl(String s3BucketName, String filename) {
+        return amazonS3.getUrl(s3BucketName,filename).toString();
+    }
+
+    @Async
+    public String save(final MultipartFile multipartFile) {
         try {
             final File file = convertMultiPartFileToFile(multipartFile);
             final String fileName = LocalDateTime.now() + "_" + file.getName();
             LOG.info("Uploading file with name {}", fileName);
             final PutObjectRequest putObjectRequest = new PutObjectRequest(s3BucketName, fileName, file);
-            PutObjectResult imageData = amazonS3.putObject(putObjectRequest);
+            amazonS3.putObject(putObjectRequest);
             Files.delete(file.toPath()); // Remove the file locally created in the project folder
-            //TODO: return data of uploaded file
-//            System.out.println(response.getMetadata());
+            return fetchImageUrl(s3BucketName,fileName);
         } catch (AmazonServiceException e) {
             LOG.error("Error {} occurred while uploading file", e.getLocalizedMessage());
         } catch (IOException ex) {
             LOG.error("Error {} occurred while deleting temporary file", ex.getLocalizedMessage());
         }
+        return null;
     }
 }
