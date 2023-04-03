@@ -30,16 +30,13 @@ public class User {
 	private String city;
 	private String pincode;
 	private Long phoneNumber;
+	private String ImageUrl;
 	@JsonIgnore
 	private String password;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private Set<PetprofileModel> pets = new HashSet<>();
-
-	@OneToOne(cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "image_id", referencedColumnName = "id")
-	private Image image;
 
 	public UUID getUserId() {
 		return userId;
@@ -125,11 +122,11 @@ public class User {
 		this.pets = pets;
 	}
 
-	public Image getImage() {
-		return image;
+	public String getImageUrl() {
+		return ImageUrl;
 	}
 
-	public void setImage(Image image) {
-		this.image = image;
+	public void setImageUrl(String imagexUrl) {
+		ImageUrl = imagexUrl;
 	}
 }
