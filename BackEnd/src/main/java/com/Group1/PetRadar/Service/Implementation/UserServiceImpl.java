@@ -1,22 +1,9 @@
 package com.Group1.PetRadar.Service.Implementation;
 
-import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
-import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
-import com.Group1.PetRadar.DTO.user.updateUserDTO;
-import com.Group1.PetRadar.Model.Image;
-import com.Group1.PetRadar.Model.User;
-import com.Group1.PetRadar.Repository.ImageRepository;
-import com.Group1.PetRadar.Repository.UserRepository;
-
-import java.io.IOException;
-import java.nio.file.Files;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 import java.util.UUID;
 
-import com.Group1.PetRadar.Service.ImageService;
-import com.Group1.PetRadar.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -29,7 +16,16 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
+import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
+import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
+import com.Group1.PetRadar.DTO.user.updateUserDTO;
+import com.Group1.PetRadar.Model.User;
+import com.Group1.PetRadar.Repository.ImageRepository;
+import com.Group1.PetRadar.Repository.UserRepository;
+import com.Group1.PetRadar.Service.ImageService;
+import com.Group1.PetRadar.Service.UserService;
+import com.Group1.PetRadar.utils.AwsService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -51,6 +47,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    AwsService awsService;
 
     @Autowired
     ImageService imageService;
@@ -105,18 +104,9 @@ public class UserServiceImpl implements UserService {
             user.setCity(userDetails.getCity());
             user.setPincode(userDetails.getPincode());
             user.setPhoneNumber(userDetails.getMobileNumber());
+            user.setImageUrl(awsService.save(userDetails.getFile()));
+            userRepository.save(user);
 
-            
-            MultipartFile file = userDetails.getFile();
-            Image image = new Image();
-            image.setName(file.getOriginalFilename());
-            image.setPath("user/image");
-            image.setImageData(file.getBytes());
-            image = imageRepository.save(image);
-            user.setImage(image);
-            userRepository.save(user);
-            return user;
-            userRepository.save(user);
             return user;
         } catch (Exception e) {
             throw new Exception("Please enter valid data");
