@@ -30,6 +30,14 @@ public class PetprofileModel {
     Float weightInLbs;
     String petIdentificationMarks;
     String allergies;
+    private String ImageUrl;
+    public String getImageUrl() {
+        return ImageUrl;
+    }
+
+    public void setImageUrl(String imagexUrl) {
+        ImageUrl = imagexUrl;
+    }
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "userId")

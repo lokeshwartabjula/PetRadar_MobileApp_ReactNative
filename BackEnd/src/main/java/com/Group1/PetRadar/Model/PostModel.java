@@ -21,6 +21,15 @@ public class PostModel {
         Date postDate;
         String location;
 
+        private String ImageUrl;
+        public String getImageUrl() {
+                return ImageUrl;
+        }
+
+        public void setImageUrl(String imagexUrl) {
+                ImageUrl = imagexUrl;
+        }
+
         public UUID getPostId() {
                 return postId;
         }
