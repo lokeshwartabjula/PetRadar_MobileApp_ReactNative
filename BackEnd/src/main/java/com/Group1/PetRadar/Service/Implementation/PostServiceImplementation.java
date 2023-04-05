@@ -1,6 +1,7 @@
 package com.Group1.PetRadar.Service.Implementation;
 
 import com.Group1.PetRadar.DTO.post.AddPostDTO;
+import com.Group1.PetRadar.DTO.post.UdpatePostDTO;
 import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Repository.PostRepository;
 import com.Group1.PetRadar.Service.PostService;
@@ -32,8 +33,8 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public PostModel updatePost(PostModel postmodel) {
-        PostModel existingpost = postRepository.findById(postmodel.getPostId()).orElse(null);
+    public PostModel updatePost(UdpatePostDTO postmodel, UUID id) {
+        PostModel existingpost = postRepository.findById(id).orElse(null);
         if (postmodel.getPostDate() != null)
             existingpost.setPostDate(postmodel.getPostDate());
         if (postmodel.getDescription() != null)
@@ -47,7 +48,7 @@ public class PostServiceImplementation implements PostService {
     @Override
     public String deletePostById(UUID id) {
         postRepository.deleteById(id);
-        return "Petprofile deleted!";
+        return "post deleted!";
     }
 
 }

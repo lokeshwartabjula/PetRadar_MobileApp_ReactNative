@@ -1,25 +1,20 @@
 package com.Group1.PetRadar.DTO.post;
 
-import java.util.Date;
+import lombok.NoArgsConstructor;
 
-public class AddPostDTO {
+import java.util.Date;
+import java.util.UUID;
+
+@NoArgsConstructor
+public class UdpatePostDTO {
 
     private String description;
     private Date postDate;
     private String location;
 
-    // Default constructor
-    public AddPostDTO() {
-    }
+    private String id;
 
-    // Parameterized constructor
-    public AddPostDTO(String description, Date postDate, String location) {
-        this.description = description;
-        this.postDate = postDate;
-        this.location = location;
-    }
 
-    // Getters and setters
     public String getDescription() {
         return description;
     }
@@ -47,4 +42,15 @@ public class AddPostDTO {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public UUID getId() {
+        return UUID.fromString(id);
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
+
+
+
