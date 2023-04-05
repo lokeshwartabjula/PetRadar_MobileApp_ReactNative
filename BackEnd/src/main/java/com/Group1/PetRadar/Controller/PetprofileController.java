@@ -70,8 +70,25 @@ public class PetprofileController {
     }
 
     @GetMapping("/get/{id}")
-    public PetprofileModel getPetprofileId(@PathVariable("id") UUID id) {
-        return petProfileService.getPetprofileById(id);
+    public ResponseEntity<Response> getPetprofileId(@PathVariable("id") UUID id) {
+        PetprofileModel post = null;
+        Response failureResponse = null;
+
+        try {
+            post = petProfileService.getPetprofileById(id);
+        } catch (Exception e) {
+            failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+        }
+        Map<String, Object> data = new HashMap<>();
+        data.put("petProfile", post);
+        Response response = new Response();
+        response.setData(data);
+        response.setMessage(HttpStatus.ACCEPTED.name());
+        response.setStatus(HttpStatus.ACCEPTED.value());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+
     }
 
     @PutMapping("/update")

@@ -9,7 +9,7 @@ public interface PetProfileService {
     // String saveMovie(Movie movie);
     PetprofileModel savePetProfile(AddPetDTO petprofileModel);
 
-    PetprofileModel getPetprofileById(UUID id);
+    PetprofileModel getPetprofileById(UUID id) throws Exception;
 
     PetprofileModel updatePetprofile(PetprofileModel petprofileModel);
 

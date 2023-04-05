@@ -59,9 +59,19 @@ public class PetProfileServiceImplementation implements PetProfileService {
     }
 
     @Override
-    public PetprofileModel getPetprofileById(UUID id) {
-        PetprofileModel m = petprofileRepository.findById(id).orElse(null);
-        return m;
+    public PetprofileModel getPetprofileById(UUID id) throws Exception {
+        PetprofileModel petDetails = null;
+        try {
+            if (!petprofileRepository.existsById(id)) {
+                throw new Exception("Pet not found");
+            }
+            petDetails = petprofileRepository.findById(id).get();
+            return petDetails;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("No pet profile found for given UUID");
+        }
     }
 
     @Override
