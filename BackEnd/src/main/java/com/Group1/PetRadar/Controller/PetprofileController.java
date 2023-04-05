@@ -3,6 +3,7 @@ package com.Group1.PetRadar.Controller;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.Group1.PetRadar.DTO.pet.AddPetDTO;
 import com.Group1.PetRadar.Model.PetprofileModel;
 import com.Group1.PetRadar.Service.PetProfileService;
@@ -26,11 +30,31 @@ public class PetprofileController {
     PetProfileService petProfileService;
 
     @PostMapping("/create")
-    public ResponseEntity<Response> createPetprofile(@RequestBody AddPetDTO petprofile) throws Exception {
+    public ResponseEntity<Response> createPetprofile(@RequestParam Map<String, String> paramList,
+            @RequestParam("image") MultipartFile file) throws Exception {
         Response failureResponse = null;
         PetprofileModel petDetails = null;
+        AddPetDTO addPetDTO = new AddPetDTO();
+        paramList.forEach((String key, String value) -> {
+            switch (key) {
+                case "petName" -> addPetDTO.setPetName(value);
+                case "petBreed" -> addPetDTO.setPetBreed(value);
+                case "age" -> addPetDTO.setAge(Integer.parseInt(value));
+                case "petCategory" -> addPetDTO.setPetCategory(value);
+                case "gender" -> addPetDTO.setGender(value);
+                case "bio" -> addPetDTO.setBio(value);
+                case "petHeightInCms" -> addPetDTO.setPetHeightInCms(Float.parseFloat(value));
+                case "weightInLbs" -> addPetDTO.setWeightInLbs(Float.parseFloat(value));
+                case "petIdentificationMarks" -> addPetDTO.setPetIdentificationMarks(value);
+                case "allergies" -> addPetDTO.setAllergies(value);
+                case "userId" -> addPetDTO.setUserId(value);
+                // case "image" -> addPetDTO.setImage(value);
+                default -> throw new IllegalStateException("Unexpected value: " + key);
+            }
+        });
+
         try {
-            petDetails = petProfileService.savePetProfile(petprofile);
+            petDetails = petProfileService.savePetProfile(addPetDTO);
         } catch (Exception e) {
             failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
                     HttpStatus.UNAUTHORIZED.name());
