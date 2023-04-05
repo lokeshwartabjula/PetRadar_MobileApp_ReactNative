@@ -32,8 +32,12 @@ public class AddPostDTO {
         return postDate;
     }
 
-    public void setPostDate(Date postDate) {
-        this.postDate = postDate;
+    public void setPostDate(String postDate) {
+        try {
+            this.postDate = new Date(postDate);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getLocation() {
