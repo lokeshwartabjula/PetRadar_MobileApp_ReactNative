@@ -30,16 +30,13 @@ public class PostController {
     @Autowired
     PostService postService;
 
-    // @PostMapping("/create")
-    // public PostModel createPost(@RequestBody AddPostDTO postmodel) throws
-    // Exception {
-    // return postService.savePost(postmodel);
-    // }
     @PostMapping("/create")
     public ResponseEntity<Response> createPost(
             @RequestParam() Map<String, String> paramList,
             @RequestParam("image") MultipartFile file) throws Exception {
         PostModel newPost = null;
+        Response failureResponse = null;
+
         try {
             // PostModelBuilder dummy = PostModel.builder();
             AddPostDTO newPostDTO = new AddPostDTO();
@@ -59,7 +56,9 @@ public class PostController {
             newPost = postService.savePost(newPostDTO);
             // dummy2 = postService.savePost(dummy1);
         } catch (Exception e) {
-            // TODO: handle exception
+            failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
         }
         Response response = new Response();
         Map<String, Object> data = new HashMap<>();
