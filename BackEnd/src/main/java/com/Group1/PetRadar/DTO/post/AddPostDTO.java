@@ -1,12 +1,14 @@
 package com.Group1.PetRadar.DTO.post;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class AddPostDTO {
 
     private String description;
     private Date postDate;
     private String location;
+    private UUID userId;
 
     // Default constructor
     public AddPostDTO() {
@@ -46,5 +48,13 @@ public class AddPostDTO {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public UUID getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = UUID.fromString(userId);
     }
 }

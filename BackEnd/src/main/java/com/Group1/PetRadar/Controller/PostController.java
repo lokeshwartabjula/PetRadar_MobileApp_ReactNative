@@ -45,6 +45,7 @@ public class PostController {
                     case "description" -> newPostDTO.setDescription(value);
                     case "postDate" -> newPostDTO.setPostDate(value);
                     case "location" -> newPostDTO.setLocation(value);
+                    case "userId" -> newPostDTO.setUserId(value);
                     default -> throw new IllegalStateException("Unexpected value: " + key);
                 }
             });

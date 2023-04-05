@@ -8,7 +8,7 @@ import com.Group1.PetRadar.Model.PostModel;
 
 public interface PostService {
 
-    PostModel savePost(AddPostDTO postmodel);
+    PostModel savePost(AddPostDTO postmodel) throws Exception;
 
     PostModel getPostById(UUID id);
 
