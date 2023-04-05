@@ -13,7 +13,7 @@ public class PetprofileModel {
     UUID petId;
     String petName;
     String petBreed;
-    Date petDob;
+    int age;
     String petCategory;
     @Lob
     @Column(name = "image_bytes", columnDefinition = "BLOB")
@@ -49,12 +49,12 @@ public class PetprofileModel {
         this.petBreed = petBreed;
     }
 
-    public Date getPetDob() {
-        return petDob;
+    public int getAge() {
+        return age;
     }
 
-    public void setPetDob(Date petDob) {
-        this.petDob = petDob;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getPetCategory() {

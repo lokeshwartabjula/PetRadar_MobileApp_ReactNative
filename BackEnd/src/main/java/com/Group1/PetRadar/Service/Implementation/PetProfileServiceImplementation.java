@@ -33,7 +33,7 @@ public class PetProfileServiceImplementation implements PetProfileService {
         // Building Pet object
         newPet.setPetName(petDetails.getPetName());
         newPet.setPetBreed(petDetails.getPetBreed());
-        newPet.setPetDob(petDetails.getPetDob());
+        newPet.setAge(petDetails.getAge());
         newPet.setPetCategory(petDetails.getPetCategory());
         newPet.setGender(petDetails.getGender());
         newPet.setBio(petDetails.getBio());
@@ -59,24 +59,32 @@ public class PetProfileServiceImplementation implements PetProfileService {
     }
 
     @Override
-    public PetprofileModel getPetprofileById(UUID id) {
-        PetprofileModel m = petprofileRepository.findById(id).orElse(null);
-        return m;
+    public PetprofileModel getPetprofileById(UUID id) throws Exception {
+        PetprofileModel petDetails = null;
+        try {
+            if (!petprofileRepository.existsById(id)) {
+                throw new Exception("Pet not found");
+            }
+            petDetails = petprofileRepository.findById(id).get();
+            return petDetails;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("No pet profile found for given UUID");
+        }
     }
 
     @Override
-    public PetprofileModel updatePetprofile(PetprofileModel petprofileModel) {
+    public PetprofileModel updatePetprofile(AddPetDTO petprofileModel) {
         PetprofileModel m = petprofileRepository.findById(petprofileModel.getPetId()).orElse(null);
         if (petprofileModel.getPetName() != null)
             m.setPetName(petprofileModel.getPetName());
         if (petprofileModel.getPetBreed() != null)
             m.setPetBreed(petprofileModel.getPetBreed());
-        if (petprofileModel.getPetDob() != null)
-            m.setPetDob(petprofileModel.getPetDob());
+        if (petprofileModel.getAge() > 0)
+            m.setAge(petprofileModel.getAge());
         if (petprofileModel.getPetCategory() != null)
             m.setPetCategory(petprofileModel.getPetCategory());
-        if (petprofileModel.getPetQrImage() != null)
-            m.setPetQrImage(petprofileModel.getPetQrImage());
         if (petprofileModel.getGender() != null)
             m.setGender(petprofileModel.getGender());
         if (petprofileModel.getBio() != null)
