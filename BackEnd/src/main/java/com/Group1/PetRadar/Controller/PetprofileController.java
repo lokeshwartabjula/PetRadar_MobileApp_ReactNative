@@ -1,6 +1,5 @@
 package com.Group1.PetRadar.Controller;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -19,11 +18,6 @@ import com.Group1.PetRadar.DTO.pet.AddPetDTO;
 import com.Group1.PetRadar.Model.PetprofileModel;
 import com.Group1.PetRadar.Service.PetProfileService;
 import com.Group1.PetRadar.protocol.Response;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 @RestController
 @RequestMapping("/petprofile")
