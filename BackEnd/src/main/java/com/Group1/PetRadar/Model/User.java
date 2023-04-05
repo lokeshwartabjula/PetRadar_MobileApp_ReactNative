@@ -38,6 +38,10 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PetprofileModel> pets;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PostModel> posts;
+
 	public UUID getUserId() {
 		return userId;
 	}
@@ -120,6 +124,14 @@ public class User {
 
 	public void setPets(List<PetprofileModel> pets) {
 		this.pets = pets;
+	}
+
+	public List<PostModel> getPosts() {
+		return this.posts;
+	}
+
+	public void setPosts(List<PostModel> posts) {
+		this.posts = posts;
 	}
 
 }

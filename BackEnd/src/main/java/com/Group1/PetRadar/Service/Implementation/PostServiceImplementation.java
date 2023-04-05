@@ -1,15 +1,17 @@
 package com.Group1.PetRadar.Service.Implementation;
 
-import com.Group1.PetRadar.DTO.post.AddPostDTO;
-import com.Group1.PetRadar.DTO.post.UdpatePostDTO;
-import com.Group1.PetRadar.Model.PostModel;
-import com.Group1.PetRadar.Repository.PostRepository;
-import com.Group1.PetRadar.Service.PostService;
-
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.Group1.PetRadar.DTO.post.AddPostDTO;
+import com.Group1.PetRadar.DTO.post.UdpatePostDTO;
+import com.Group1.PetRadar.Model.PostModel;
+import com.Group1.PetRadar.Model.User;
+import com.Group1.PetRadar.Repository.PostRepository;
+import com.Group1.PetRadar.Service.PostService;
+import com.Group1.PetRadar.Service.UserService;
 
 @Service
 public class PostServiceImplementation implements PostService {
@@ -17,12 +19,25 @@ public class PostServiceImplementation implements PostService {
     @Autowired
     PostRepository postRepository;
 
+    @Autowired
+    UserService userService;
+
     @Override
-    public PostModel savePost(AddPostDTO postmodel) {
+    public PostModel savePost(AddPostDTO postmodel) throws Exception {
         PostModel newPost = new PostModel();
+        User user = null;
+        try {
+            String userId = postmodel.getUserId().toString();
+            user = userService.findById(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Please enter valid user ID");
+        }
+
         newPost.setDescription(postmodel.getDescription());
         newPost.setLocation(postmodel.getLocation());
         newPost.setPostDate(postmodel.getPostDate());
+        newPost.setUser(user);
         return postRepository.save(newPost);
     }
 

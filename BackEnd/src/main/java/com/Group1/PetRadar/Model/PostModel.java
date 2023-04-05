@@ -3,13 +3,22 @@ package com.Group1.PetRadar.Model;
 import java.util.Date;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
+import lombok.NoArgsConstructor;
 
 @Entity()
+@Transactional
+@NoArgsConstructor
+@Table(name = "post")
 public class PostModel {
 
         @Id()
@@ -20,6 +29,15 @@ public class PostModel {
         String description;
         Date postDate;
         String location;
+
+        @JsonIgnore
+        @ManyToOne
+        @JoinColumn(name = "user_id", referencedColumnName = "userId")
+        private User user;
+
+        public void setPostId(UUID postId) {
+                this.postId = postId;
+        }
 
         public UUID getPostId() {
                 return postId;
@@ -47,6 +65,10 @@ public class PostModel {
 
         public void setLocation(String location) {
                 this.location = location;
+        }
+
+        public void setUser(User user) {
+                this.user = user;
         }
 
 }
