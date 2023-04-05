@@ -7,7 +7,7 @@ public class AddPetDTO {
 
     private String petName;
     private String petBreed;
-    private Date petDob;
+    private int age;
     private String petCategory;
     private String gender;
     private String bio;
@@ -20,12 +20,12 @@ public class AddPetDTO {
     public AddPetDTO() {
     }
 
-    public AddPetDTO(String petName, String petBreed, Date petDob, String petCategory,
+    public AddPetDTO(String petName, String petBreed, int age, String petCategory,
             String gender, String bio, Float petHeightInCms, Float weightInLbs, String petIdentificationMarks,
             String allergies, String userId) {
         this.petName = petName;
         this.petBreed = petBreed;
-        this.petDob = petDob;
+        this.age = age;
         this.petCategory = petCategory;
         this.gender = gender;
         this.bio = bio;
@@ -54,12 +54,12 @@ public class AddPetDTO {
         this.petBreed = petBreed;
     }
 
-    public Date getPetDob() {
-        return petDob;
+    public int getAge() {
+        return age;
     }
 
-    public void setPetDob(Date petDob) {
-        this.petDob = petDob;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getPetCategory() {

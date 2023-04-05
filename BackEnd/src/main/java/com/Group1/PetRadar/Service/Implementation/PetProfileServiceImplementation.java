@@ -33,7 +33,7 @@ public class PetProfileServiceImplementation implements PetProfileService {
         // Building Pet object
         newPet.setPetName(petDetails.getPetName());
         newPet.setPetBreed(petDetails.getPetBreed());
-        newPet.setPetDob(petDetails.getPetDob());
+        newPet.setAge(petDetails.getAge());
         newPet.setPetCategory(petDetails.getPetCategory());
         newPet.setGender(petDetails.getGender());
         newPet.setBio(petDetails.getBio());
@@ -71,8 +71,8 @@ public class PetProfileServiceImplementation implements PetProfileService {
             m.setPetName(petprofileModel.getPetName());
         if (petprofileModel.getPetBreed() != null)
             m.setPetBreed(petprofileModel.getPetBreed());
-        if (petprofileModel.getPetDob() != null)
-            m.setPetDob(petprofileModel.getPetDob());
+        if (petprofileModel.getAge() > 0)
+            m.setAge(petprofileModel.getAge());
         if (petprofileModel.getPetCategory() != null)
             m.setPetCategory(petprofileModel.getPetCategory());
         if (petprofileModel.getPetQrImage() != null)
