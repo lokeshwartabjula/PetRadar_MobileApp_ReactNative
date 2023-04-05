@@ -48,7 +48,7 @@ public class PostServiceImplementation implements PostService {
     @Override
     public String deletePostById(UUID id) {
         postRepository.deleteById(id);
-        return "Petprofile deleted!";
+        return "post deleted!";
     }
 
 }

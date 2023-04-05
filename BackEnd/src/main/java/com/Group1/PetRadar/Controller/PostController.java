@@ -136,8 +136,23 @@ public class PostController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deletePostById(@PathVariable("id") UUID id) {
-        return postService.deletePostById(id);
+    public ResponseEntity<Response> deletePostById(@PathVariable("id") UUID id) {
+        Response failureResponse = null;
+
+        try {
+            postService.deletePostById(id);
+            Response response = new Response();
+            Map<String, Object> data = new HashMap<>();
+            data.put("message", "Post deleted succesfully");
+            response.setData(data);
+            response.setMessage(HttpStatus.ACCEPTED.name());
+            response.setStatus(HttpStatus.ACCEPTED.value());
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+        } catch (Exception e) {
+            failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+        }
     }
 
 }
