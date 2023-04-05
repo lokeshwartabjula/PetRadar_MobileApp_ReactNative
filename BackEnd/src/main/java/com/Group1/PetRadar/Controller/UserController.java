@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
 import com.Group1.PetRadar.DTO.user.updateUserDTO;
 import com.Group1.PetRadar.Model.PetprofileModel;
+import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Service.UserService;
 import com.Group1.PetRadar.protocol.Response;
@@ -60,6 +61,28 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
+	@GetMapping("/allPost")
+	public ResponseEntity<Response> getAllPostsByUserId(@RequestParam(name = "userId") String id) {
+
+		System.out.println(id);
+		Response failureResponse = null;
+		List<PostModel> posts = null;
+		try {
+			posts = userService.findPostsByUserId(UUID.fromString(id));
+		} catch (Exception e) {
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put("posts", posts);
+		Response response = new Response();
+		response.setData(data);
+		response.setMessage(HttpStatus.ACCEPTED.name());
+		response.setStatus(HttpStatus.ACCEPTED.value());
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Response> getUserById(@PathVariable String id) {
 		Response failureResponse = null;
@@ -81,13 +104,14 @@ public class UserController {
 	}
 
 	@PostMapping("/googleLogin")
-	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user, @RequestParam Boolean isLogin) throws Exception {
+	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user, @RequestParam Boolean isLogin)
+			throws Exception {
 		Boolean isLoginSuccessful = false;
 		Response failureResponse = null;
 
-//		Boolean isLogin = isLoginFlow=="true"?true:false;
+		// Boolean isLogin = isLoginFlow=="true"?true:false;
 		try {
-			isLoginSuccessful = userService.googleLogin(user,isLogin);
+			isLoginSuccessful = userService.googleLogin(user, isLogin);
 		} catch (Exception e) {
 			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
 					HttpStatus.UNAUTHORIZED.name());
@@ -107,11 +131,11 @@ public class UserController {
 			response.setData(data);
 			response.setMessage(HttpStatus.ACCEPTED.name());
 			response.setStatus(HttpStatus.ACCEPTED.value());
-		}
-		else
+		} else
 			throw new Exception("Login is not successful");
 
-//		Response response = new Response(token, HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
+		// Response response = new Response(token, HttpStatus.ACCEPTED.value(),
+		// HttpStatus.ACCEPTED.name());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 

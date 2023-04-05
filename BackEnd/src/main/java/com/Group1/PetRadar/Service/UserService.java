@@ -7,6 +7,7 @@ import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
 import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
 import com.Group1.PetRadar.DTO.user.updateUserDTO;
 import com.Group1.PetRadar.Model.PetprofileModel;
+import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Model.User;
 
 public interface UserService {
@@ -36,4 +37,6 @@ public interface UserService {
 	Boolean registerAppUser(AuthReqDTO authReqDTO) throws Exception;
 
 	List<PetprofileModel> findPetsByUserId(UUID id) throws Exception;
+
+	List<PostModel> findPostsByUserId(UUID id) throws Exception;
 }

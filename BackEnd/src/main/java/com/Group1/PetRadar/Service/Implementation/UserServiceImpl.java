@@ -22,6 +22,7 @@ import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
 import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
 import com.Group1.PetRadar.DTO.user.updateUserDTO;
 import com.Group1.PetRadar.Model.PetprofileModel;
+import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.UserRepository;
 import com.Group1.PetRadar.Service.UserService;
@@ -131,7 +132,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean googleLogin(User user,Boolean isLogin) throws Exception {
+    public Boolean googleLogin(User user, Boolean isLogin) throws Exception {
         // TODO Auto-generated method stub
         Boolean isUserFound = false;
         Boolean isGoogleUser = false;
@@ -148,21 +149,21 @@ public class UserServiceImpl implements UserService {
         } catch (EmptyResultDataAccessException e) {
             isUserFound = false;
         }
-        if (foundUser.getEmail()!=null)
+        if (foundUser.getEmail() != null)
             isUserFound = true;
 
-        if(!isUserFound&&isLogin)
+        if (!isUserFound && isLogin)
             throw new Exception("You have not registered through google yet, Please sign up first and try again");
 
-        if (foundUser.getEmail()!=null&&foundUser.getPassword()==null)
+        if (foundUser.getEmail() != null && foundUser.getPassword() == null)
             isGoogleUser = true;
         if (!isUserFound && !isGoogleLoginFlow) {
             user.setPassword(null);
             saveGoogleUser(user);
             return true;
-        } else if(isUserFound && isGoogleUser && !isGoogleLoginFlow) {
+        } else if (isUserFound && isGoogleUser && !isGoogleLoginFlow) {
             throw new Exception("You have already signed up as a google User");
-        }else {
+        } else {
             if (isGoogleUser) // if user has the password as dummy return token
                 return true;
             else // else if user doesnt have the password as dummy, return exception stating that
@@ -292,6 +293,17 @@ public class UserServiceImpl implements UserService {
             User user = findById(userId.toString());
             System.out.println(user.getPets());
             return user.getPets();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Exception occurred while retrieving pets");
+        }
+    }
+
+    public List<PostModel> findPostsByUserId(UUID userId) throws Exception {
+        try {
+            User user = findById(userId.toString());
+            System.out.println(user.getPosts());
+            return user.getPosts();
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Exception occurred while retrieving pets");
