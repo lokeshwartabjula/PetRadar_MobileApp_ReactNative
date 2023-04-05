@@ -75,7 +75,7 @@ public class PetProfileServiceImplementation implements PetProfileService {
     }
 
     @Override
-    public PetprofileModel updatePetprofile(PetprofileModel petprofileModel) {
+    public PetprofileModel updatePetprofile(AddPetDTO petprofileModel) {
         PetprofileModel m = petprofileRepository.findById(petprofileModel.getPetId()).orElse(null);
         if (petprofileModel.getPetName() != null)
             m.setPetName(petprofileModel.getPetName());
@@ -85,8 +85,6 @@ public class PetProfileServiceImplementation implements PetProfileService {
             m.setAge(petprofileModel.getAge());
         if (petprofileModel.getPetCategory() != null)
             m.setPetCategory(petprofileModel.getPetCategory());
-        if (petprofileModel.getPetQrImage() != null)
-            m.setPetQrImage(petprofileModel.getPetQrImage());
         if (petprofileModel.getGender() != null)
             m.setGender(petprofileModel.getGender());
         if (petprofileModel.getBio() != null)

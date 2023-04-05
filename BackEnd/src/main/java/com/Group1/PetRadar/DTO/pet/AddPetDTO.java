@@ -5,6 +5,7 @@ import java.util.UUID;
 
 public class AddPetDTO {
 
+    private UUID petId;
     private String petName;
     private String petBreed;
     private int age;
@@ -20,23 +21,15 @@ public class AddPetDTO {
     public AddPetDTO() {
     }
 
-    public AddPetDTO(String petName, String petBreed, int age, String petCategory,
-            String gender, String bio, Float petHeightInCms, Float weightInLbs, String petIdentificationMarks,
-            String allergies, String userId) {
-        this.petName = petName;
-        this.petBreed = petBreed;
-        this.age = age;
-        this.petCategory = petCategory;
-        this.gender = gender;
-        this.bio = bio;
-        this.petHeightInCms = petHeightInCms;
-        this.weightInLbs = weightInLbs;
-        this.petIdentificationMarks = petIdentificationMarks;
-        this.allergies = allergies;
-        this.userId = userId;
+    // Getters and setters
+
+    public UUID getPetId() {
+        return this.petId;
     }
 
-    // Getters and setters
+    public void setPetId(String petId) {
+        this.petId = UUID.fromString(petId);
+    }
 
     public String getPetName() {
         return petName;
