@@ -32,7 +32,7 @@ public class PostController {
             @RequestParam("image") MultipartFile file) throws Exception {
         PostModel newPost = null;
         try {
-//            PostModelBuilder dummy = PostModel.builder();
+            // PostModelBuilder dummy = PostModel.builder();
             AddPostDTO newPostDTO = new AddPostDTO();
             paramList.forEach((String key, String value) -> {
                 switch (key) {
@@ -43,18 +43,17 @@ public class PostController {
                 }
             });
 
-//            newPostDTO.setImage(file);
-//            dummy1 = dummy.build();
-//            System.out.println("================>" + dummy1.getDescription());
+            // newPostDTO.setImage(file);
+            // dummy1 = dummy.build();
+            // System.out.println("================>" + dummy1.getDescription());
 
             newPost = postService.savePost(newPostDTO);
-//            dummy2 = postService.savePost(dummy1);
+            // dummy2 = postService.savePost(dummy1);
         } catch (Exception e) {
             // TODO: handle exception
         }
         Response response = new Response();
         Map<String, Object> data = new HashMap<>();
-        data.put("token", "token");
         data.put("post", newPost);
         response.setData(data);
         response.setMessage(HttpStatus.ACCEPTED.name());
@@ -62,9 +61,25 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
-    @GetMapping("/get/{id}")
-    public PostModel getPostById(@PathVariable("id") UUID id) {
-        return postService.getPostById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Response> getPostById(@PathVariable("id") UUID id) {
+        PostModel post = null;
+        Response failureResponse = null;
+
+        try {
+            post = postService.getPostById(id);
+        } catch (Exception e) {
+            failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+        }
+        Response response = new Response();
+        Map<String, Object> data = new HashMap<>();
+        data.put("post", post);
+        response.setData(data);
+        response.setMessage(HttpStatus.ACCEPTED.name());
+        response.setStatus(HttpStatus.ACCEPTED.value());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
     @PutMapping("/update")
