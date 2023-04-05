@@ -1,17 +1,10 @@
 package com.Group1.PetRadar.Service.Implementation;
 
-import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
-import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
-import com.Group1.PetRadar.DTO.user.updateUserDTO;
-import com.Group1.PetRadar.Model.User;
-import com.Group1.PetRadar.Repository.UserRepository;
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
-import com.Group1.PetRadar.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -24,6 +17,14 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
+
+import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
+import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
+import com.Group1.PetRadar.DTO.user.updateUserDTO;
+import com.Group1.PetRadar.Model.PetprofileModel;
+import com.Group1.PetRadar.Model.User;
+import com.Group1.PetRadar.Repository.UserRepository;
+import com.Group1.PetRadar.Service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserService {
         UserEncode.setProfileUrl(user.getProfileUrl());
         return userRepository.save(UserEncode);
     }
-    
+
     @Override
     public User saveUser(User user) {
         User UserEncode = new User();
@@ -149,9 +150,9 @@ public class UserServiceImpl implements UserService {
         }
         if (foundUser.getEmail()!=null)
             isUserFound = true;
-        
+
         if(!isUserFound&&isLogin)
-        	throw new Exception("You have not registered through google yet, Please sign up first and try again");
+            throw new Exception("You have not registered through google yet, Please sign up first and try again");
 
         if (foundUser.getEmail()!=null&&foundUser.getPassword()==null)
             isGoogleUser = true;
@@ -159,10 +160,9 @@ public class UserServiceImpl implements UserService {
             user.setPassword(null);
             saveGoogleUser(user);
             return true;
-        } else if(isUserFound && isGoogleUser && !isGoogleLoginFlow){
-        	throw new Exception("You have already signed up as a google User");
-        }else
-        {
+        } else if(isUserFound && isGoogleUser && !isGoogleLoginFlow) {
+            throw new Exception("You have already signed up as a google User");
+        }else {
             if (isGoogleUser) // if user has the password as dummy return token
                 return true;
             else // else if user doesnt have the password as dummy, return exception stating that
@@ -287,6 +287,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-	
+    public List<PetprofileModel> findPetsByUserId(UUID userId) throws Exception {
+        try {
+            User user = findById(userId.toString());
+            System.out.println(user.getPets());
+            return user.getPets();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Exception occurred while retrieving pets");
+        }
+    }
 
 }
