@@ -1,12 +1,19 @@
 package com.Group1.PetRadar.Model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -31,12 +38,39 @@ public class User {
 	private String pincode;
 	private Long phoneNumber;
 	private String ImageUrl;
+
 	@JsonIgnore
 	private String password;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	private Set<PetprofileModel> pets = new HashSet<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PetprofileModel> pets;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PostModel> posts;
+
+	@Column(precision = 10, scale = 6)
+	private BigDecimal latitude;
+
+	@Column(precision = 10, scale = 6)
+	private BigDecimal longitude;
+
+	public BigDecimal getLatitude() {
+		return this.latitude;
+	}
+
+	public void setLatitude(BigDecimal latitude) {
+		this.latitude = latitude;
+	}
+
+	public BigDecimal getLongitude() {
+		return this.longitude;
+	}
+
+	public void setLongitude(BigDecimal longitude) {
+		this.longitude = longitude;
+	}
 
 	public UUID getUserId() {
 		return userId;
@@ -114,19 +148,23 @@ public class User {
 		this.password = password;
 	}
 
-	public Set<PetprofileModel> getPets() {
+	public List<PetprofileModel> getPets() {
 		return pets;
 	}
 
-	public void setPets(Set<PetprofileModel> pets) {
+	public void setPets(List<PetprofileModel> pets) {
 		this.pets = pets;
-	}
-
-	public String getImageUrl() {
-		return ImageUrl;
 	}
 
 	public void setImageUrl(String imagexUrl) {
 		ImageUrl = imagexUrl;
+	}
+
+	public List<PostModel> getPosts() {
+		return this.posts;
+	}
+
+	public void setPosts(List<PostModel> posts) {
+		this.posts = posts;
 	}
 }

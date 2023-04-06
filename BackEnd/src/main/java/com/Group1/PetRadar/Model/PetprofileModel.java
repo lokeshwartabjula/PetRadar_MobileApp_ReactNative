@@ -1,14 +1,7 @@
 package com.Group1.PetRadar.Model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,12 +11,13 @@ public class PetprofileModel {
     @GeneratedValue(strategy = GenerationType.UUID)
     @JoinColumn(name = "id")
     UUID petId;
-
     String petName;
     String petBreed;
-    Date petDob;
+    int age;
     String petCategory;
-    Integer petQrImageId;
+    @Lob
+    @Column(name = "image_bytes", columnDefinition = "BLOB")
+    byte[] petQrImage;
     String gender;
     String bio;
     Float petHeightInCms;
@@ -39,7 +33,8 @@ public class PetprofileModel {
         ImageUrl = imagexUrl;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
 
@@ -63,12 +58,12 @@ public class PetprofileModel {
         this.petBreed = petBreed;
     }
 
-    public Date getPetDob() {
-        return petDob;
+    public int getAge() {
+        return age;
     }
 
-    public void setPetDob(Date petDob) {
-        this.petDob = petDob;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getPetCategory() {
@@ -79,12 +74,12 @@ public class PetprofileModel {
         this.petCategory = petCategory;
     }
 
-    public Integer getPetQrImageId() {
-        return petQrImageId;
+    public byte[] getPetQrImage() {
+        return petQrImage;
     }
 
-    public void setPetQrImageId(int petQrImageId) {
-        this.petQrImageId = petQrImageId;
+    public byte[] setPetQrImage(byte[] petQrImage) {
+        return this.petQrImage = petQrImage;
     }
 
     public String getGender() {
@@ -142,5 +137,4 @@ public class PetprofileModel {
     public void setUser(User user) {
         this.user = user;
     }
-
 }

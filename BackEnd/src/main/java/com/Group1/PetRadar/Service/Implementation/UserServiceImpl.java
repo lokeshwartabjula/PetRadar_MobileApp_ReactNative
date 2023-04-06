@@ -2,6 +2,7 @@ package com.Group1.PetRadar.Service.Implementation;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
 import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
 import com.Group1.PetRadar.DTO.user.updateUserDTO;
+import com.Group1.PetRadar.Model.PetprofileModel;
+import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.ImageRepository;
 import com.Group1.PetRadar.Repository.UserRepository;
@@ -66,6 +69,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User saveGoogleUser(User user) {
+        User UserEncode = new User();
+        UserEncode.setEmail(user.getEmail());
+        UserEncode.setPassword(null);
+        UserEncode.setFirstName(user.getFirstName());
+        UserEncode.setLastName(user.getFirstName());
+        UserEncode.setProfileUrl(user.getProfileUrl());
+        return userRepository.save(UserEncode);
+    }
+
+    @Override
     public User saveUser(User user) {
         User UserEncode = new User();
         UserEncode.setEmail(user.getEmail());
@@ -105,6 +119,8 @@ public class UserServiceImpl implements UserService {
             user.setPincode(userDetails.getPincode());
             user.setPhoneNumber(userDetails.getMobileNumber());
             user.setImageUrl(awsService.save(userDetails.getFile()));
+            user.setLatitude(userDetails.getLatitude());
+            user.setLongitude(userDetails.getLongitude());
             userRepository.save(user);
 
             return user;
@@ -115,13 +131,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean googleLogin(User user) throws Exception {
+    public Boolean googleLogin(User user, Boolean isLogin) throws Exception {
         // TODO Auto-generated method stub
         Boolean isUserFound = false;
         Boolean isGoogleUser = false;
+        Boolean isGoogleLoginFlow = isLogin;
 
         // check if user is in the db
-        String ifUserExistsQuery = "select * from user_model where email = :email";
+        String ifUserExistsQuery = "select * from user where email = :email";
         MapSqlParameterSource map = new MapSqlParameterSource();
         map.addValue("email", user.getEmail());
         User foundUser = new User();
@@ -131,19 +148,20 @@ public class UserServiceImpl implements UserService {
         } catch (EmptyResultDataAccessException e) {
             isUserFound = false;
         }
-        if (foundUser.getUserId().toString().length() > 0)
+        if (foundUser.getEmail() != null)
             isUserFound = true;
 
-        // check if password is dummy
-        String dummyPassword = passwordEncoder.encode("dummy");
-        if (foundUser.getProfileUrl() != null)
+        if (!isUserFound && isLogin)
+            throw new Exception("You have not registered through google yet, Please sign up first and try again");
+
+        if (foundUser.getEmail() != null && foundUser.getPassword() == null)
             isGoogleUser = true;
-        // If user is not in the db save user
-        if (!isUserFound) {
-            // save user
-            user.setPassword("dummy");
-            saveUser(user);
+        if (!isUserFound && !isGoogleLoginFlow) {
+            user.setPassword(null);
+            saveGoogleUser(user);
             return true;
+        } else if (isUserFound && isGoogleUser && !isGoogleLoginFlow) {
+            throw new Exception("You have already signed up as a google User");
         } else {
             if (isGoogleUser) // if user has the password as dummy return token
                 return true;
@@ -173,10 +191,10 @@ public class UserServiceImpl implements UserService {
             isUserFound = false;
         }
 
-        if (foundUser.getUserId() != null && foundUser.getUserId().toString().length() > 0)
+        if (foundUser.getEmail() != null && foundUser.getEmail().toString().length() > 0)
             isUserFound = true;
 
-        if (foundUser.getProfileUrl() != null)
+        if (foundUser.getPassword() == null)
             isGoogleUser = true;
 
         if (isGoogleUser) {
@@ -220,7 +238,7 @@ public class UserServiceImpl implements UserService {
             isUserFound = false;
         }
 
-        if (foundUser.getUserId() != null && foundUser.getUserId().toString().length() > 0)
+        if (foundUser.getEmail() != null)
             isUserFound = true;
 
         if (foundUser.getProfileUrl() != null)
@@ -252,6 +270,7 @@ public class UserServiceImpl implements UserService {
                 throw new Exception("User not found");
             }
             user = userRepository.findById(UUID.fromString(id)).get();
+            System.out.println(user.getLatitude());
             return user;
         } catch (Exception e) {
             e.printStackTrace();
@@ -266,6 +285,28 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Unable to Delete the user");
+        }
+    }
+
+    public List<PetprofileModel> findPetsByUserId(UUID userId) throws Exception {
+        try {
+            User user = findById(userId.toString());
+            System.out.println(user.getPets());
+            return user.getPets();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Exception occurred while retrieving pets");
+        }
+    }
+
+    public List<PostModel> findPostsByUserId(UUID userId) throws Exception {
+        try {
+            User user = findById(userId.toString());
+            System.out.println(user.getPosts());
+            return user.getPosts();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Exception occurred while retrieving pets");
         }
     }
 

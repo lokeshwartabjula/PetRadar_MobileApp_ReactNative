@@ -5,40 +5,31 @@ import java.util.UUID;
 
 public class AddPetDTO {
 
+    private UUID petId;
     private String petName;
     private String petBreed;
-    private Date petDob;
+    private int age;
     private String petCategory;
-    private Integer petQrImageId;
     private String gender;
     private String bio;
     private Float petHeightInCms;
     private Float weightInLbs;
     private String petIdentificationMarks;
     private String allergies;
-    private UUID userId;
+    private String userId;
 
     public AddPetDTO() {
     }
 
-    public AddPetDTO(String petName, String petBreed, Date petDob, String petCategory, Integer petQrImageId,
-            String gender, String bio, Float petHeightInCms, Float weightInLbs, String petIdentificationMarks,
-            String allergies, UUID userId) {
-        this.petName = petName;
-        this.petBreed = petBreed;
-        this.petDob = petDob;
-        this.petCategory = petCategory;
-        this.petQrImageId = petQrImageId;
-        this.gender = gender;
-        this.bio = bio;
-        this.petHeightInCms = petHeightInCms;
-        this.weightInLbs = weightInLbs;
-        this.petIdentificationMarks = petIdentificationMarks;
-        this.allergies = allergies;
-        this.userId = userId;
+    // Getters and setters
+
+    public UUID getPetId() {
+        return this.petId;
     }
 
-    // Getters and setters
+    public void setPetId(String petId) {
+        this.petId = UUID.fromString(petId);
+    }
 
     public String getPetName() {
         return petName;
@@ -56,12 +47,12 @@ public class AddPetDTO {
         this.petBreed = petBreed;
     }
 
-    public Date getPetDob() {
-        return petDob;
+    public int getAge() {
+        return age;
     }
 
-    public void setPetDob(Date petDob) {
-        this.petDob = petDob;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getPetCategory() {
@@ -70,14 +61,6 @@ public class AddPetDTO {
 
     public void setPetCategory(String petCategory) {
         this.petCategory = petCategory;
-    }
-
-    public Integer getPetQrImageId() {
-        return this.petQrImageId;
-    }
-
-    public void setPetQrImageId(Integer petQrImageId) {
-        this.petQrImageId = petQrImageId;
     }
 
     public String getGender() {
@@ -129,10 +112,10 @@ public class AddPetDTO {
     }
 
     public UUID getUserId() {
-        return this.userId;
+        return UUID.fromString(this.userId);
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

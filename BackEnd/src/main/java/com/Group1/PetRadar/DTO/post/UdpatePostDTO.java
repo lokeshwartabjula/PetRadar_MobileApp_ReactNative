@@ -1,21 +1,20 @@
 package com.Group1.PetRadar.DTO.post;
 
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 import java.util.UUID;
 
-import com.Group1.PetRadar.Model.Location;
-
-public class AddPostDTO extends Location {
+@NoArgsConstructor
+public class UdpatePostDTO {
 
     private String description;
     private Date postDate;
-    private UUID userId;
+    private String location;
 
-    // Default constructor
-    public AddPostDTO() {
-    }
+    private String id;
 
-    // Getters and setters
+
     public String getDescription() {
         return description;
     }
@@ -36,11 +35,22 @@ public class AddPostDTO extends Location {
         }
     }
 
-    public UUID getUserId() {
-        return this.userId;
+    public String getLocation() {
+        return location;
     }
 
-    public void setUserId(String userId) {
-        this.userId = UUID.fromString(userId);
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public UUID getId() {
+        return UUID.fromString(id);
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
+
+
+

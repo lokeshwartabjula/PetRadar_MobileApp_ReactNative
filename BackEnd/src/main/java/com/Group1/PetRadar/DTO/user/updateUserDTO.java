@@ -2,7 +2,9 @@ package com.Group1.PetRadar.DTO.user;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class updateUserDTO {
+import com.Group1.PetRadar.Model.Location;
+
+public class updateUserDTO extends Location {
 
     private String firstName;
     private String lastName;

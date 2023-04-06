@@ -1,22 +1,32 @@
 package com.Group1.PetRadar.Controller;
 
-import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
-import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
-import com.Group1.PetRadar.DTO.user.updateUserDTO;
-import com.Group1.PetRadar.utils.FileUpload;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
+import com.Group1.PetRadar.DTO.user.updateUserDTO;
+import com.Group1.PetRadar.Model.PetprofileModel;
+import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Service.UserService;
 import com.Group1.PetRadar.protocol.Response;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -28,6 +38,50 @@ public class UserController {
 	@GetMapping("/message")
 	public String home() {
 		return "Never give up!!";
+	}
+
+	@GetMapping("/allPet")
+	public ResponseEntity<Response> getAllPetsByUserId(@RequestParam(name = "userId") String id) {
+
+		System.out.println(id);
+		Response failureResponse = null;
+		List<PetprofileModel> pets = null;
+		try {
+			pets = userService.findPetsByUserId(UUID.fromString(id));
+		} catch (Exception e) {
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put("pets", pets);
+		Response response = new Response();
+		response.setData(data);
+		response.setMessage(HttpStatus.ACCEPTED.name());
+		response.setStatus(HttpStatus.ACCEPTED.value());
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+	}
+
+	@GetMapping("/allPost")
+	public ResponseEntity<Response> getAllPostsByUserId(@RequestParam(name = "userId") String id) {
+
+		System.out.println(id);
+		Response failureResponse = null;
+		List<PostModel> posts = null;
+		try {
+			posts = userService.findPostsByUserId(UUID.fromString(id));
+		} catch (Exception e) {
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put("posts", posts);
+		Response response = new Response();
+		response.setData(data);
+		response.setMessage(HttpStatus.ACCEPTED.name());
+		response.setStatus(HttpStatus.ACCEPTED.value());
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
 	@GetMapping("/{id}")
@@ -51,12 +105,14 @@ public class UserController {
 	}
 
 	@PostMapping("/googleLogin")
-	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user) throws Exception {
+	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user, @RequestParam Boolean isLogin)
+			throws Exception {
 		Boolean isLoginSuccessful = false;
 		Response failureResponse = null;
 
+		// Boolean isLogin = isLoginFlow=="true"?true:false;
 		try {
-			isLoginSuccessful = userService.googleLogin(user);
+			isLoginSuccessful = userService.googleLogin(user, isLogin);
 		} catch (Exception e) {
 			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
 					HttpStatus.UNAUTHORIZED.name());
@@ -64,12 +120,23 @@ public class UserController {
 		}
 
 		String token = null;
-		if (isLoginSuccessful)
+		Response response = new Response();
+
+		if (isLoginSuccessful) {
+			User registeredUser = userService.getUserEmail(user.getEmail());
 			token = userService.generateToken(user.getEmail());
-		else
+			Map<String, Object> data = new HashMap<>();
+			data.put("token", token);
+			data.put("user", registeredUser);
+
+			response.setData(data);
+			response.setMessage(HttpStatus.ACCEPTED.name());
+			response.setStatus(HttpStatus.ACCEPTED.value());
+		} else
 			throw new Exception("Login is not successful");
 
-		Response response = new Response(token, HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
+		// Response response = new Response(token, HttpStatus.ACCEPTED.value(),
+		// HttpStatus.ACCEPTED.name());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
@@ -148,10 +215,13 @@ public class UserController {
 			@RequestParam("pincode") String pincode,
 			@RequestParam("mobileNumber") String mobileNumber,
 			@RequestParam("userId") String userId,
-			@RequestParam("imgType") String imgType,
-			@RequestParam("image") MultipartFile file) throws IOException {
+			@RequestParam("latitude") String latitude,
+			@RequestParam("longitude") String longitude,
+			@RequestParam(name = "image", required = false) MultipartFile file) {
 
-		System.out.println(file.getOriginalFilename());
+		System.out.println(firstName + lastName + address + city + pincode + mobileNumber + userId);
+		// System.out.println(file.getOriginalFilename());
+
 		updateUserDTO updatedUserDetails = new updateUserDTO();
 		updatedUserDetails.setFirstName(firstName);
 		updatedUserDetails.setLastName(lastName);
@@ -159,8 +229,9 @@ public class UserController {
 		updatedUserDetails.setCity(city);
 		updatedUserDetails.setPincode(pincode);
 		updatedUserDetails.setPhoneNumber(Long.parseLong(mobileNumber));
-		updatedUserDetails.setImgType(imgType);
 		updatedUserDetails.setFile(file);
+		updatedUserDetails.setLatitude(new BigDecimal(latitude));
+		updatedUserDetails.setLongitude(new BigDecimal(longitude));
 
 		Response failureResponse = null;
 		User user = null;
