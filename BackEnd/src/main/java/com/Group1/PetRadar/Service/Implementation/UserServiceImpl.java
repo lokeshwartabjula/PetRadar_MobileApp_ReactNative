@@ -273,6 +273,7 @@ public class UserServiceImpl implements UserService {
                 throw new Exception("User not found");
             }
             user = userRepository.findById(UUID.fromString(id)).get();
+            System.out.println(user.getLatitude());
             return user;
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,11 +1,13 @@
 package com.Group1.PetRadar.Model;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Transactional
 @NoArgsConstructor
 @Table(name = "user")
-public class User extends Location {
+public class User {
 
 	@Id()
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -46,6 +48,28 @@ public class User extends Location {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PostModel> posts;
+
+	@Column(precision = 10, scale = 6)
+	private BigDecimal latitude;
+
+	@Column(precision = 10, scale = 6)
+	private BigDecimal longitude;
+
+	public BigDecimal getLatitude() {
+		return this.latitude;
+	}
+
+	public void setLatitude(BigDecimal latitude) {
+		this.latitude = latitude;
+	}
+
+	public BigDecimal getLongitude() {
+		return this.longitude;
+	}
+
+	public void setLongitude(BigDecimal longitude) {
+		this.longitude = longitude;
+	}
 
 	public UUID getUserId() {
 		return userId;

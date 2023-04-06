@@ -1,5 +1,6 @@
 package com.Group1.PetRadar.Controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -44,8 +45,9 @@ public class PostController {
                 switch (key) {
                     case "description" -> newPostDTO.setDescription(value);
                     case "postDate" -> newPostDTO.setPostDate(value);
-                    case "location" -> newPostDTO.setLocation(value);
                     case "userId" -> newPostDTO.setUserId(value);
+                    case "latitude" -> newPostDTO.setLatitude(new BigDecimal(value));
+                    case "longitude" -> newPostDTO.setLongitude(new BigDecimal(value));
                     default -> throw new IllegalStateException("Unexpected value: " + key);
                 }
             });

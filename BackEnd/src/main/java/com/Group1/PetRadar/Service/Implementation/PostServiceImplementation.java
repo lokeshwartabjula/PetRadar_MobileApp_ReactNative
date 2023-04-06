@@ -35,8 +35,9 @@ public class PostServiceImplementation implements PostService {
         }
 
         newPost.setDescription(postmodel.getDescription());
-        newPost.setLocation(postmodel.getLocation());
         newPost.setPostDate(postmodel.getPostDate());
+        newPost.setLatitude(postmodel.getLatitude());
+        newPost.setLongitude(postmodel.getLongitude());
         newPost.setUser(user);
         return postRepository.save(newPost);
     }
@@ -54,8 +55,6 @@ public class PostServiceImplementation implements PostService {
             existingpost.setPostDate(postmodel.getPostDate());
         if (postmodel.getDescription() != null)
             existingpost.setDescription(postmodel.getDescription());
-        if (postmodel.getLocation() != null)
-            existingpost.setLocation(postmodel.getLocation());
 
         return postRepository.save(existingpost);
     }

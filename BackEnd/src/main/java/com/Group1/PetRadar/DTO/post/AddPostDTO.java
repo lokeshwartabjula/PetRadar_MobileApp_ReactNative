@@ -3,22 +3,16 @@ package com.Group1.PetRadar.DTO.post;
 import java.util.Date;
 import java.util.UUID;
 
-public class AddPostDTO {
+import com.Group1.PetRadar.Model.Location;
+
+public class AddPostDTO extends Location {
 
     private String description;
     private Date postDate;
-    private String location;
     private UUID userId;
 
     // Default constructor
     public AddPostDTO() {
-    }
-
-    // Parameterized constructor
-    public AddPostDTO(String description, Date postDate, String location) {
-        this.description = description;
-        this.postDate = postDate;
-        this.location = location;
     }
 
     // Getters and setters
@@ -40,14 +34,6 @@ public class AddPostDTO {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public UUID getUserId() {
