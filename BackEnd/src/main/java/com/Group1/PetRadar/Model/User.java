@@ -160,6 +160,10 @@ public class User {
 		ImageUrl = imagexUrl;
 	}
 
+	public String getImageUrl() {
+		return this.ImageUrl;
+	}
+
 	public List<PostModel> getPosts() {
 		return this.posts;
 	}

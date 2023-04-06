@@ -12,6 +12,7 @@ import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.PostRepository;
 import com.Group1.PetRadar.Service.PostService;
 import com.Group1.PetRadar.Service.UserService;
+import com.Group1.PetRadar.utils.AwsService;
 
 @Service
 public class PostServiceImplementation implements PostService {
@@ -21,6 +22,9 @@ public class PostServiceImplementation implements PostService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    AwsService awsService;
 
     @Override
     public PostModel savePost(AddPostDTO postmodel) throws Exception {
@@ -38,6 +42,7 @@ public class PostServiceImplementation implements PostService {
         newPost.setPostDate(postmodel.getPostDate());
         newPost.setLatitude(postmodel.getLatitude());
         newPost.setLongitude(postmodel.getLongitude());
+        newPost.setImageUrl(awsService.save(postmodel.getImage()));
         newPost.setUser(user);
         return postRepository.save(newPost);
     }

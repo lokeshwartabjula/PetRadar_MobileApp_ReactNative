@@ -30,6 +30,7 @@ public class PostModel {
 
         String description;
         Date postDate;
+        String ImageUrl;
 
         @JsonIgnore
         @ManyToOne
@@ -62,7 +63,6 @@ public class PostModel {
                 this.postId = postId;
         }
 
-        private String ImageUrl;
         public String getImageUrl() {
                 return ImageUrl;
         }

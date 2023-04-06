@@ -34,7 +34,7 @@ public class PostController {
     @PostMapping("/create")
     public ResponseEntity<Response> createPost(
             @RequestParam() Map<String, String> paramList,
-            @RequestParam("image") MultipartFile file) throws Exception {
+            @RequestParam(name = "image", required = true) MultipartFile file) throws Exception {
         PostModel newPost = null;
         Response failureResponse = null;
 
@@ -51,6 +51,7 @@ public class PostController {
                     default -> throw new IllegalStateException("Unexpected value: " + key);
                 }
             });
+            newPostDTO.setImage(file);
 
             // newPostDTO.setImage(file);
             // dummy1 = dummy.build();

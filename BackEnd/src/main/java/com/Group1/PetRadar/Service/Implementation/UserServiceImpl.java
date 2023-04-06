@@ -24,9 +24,7 @@ import com.Group1.PetRadar.DTO.user.updateUserDTO;
 import com.Group1.PetRadar.Model.PetprofileModel;
 import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Model.User;
-import com.Group1.PetRadar.Repository.ImageRepository;
 import com.Group1.PetRadar.Repository.UserRepository;
-import com.Group1.PetRadar.Service.ImageService;
 import com.Group1.PetRadar.Service.UserService;
 import com.Group1.PetRadar.utils.AwsService;
 
@@ -43,9 +41,6 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
-    ImageRepository imageRepository;
-
-    @Autowired
     JwtEncoder jwtEncoder;
 
     @Autowired
@@ -53,9 +48,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     AwsService awsService;
-
-    @Autowired
-    ImageService imageService;
 
     @Override
     public User saveUser(RegisterUserDTO registerUserDTO) {
