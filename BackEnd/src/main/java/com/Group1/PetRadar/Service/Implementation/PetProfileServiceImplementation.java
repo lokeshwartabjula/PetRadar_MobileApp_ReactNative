@@ -51,7 +51,8 @@ public class PetProfileServiceImplementation implements PetProfileService {
         newPet = petprofileRepository.save(newPet);
 
         try {
-            BufferedImage QrData = generateQRCodeImage(newPet.getPetId().toString());
+            String petRadarWebUrl = "http://129.173.67.181:3000/";
+            BufferedImage QrData = generateQRCodeImage(petRadarWebUrl + newPet.getPetId().toString());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(QrData, "jpeg", baos);
             byte[] byteData = baos.toByteArray();
@@ -103,7 +104,7 @@ public class PetProfileServiceImplementation implements PetProfileService {
             m.setPetIdentificationMarks(petprofileModel.getPetIdentificationMarks());
         if (petprofileModel.getAllergies() != null)
             m.setAllergies(petprofileModel.getAllergies());
-        if (petprofileModel.getImage() != null){
+        if (petprofileModel.getImage() != null) {
             m.setImageUrl(awsService.save(petprofileModel.getImage()));
         }
         return petprofileRepository.save(m);
@@ -119,7 +120,7 @@ public class PetProfileServiceImplementation implements PetProfileService {
         QRCodeWriter barcodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = null;
         try {
-            bitMatrix = barcodeWriter.encode(barcodeText, BarcodeFormat.QR_CODE, 75, 75);
+            bitMatrix = barcodeWriter.encode(barcodeText, BarcodeFormat.QR_CODE, 300, 300);
         } catch (WriterException e) {
             throw new RuntimeException(e);
         }
