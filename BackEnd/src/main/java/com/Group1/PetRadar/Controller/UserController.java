@@ -215,9 +215,10 @@ public class UserController {
 			@RequestParam("pincode") String pincode,
 			@RequestParam("mobileNumber") String mobileNumber,
 			@RequestParam("userId") String userId,
+			@RequestParam(name = "image", required = false) MultipartFile file,
 			@RequestParam("latitude") String latitude,
 			@RequestParam("longitude") String longitude,
-			@RequestParam(name = "image", required = false) MultipartFile file) {
+			@RequestParam("onesignalUserId") String onesignalUserId) {
 
 		System.out.println(firstName + lastName + address + city + pincode + mobileNumber + userId);
 		// System.out.println(file.getOriginalFilename());
@@ -228,10 +229,11 @@ public class UserController {
 		updatedUserDetails.setAddress(address);
 		updatedUserDetails.setCity(city);
 		updatedUserDetails.setPincode(pincode);
-		updatedUserDetails.setPhoneNumber(Long.parseLong(mobileNumber));
 		updatedUserDetails.setFile(file);
+		updatedUserDetails.setPhoneNumber(Long.parseLong(mobileNumber));
 		updatedUserDetails.setLatitude(new BigDecimal(latitude));
 		updatedUserDetails.setLongitude(new BigDecimal(longitude));
+		updatedUserDetails.setOneSignalUserId(onesignalUserId);
 
 		Response failureResponse = null;
 		User user = null;

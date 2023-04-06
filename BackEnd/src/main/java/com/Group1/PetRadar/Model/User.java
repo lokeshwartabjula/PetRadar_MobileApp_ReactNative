@@ -41,6 +41,13 @@ public class User {
 
 	@JsonIgnore
 	private String password;
+	private String onesignalUserId;
+
+	@Column(precision = 10, scale = 6)
+	private BigDecimal latitude;
+
+	@Column(precision = 10, scale = 6)
+	private BigDecimal longitude;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -49,28 +56,6 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PostModel> posts;
-
-	@Column(precision = 10, scale = 6)
-	private BigDecimal latitude;
-
-	@Column(precision = 10, scale = 6)
-	private BigDecimal longitude;
-
-	public BigDecimal getLatitude() {
-		return this.latitude;
-	}
-
-	public void setLatitude(BigDecimal latitude) {
-		this.latitude = latitude;
-	}
-
-	public BigDecimal getLongitude() {
-		return this.longitude;
-	}
-
-	public void setLongitude(BigDecimal longitude) {
-		this.longitude = longitude;
-	}
 
 	public UUID getUserId() {
 		return userId;
@@ -171,4 +156,29 @@ public class User {
 	public void setPosts(List<PostModel> posts) {
 		this.posts = posts;
 	}
+
+	public void setLatitude(BigDecimal latitude) {
+		this.latitude = latitude;
+	}
+
+	public BigDecimal getLatitude() {
+		return latitude;
+	}
+
+	public void setLongitude(BigDecimal longitude) {
+		this.longitude = longitude;
+	}
+
+	public BigDecimal getLongitude() {
+		return longitude;
+	}
+
+	public String getOnesignalUserId() {
+		return onesignalUserId;
+	}
+
+	public void setOnesignalUserId(String onesignalUserId) {
+		this.onesignalUserId = onesignalUserId;
+	}
+
 }

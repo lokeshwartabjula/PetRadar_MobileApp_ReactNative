@@ -1,5 +1,6 @@
 package com.Group1.PetRadar.DTO.post;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,6 +14,8 @@ public class AddPostDTO extends Location {
     private Date postDate;
     private UUID userId;
     private MultipartFile image;
+    private BigDecimal longitude;
+    private BigDecimal latitude;
 
     // Default constructor
     public AddPostDTO() {
@@ -53,5 +56,21 @@ public class AddPostDTO extends Location {
 
     public void setImage(MultipartFile image) {
         this.image = image;
+    }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
     }
 }

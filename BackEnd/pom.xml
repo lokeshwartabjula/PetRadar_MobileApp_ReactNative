@@ -92,6 +92,13 @@
 			<artifactId>javase</artifactId>
 			<version>3.3.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.onesignal</groupId>
+			<artifactId>OneSignal</artifactId>
+			<version>3.9.1</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
 	<dependency>
     <groupId>org.springframework.boot</groupId>

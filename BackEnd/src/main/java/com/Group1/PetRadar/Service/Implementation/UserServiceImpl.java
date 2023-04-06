@@ -113,6 +113,7 @@ public class UserServiceImpl implements UserService {
             user.setImageUrl(awsService.save(userDetails.getFile()));
             user.setLatitude(userDetails.getLatitude());
             user.setLongitude(userDetails.getLongitude());
+            user.setOnesignalUserId(userDetails.getOneSignalUserId());
             userRepository.save(user);
 
             return user;
