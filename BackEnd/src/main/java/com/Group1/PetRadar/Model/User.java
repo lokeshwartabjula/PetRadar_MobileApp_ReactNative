@@ -33,6 +33,9 @@ public class User {
 	private Long phoneNumber;
 	@JsonIgnore
 	private String password;
+	private double latitude;
+	private double longitude;
+	private String onesignalUserId;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -120,6 +123,30 @@ public class User {
 
 	public void setPets(List<PetprofileModel> pets) {
 		this.pets = pets;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public String getOnesignalUserId() {
+		return onesignalUserId;
+	}
+
+	public void setOnesignalUserId(String onesignalUserId) {
+		this.onesignalUserId = onesignalUserId;
 	}
 
 }

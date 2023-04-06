@@ -6,17 +6,11 @@ public class AddPostDTO {
 
     private String description;
     private Date postDate;
-    private String location;
+    private double longitude;
+    private double latitude;
 
     // Default constructor
     public AddPostDTO() {
-    }
-
-    // Parameterized constructor
-    public AddPostDTO(String description, Date postDate, String location) {
-        this.description = description;
-        this.postDate = postDate;
-        this.location = location;
     }
 
     // Getters and setters
@@ -36,11 +30,19 @@ public class AddPostDTO {
         this.postDate = postDate;
     }
 
-    public String getLocation() {
-        return location;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

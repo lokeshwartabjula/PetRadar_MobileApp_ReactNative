@@ -19,7 +19,8 @@ public class PostModel {
 
         String description;
         Date postDate;
-        String location;
+        Double latitude;
+        Double longitude;
 
         public UUID getPostId() {
                 return postId;
@@ -41,12 +42,20 @@ public class PostModel {
                 this.postDate = postDate;
         }
 
-        public String getLocation() {
-                return location;
+        public Double getLatitude() {
+                return latitude;
         }
 
-        public void setLocation(String location) {
-                this.location = location;
+        public void setLatitude(Double latitude) {
+                this.latitude = latitude;
+        }
+
+        public Double getLongitude() {
+                return longitude;
+        }
+
+        public void setLongitude(Double longitude) {
+                this.longitude = longitude;
         }
 
 }

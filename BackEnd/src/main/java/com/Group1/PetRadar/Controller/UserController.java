@@ -49,13 +49,14 @@ public class UserController {
 	}
 
 	@PostMapping("/googleLogin")
-	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user, @RequestParam Boolean isLogin) throws Exception {
+	public ResponseEntity<Response> googleRegisterLogin(@RequestBody User user, @RequestParam Boolean isLogin)
+			throws Exception {
 		Boolean isLoginSuccessful = false;
 		Response failureResponse = null;
 
-//		Boolean isLogin = isLoginFlow=="true"?true:false;
+		// Boolean isLogin = isLoginFlow=="true"?true:false;
 		try {
-			isLoginSuccessful = userService.googleLogin(user,isLogin);
+			isLoginSuccessful = userService.googleLogin(user, isLogin);
 		} catch (Exception e) {
 			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
 					HttpStatus.UNAUTHORIZED.name());
@@ -75,11 +76,11 @@ public class UserController {
 			response.setData(data);
 			response.setMessage(HttpStatus.ACCEPTED.name());
 			response.setStatus(HttpStatus.ACCEPTED.value());
-		}
-		else
+		} else
 			throw new Exception("Login is not successful");
 
-//		Response response = new Response(token, HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
+		// Response response = new Response(token, HttpStatus.ACCEPTED.value(),
+		// HttpStatus.ACCEPTED.name());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
@@ -158,7 +159,10 @@ public class UserController {
 			@RequestParam("pincode") String pincode,
 			@RequestParam("mobileNumber") String mobileNumber,
 			@RequestParam("userId") String userId,
-			@RequestParam("image") MultipartFile file) {
+			@RequestParam("image") MultipartFile file,
+			@RequestParam("latitude") String latitude,
+			@RequestParam("longitude") String longitude,
+			@RequestParam("onesignalUserId") String onesignalUserId) {
 
 		System.out.println(firstName + lastName + address + city + pincode + mobileNumber + userId);
 		System.out.println(file.getOriginalFilename());
@@ -170,6 +174,9 @@ public class UserController {
 		updatedUserDetails.setCity(city);
 		updatedUserDetails.setPincode(pincode);
 		updatedUserDetails.setPhoneNumber(Long.parseLong(mobileNumber));
+		updatedUserDetails.setLatitude(Double.parseDouble(latitude));
+		updatedUserDetails.setLongitude(Double.parseDouble(longitude));
+		updatedUserDetails.setOneSignalUserId(onesignalUserId);
 
 		Response failureResponse = null;
 		User user = null;

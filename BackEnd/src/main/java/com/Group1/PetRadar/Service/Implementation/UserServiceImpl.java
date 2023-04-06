@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
         UserEncode.setProfileUrl(user.getProfileUrl());
         return userRepository.save(UserEncode);
     }
-    
+
     @Override
     public User saveUser(User user) {
         User UserEncode = new User();
@@ -121,6 +121,9 @@ public class UserServiceImpl implements UserService {
             user.setCity(userDetails.getCity());
             user.setPincode(userDetails.getPincode());
             user.setPhoneNumber(userDetails.getMobileNumber());
+            user.setLatitude(userDetails.getLatitude());
+            user.setLongitude(userDetails.getLongitude());
+            user.setOnesignalUserId(userDetails.getOneSignalUserId());
             userRepository.save(user);
             return user;
         } catch (Exception e) {
@@ -130,7 +133,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean googleLogin(User user,Boolean isLogin) throws Exception {
+    public Boolean googleLogin(User user, Boolean isLogin) throws Exception {
         // TODO Auto-generated method stub
         Boolean isUserFound = false;
         Boolean isGoogleUser = false;
@@ -147,22 +150,21 @@ public class UserServiceImpl implements UserService {
         } catch (EmptyResultDataAccessException e) {
             isUserFound = false;
         }
-        if (foundUser.getEmail()!=null)
+        if (foundUser.getEmail() != null)
             isUserFound = true;
-        
-        if(!isUserFound&&isLogin)
-        	throw new Exception("You have not registered through google yet, Please sign up first and try again");
 
-        if (foundUser.getEmail()!=null&&foundUser.getPassword()==null)
+        if (!isUserFound && isLogin)
+            throw new Exception("You have not registered through google yet, Please sign up first and try again");
+
+        if (foundUser.getEmail() != null && foundUser.getPassword() == null)
             isGoogleUser = true;
         if (!isUserFound && !isGoogleLoginFlow) {
             user.setPassword(null);
             saveGoogleUser(user);
             return true;
-        } else if(isUserFound && isGoogleUser && !isGoogleLoginFlow){
-        	throw new Exception("You have already signed up as a google User");
-        }else
-        {
+        } else if (isUserFound && isGoogleUser && !isGoogleLoginFlow) {
+            throw new Exception("You have already signed up as a google User");
+        } else {
             if (isGoogleUser) // if user has the password as dummy return token
                 return true;
             else // else if user doesnt have the password as dummy, return exception stating that
@@ -286,7 +288,5 @@ public class UserServiceImpl implements UserService {
             throw new Exception("Unable to Delete the user");
         }
     }
-
-	
 
 }
