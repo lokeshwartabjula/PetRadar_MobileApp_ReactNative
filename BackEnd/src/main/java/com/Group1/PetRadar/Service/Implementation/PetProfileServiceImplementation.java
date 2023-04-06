@@ -6,6 +6,8 @@ import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.PetProfileRepository;
 import com.Group1.PetRadar.Repository.UserRepository;
 import com.Group1.PetRadar.Service.PetProfileService;
+import com.Group1.PetRadar.utils.AwsService;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.UUID;
@@ -25,6 +27,9 @@ public class PetProfileServiceImplementation implements PetProfileService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    AwsService awsService;
+
     @Override
     public PetprofileModel savePetProfile(AddPetDTO petDetails) {
         User user = userRepository.findById(petDetails.getUserId()).get();
@@ -41,6 +46,7 @@ public class PetProfileServiceImplementation implements PetProfileService {
         newPet.setWeightInLbs(petDetails.getWeightInLbs());
         newPet.setWeightInLbs(petDetails.getWeightInLbs());
         newPet.setAllergies(petDetails.getAllergies());
+        newPet.setImageUrl(awsService.save(petDetails.getImage()));
         newPet.setUser(user);
         newPet = petprofileRepository.save(newPet);
 
@@ -97,6 +103,9 @@ public class PetProfileServiceImplementation implements PetProfileService {
             m.setPetIdentificationMarks(petprofileModel.getPetIdentificationMarks());
         if (petprofileModel.getAllergies() != null)
             m.setAllergies(petprofileModel.getAllergies());
+        if (petprofileModel.getImage() != null){
+            m.setImageUrl(awsService.save(petprofileModel.getImage()));
+        }
         return petprofileRepository.save(m);
     }
 

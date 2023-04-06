@@ -25,12 +25,13 @@ public class PetprofileModel {
     String petIdentificationMarks;
     String allergies;
     private String ImageUrl;
+
     public String getImageUrl() {
-        return ImageUrl;
+        return this.ImageUrl;
     }
 
-    public void setImageUrl(String imagexUrl) {
-        ImageUrl = imagexUrl;
+    public void setImageUrl(String ImageUrl) {
+        this.ImageUrl = ImageUrl;
     }
 
     @ManyToOne

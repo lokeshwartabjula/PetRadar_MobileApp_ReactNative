@@ -51,6 +51,7 @@ public class PetprofileController {
                 default -> throw new IllegalStateException("Unexpected value: " + key);
             }
         });
+        addPetDTO.setImage(file);
 
         try {
             petDetails = petProfileService.savePetProfile(addPetDTO);
@@ -113,6 +114,9 @@ public class PetprofileController {
                 default -> throw new IllegalStateException("Unexpected value: " + key);
             }
         });
+        if (file.getOriginalFilename() != null) {
+            addPetDTO.setImage(file);
+        }
 
         try {
             petDetails = petProfileService.updatePetprofile(addPetDTO);

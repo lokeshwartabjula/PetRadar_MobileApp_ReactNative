@@ -1,7 +1,8 @@
 package com.Group1.PetRadar.DTO.pet;
 
-import java.util.Date;
 import java.util.UUID;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class AddPetDTO {
 
@@ -17,6 +18,7 @@ public class AddPetDTO {
     private String petIdentificationMarks;
     private String allergies;
     private String userId;
+    private MultipartFile image;
 
     public AddPetDTO() {
     }
@@ -117,6 +119,14 @@ public class AddPetDTO {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public MultipartFile getImage() {
+        return this.image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 
     // Other getters and setters
