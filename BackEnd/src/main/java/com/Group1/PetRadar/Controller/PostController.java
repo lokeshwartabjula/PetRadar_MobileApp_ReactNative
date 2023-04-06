@@ -96,7 +96,8 @@ public class PostController {
 
     @PutMapping("/update")
     public ResponseEntity<Response> updatePost(
-            @RequestParam() Map<String, String> paramList) throws Exception {
+            @RequestParam() Map<String, String> paramList,
+            @RequestParam(name = "image", required = false) MultipartFile file) throws Exception {
         Response failureResponse = null;
         PostModel updatePost = null;
 
@@ -110,9 +111,6 @@ public class PostController {
                     case "postDate":
                         updatePostDTO.setPostDate(value);
                         break;
-                    case "location":
-                        updatePostDTO.setLocation(value);
-                        break;
                     case "postId":
                         updatePostDTO.setId(value);
                         break;
@@ -120,6 +118,9 @@ public class PostController {
                         throw new IllegalStateException("Unexpected value: " + key);
                 }
             });
+            if (file != null) {
+                updatePostDTO.setImage(file);
+            }
 
             updatePost = postService.updatePost(updatePostDTO, updatePostDTO.getId());
 

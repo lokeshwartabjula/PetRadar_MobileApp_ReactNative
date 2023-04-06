@@ -5,15 +5,16 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.UUID;
 
+import org.springframework.web.multipart.MultipartFile;
+
 @NoArgsConstructor
 public class UdpatePostDTO {
 
     private String description;
     private Date postDate;
-    private String location;
+    private MultipartFile image;
 
     private String id;
-
 
     public String getDescription() {
         return description;
@@ -35,14 +36,6 @@ public class UdpatePostDTO {
         }
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public UUID getId() {
         return UUID.fromString(id);
     }
@@ -50,7 +43,12 @@ public class UdpatePostDTO {
     public void setId(String id) {
         this.id = id;
     }
+
+    public MultipartFile getImage() {
+        return this.image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
 }
-
-
-

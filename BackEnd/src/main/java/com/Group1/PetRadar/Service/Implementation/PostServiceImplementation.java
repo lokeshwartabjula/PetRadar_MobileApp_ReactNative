@@ -60,6 +60,9 @@ public class PostServiceImplementation implements PostService {
             existingpost.setPostDate(postmodel.getPostDate());
         if (postmodel.getDescription() != null)
             existingpost.setDescription(postmodel.getDescription());
+        if (postmodel.getImage() != null) {
+            existingpost.setImageUrl(awsService.save(postmodel.getImage()));
+        }
 
         return postRepository.save(existingpost);
     }
