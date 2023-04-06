@@ -1,5 +1,6 @@
 package com.Group1.PetRadar.Controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -214,10 +215,12 @@ public class UserController {
 			@RequestParam("pincode") String pincode,
 			@RequestParam("mobileNumber") String mobileNumber,
 			@RequestParam("userId") String userId,
-			@RequestParam("image") MultipartFile file) {
+			@RequestParam("latitude") String latitude,
+			@RequestParam("longitude") String longitude,
+			@RequestParam(name = "image", required = false) MultipartFile file) {
 
 		System.out.println(firstName + lastName + address + city + pincode + mobileNumber + userId);
-		System.out.println(file.getOriginalFilename());
+		// System.out.println(file.getOriginalFilename());
 
 		updateUserDTO updatedUserDetails = new updateUserDTO();
 		updatedUserDetails.setFirstName(firstName);
@@ -226,6 +229,8 @@ public class UserController {
 		updatedUserDetails.setCity(city);
 		updatedUserDetails.setPincode(pincode);
 		updatedUserDetails.setPhoneNumber(Long.parseLong(mobileNumber));
+		updatedUserDetails.setLatitude(new BigDecimal(latitude));
+		updatedUserDetails.setLongitude(new BigDecimal(longitude));
 
 		Response failureResponse = null;
 		User user = null;

@@ -1,13 +1,17 @@
 package com.Group1.PetRadar.Model;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Transactional
 @NoArgsConstructor
 @Table(name = "user")
-public class User {
+public class User extends Location {
 
 	@Id()
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -31,6 +35,7 @@ public class User {
 	private String city;
 	private String pincode;
 	private Long phoneNumber;
+
 	@JsonIgnore
 	private String password;
 

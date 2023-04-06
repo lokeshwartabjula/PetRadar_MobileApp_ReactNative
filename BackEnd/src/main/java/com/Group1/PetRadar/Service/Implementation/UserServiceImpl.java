@@ -123,6 +123,8 @@ public class UserServiceImpl implements UserService {
             user.setCity(userDetails.getCity());
             user.setPincode(userDetails.getPincode());
             user.setPhoneNumber(userDetails.getMobileNumber());
+            user.setLatitude(userDetails.getLatitude());
+            user.setLongitude(userDetails.getLongitude());
             userRepository.save(user);
             return user;
         } catch (Exception e) {
