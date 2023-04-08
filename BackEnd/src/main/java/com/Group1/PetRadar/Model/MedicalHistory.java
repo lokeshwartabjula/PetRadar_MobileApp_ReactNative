@@ -1,5 +1,6 @@
 package com.Group1.PetRadar.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -24,6 +25,11 @@ public class MedicalHistory {
     String surgery;
 
     String medication;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "pet_profile_id", referencedColumnName = "petId")
+    private PetprofileModel pet;
 
     public UUID getMedicalRecordId() {
         return this.medicalRecordId;
@@ -75,5 +81,13 @@ public class MedicalHistory {
 
     public void setMedication(String medication) {
         this.medication = medication;
+    }
+    
+    public PetprofileModel getPet() {
+        return pet;
+    }
+
+    public void setPet(PetprofileModel pet) {
+        this.pet = pet;
     }
 }

@@ -3,6 +3,7 @@ package com.Group1.PetRadar.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity()
@@ -28,6 +29,19 @@ public class PetprofileModel {
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
+
+    public List<MedicalHistory> getMedicalHistories() {
+        return medicalHistories;
+    }
+
+    public void setMedicalHistories(List<MedicalHistory> medicalHistories) {
+        this.medicalHistories = medicalHistories;
+    }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MedicalHistory> medicalHistories;
+
 
     public UUID getPetId() {
         return petId;
