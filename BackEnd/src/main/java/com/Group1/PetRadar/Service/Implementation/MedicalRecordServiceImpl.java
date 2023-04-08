@@ -3,6 +3,7 @@ package com.Group1.PetRadar.Service.Implementation;
 import com.Group1.PetRadar.DTO.medicalRecord.AddPetMedicalRecordDTO;
 import com.Group1.PetRadar.Model.MedicalHistory;
 import com.Group1.PetRadar.Repository.MedicalRecordRepository;
+import com.Group1.PetRadar.Repository.PetProfileRepository;
 import com.Group1.PetRadar.Service.MedicalRecordService;
 
 import java.util.UUID;
@@ -20,6 +21,9 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     @Autowired
     PetProfileService petProfileService;
 
+    @Autowired
+    PetProfileRepository perPetProfileRepository;
+
     @Override
     public MedicalHistory saveMedical(AddPetMedicalRecordDTO medicalrecord) throws Exception {
         try {
@@ -30,7 +34,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
             newRecord.setVaccinationDate(medicalrecord.getVaccinationDate());
             newRecord.setSurgery(medicalrecord.getSurgery());
             newRecord.setMedication(medicalrecord.getMedication());
-            newRecord.setPet(petProfileService.getPetprofileById(medicalrecord.getPetId()));
+            newRecord.setPet(perPetProfileRepository.findById(medicalrecord.getPetId()).get());
             return medicalRecordRepository.save(newRecord);
         } catch (Exception e) {
             e.printStackTrace();
