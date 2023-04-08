@@ -1,9 +1,11 @@
 package com.Group1.PetRadar.Controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.Group1.PetRadar.Model.MedicalHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,6 +91,26 @@ public class PetprofileController {
         response.setStatus(HttpStatus.ACCEPTED.value());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 
+    }
+
+    @GetMapping("/medical/{id}")
+    public ResponseEntity<Response> getmedicalByPetId(@PathVariable("id") UUID id) throws Exception {
+        List<MedicalHistory> medicalHistory = null;
+        Response failureResponse = null;
+        try {
+            medicalHistory = petProfileService.getmedicalByPetId(id);
+        } catch (Exception e) {
+            failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+        }
+        Map<String, Object> data = new HashMap<>();
+        data.put("medicalHistory", medicalHistory);
+        Response response = new Response();
+        response.setData(data);
+        response.setMessage(HttpStatus.ACCEPTED.name());
+        response.setStatus(HttpStatus.ACCEPTED.value());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
     @GetMapping("/contact/{id}")

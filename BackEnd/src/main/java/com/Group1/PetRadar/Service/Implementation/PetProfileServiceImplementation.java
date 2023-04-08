@@ -1,6 +1,7 @@
 package com.Group1.PetRadar.Service.Implementation;
 
 import com.Group1.PetRadar.DTO.pet.AddPetDTO;
+import com.Group1.PetRadar.Model.MedicalHistory;
 import com.Group1.PetRadar.Model.PetprofileModel;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.PetProfileRepository;
@@ -11,6 +12,7 @@ import com.Group1.PetRadar.utils.AwsService;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import com.google.zxing.BarcodeFormat;
@@ -77,6 +79,22 @@ public class PetProfileServiceImplementation implements PetProfileService {
             }
             petDetails = petprofileRepository.findByUserUserId(id).get();
             return petDetails;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("No pet profile found for given UUID");
+        }
+    }
+
+    @Override
+    public List<MedicalHistory> getmedicalByPetId(UUID id) throws Exception {
+        PetprofileModel petDetails = null;
+        try {
+            if (!petprofileRepository.existsById(id)) {
+                throw new Exception("Pet not found");
+            }
+            petDetails = petprofileRepository.findById(id).get();
+            return petDetails.getMedicalHistories();
 
         } catch (Exception e) {
             e.printStackTrace();

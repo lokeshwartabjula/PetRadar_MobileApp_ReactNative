@@ -149,4 +149,8 @@ public class PetprofileModel {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public List<MedicalHistory> getMedicalHistories() {
+        return medicalHistories;
+    }
 }
