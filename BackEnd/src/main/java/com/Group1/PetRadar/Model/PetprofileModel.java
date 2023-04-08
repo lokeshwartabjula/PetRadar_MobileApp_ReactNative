@@ -2,9 +2,16 @@ package com.Group1.PetRadar.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+@Transactional
+@NoArgsConstructor
+@Table(name = "pet_profile")
 @Entity()
 public class PetprofileModel {
     @Id()
@@ -38,6 +45,10 @@ public class PetprofileModel {
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MedicalHistory> medicalHistories;
 
     public UUID getPetId() {
         return petId;
