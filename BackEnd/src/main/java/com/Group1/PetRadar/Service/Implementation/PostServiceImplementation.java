@@ -122,12 +122,15 @@ public class PostServiceImplementation implements PostService {
     @Override
     public List<PostModel> getPostById(BigDecimal latitude, BigDecimal longitude) {
         Collection<PostModel> posts = postRepository.findPostByLocation(latitude, longitude);
-        List<PostModel> postList = new ArrayList<PostModel>();
+        List<PostModel> data = new ArrayList<>();
         posts.forEach(post -> {
-            postList.add(post);
+            User user = post.getUser();
+            post.setUserName(user.getFirstName() + " " + user.getLastName());
+            post.setUserProfilePicture(user.getImageUrl());
+            data.add(post);
         });
 
-        return postList;
+        return data;
     }
 
     @Override

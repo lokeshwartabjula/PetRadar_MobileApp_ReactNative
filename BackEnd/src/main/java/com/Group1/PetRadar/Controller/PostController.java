@@ -68,8 +68,6 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
         }
         Response response = new Response();
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("post", newPost);
         response.setData(newPost);
         response.setMessage(HttpStatus.ACCEPTED.name());
         response.setStatus(HttpStatus.ACCEPTED.value());
