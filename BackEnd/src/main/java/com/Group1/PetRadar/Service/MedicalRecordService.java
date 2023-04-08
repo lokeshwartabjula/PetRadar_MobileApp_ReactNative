@@ -9,7 +9,7 @@ public interface MedicalRecordService {
 
     MedicalHistory saveMedical(AddPetMedicalRecordDTO medical);
 
-    MedicalHistory getmedicalById(UUID id);
+    MedicalHistory getmedicalById(UUID id) throws Exception;
 
     MedicalHistory updateMedical(MedicalHistory medical);
 

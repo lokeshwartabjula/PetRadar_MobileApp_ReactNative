@@ -30,9 +30,19 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     }
 
     @Override
-    public MedicalHistory getmedicalById(UUID id) {
-        MedicalHistory m = medicalRecordRepository.findById(id).orElse(null);
-        return m;
+    public MedicalHistory getmedicalById(UUID id) throws Exception {
+        MedicalHistory medicalHistory = null;
+        try {
+            if (!medicalRecordRepository.existsById(id)) {
+                throw new Exception("Pet not found");
+            }
+            medicalHistory = medicalRecordRepository.findById(id).get();
+            return medicalHistory;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("No medical history found for given UUID");
+        }
     }
 
     @Override
