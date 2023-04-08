@@ -114,7 +114,8 @@ public class PetprofileController {
                 default -> throw new IllegalStateException("Unexpected value: " + key);
             }
         });
-        if (file.getOriginalFilename() != null) {
+
+        if (file != null && file.getOriginalFilename() != null) {
             addPetDTO.setImage(file);
         }
 
