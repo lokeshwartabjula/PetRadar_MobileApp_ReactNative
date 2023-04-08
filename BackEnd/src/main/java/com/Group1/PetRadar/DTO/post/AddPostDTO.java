@@ -11,6 +11,8 @@ import com.Group1.PetRadar.Model.Location;
 public class AddPostDTO extends Location {
 
     private String description;
+    private String userName;
+    private String userProfilePicture;
     private Date postDate;
     private UUID userId;
     private MultipartFile image;
@@ -72,5 +74,21 @@ public class AddPostDTO extends Location {
 
     public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
+    }
+
+    public String getUserProfilePicture() {
+        return userProfilePicture;
+    }
+
+    public void setUserProfilePicture(String userProfilePicture) {
+        this.userProfilePicture = userProfilePicture;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

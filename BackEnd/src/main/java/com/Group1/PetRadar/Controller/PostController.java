@@ -2,6 +2,7 @@ package com.Group1.PetRadar.Controller;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ import com.Group1.PetRadar.DTO.post.UdpatePostDTO;
 import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Service.PostService;
 import com.Group1.PetRadar.protocol.Response;
+import com.beust.jcommander.internal.Console;
 
 @RestController
 @RequestMapping("/post")
@@ -37,7 +39,6 @@ public class PostController {
             @RequestParam(name = "image", required = true) MultipartFile file) throws Exception {
         PostModel newPost = null;
         Response failureResponse = null;
-
         try {
             // PostModelBuilder dummy = PostModel.builder();
             AddPostDTO newPostDTO = new AddPostDTO();
@@ -48,6 +49,8 @@ public class PostController {
                     case "userId" -> newPostDTO.setUserId(value);
                     case "latitude" -> newPostDTO.setLatitude(new BigDecimal(value));
                     case "longitude" -> newPostDTO.setLongitude(new BigDecimal(value));
+                    case "userName" -> newPostDTO.setUserName(value);
+                    case "userProfilePicture" -> newPostDTO.setUserProfilePicture(value);
                     default -> throw new IllegalStateException("Unexpected value: " + key);
                 }
             });
@@ -73,13 +76,15 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Response> getPostById(@PathVariable("id") UUID id) {
-        PostModel post = null;
+    @GetMapping("/{latitude}/{longitude}")
+    public ResponseEntity<Response> getPostById(
+            @PathVariable("latitude") BigDecimal latitude,
+            @PathVariable("longitude") BigDecimal longitude) {
+        List<PostModel> post = null;
         Response failureResponse = null;
 
         try {
-            post = postService.getPostById(id);
+            post = postService.getPostById(latitude, longitude);
         } catch (Exception e) {
             failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
                     HttpStatus.UNAUTHORIZED.name());
@@ -87,7 +92,7 @@ public class PostController {
         }
         Response response = new Response();
         Map<String, Object> data = new HashMap<>();
-        data.put("post", post);
+        data.put("posts", post);
         response.setData(data);
         response.setMessage(HttpStatus.ACCEPTED.name());
         response.setStatus(HttpStatus.ACCEPTED.value());

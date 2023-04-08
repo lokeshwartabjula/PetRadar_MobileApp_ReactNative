@@ -31,6 +31,8 @@ public class PostModel {
         String description;
         Date postDate;
         String ImageUrl;
+        String userName;
+        String userProfilePicture;
 
         @JsonIgnore
         @ManyToOne
@@ -93,6 +95,22 @@ public class PostModel {
 
         public void setUser(User user) {
                 this.user = user;
+        }
+
+        public String getUserProfilePicture() {
+                return userProfilePicture;
+        }
+
+        public void setUserProfilePicture(String userProfilePicture) {
+                this.userProfilePicture = userProfilePicture;
+        }
+
+        public String getUserName() {
+                return userName;
+        }
+
+        public void setUserName(String userName) {
+                this.userName = userName;
         }
 
 }

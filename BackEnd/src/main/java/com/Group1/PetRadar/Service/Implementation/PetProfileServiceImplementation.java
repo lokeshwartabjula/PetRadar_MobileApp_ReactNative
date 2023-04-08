@@ -69,10 +69,10 @@ public class PetProfileServiceImplementation implements PetProfileService {
     public PetprofileModel getPetprofileById(UUID id) throws Exception {
         PetprofileModel petDetails = null;
         try {
-            if (!petprofileRepository.existsById(id)) {
+            if (petprofileRepository.findByUserUserId(id).isEmpty()) {
                 throw new Exception("Pet not found");
             }
-            petDetails = petprofileRepository.findById(id).get();
+            petDetails = petprofileRepository.findByUserUserId(id).get();
             return petDetails;
 
         } catch (Exception e) {

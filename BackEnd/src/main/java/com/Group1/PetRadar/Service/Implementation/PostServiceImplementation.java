@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -108,6 +109,8 @@ public class PostServiceImplementation implements PostService {
         newPost.setLatitude(postmodel.getLatitude());
         newPost.setLongitude(postmodel.getLongitude());
         newPost.setImageUrl(awsService.save(postmodel.getImage()));
+        newPost.setUserName(postmodel.getUserName());
+        newPost.setUserProfilePicture(postmodel.getUserProfilePicture());
         newPost.setUser(user);
 
         newPost = postRepository.save(newPost);
@@ -118,9 +121,14 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public PostModel getPostById(UUID id) {
-        PostModel m = postRepository.findById(id).orElse(null);
-        return m;
+    public List<PostModel> getPostById(BigDecimal latitude, BigDecimal longitude) {
+        Collection<PostModel> posts = postRepository.findPostByLocation(latitude, longitude);
+        List<PostModel> postList = new ArrayList<PostModel>();
+        posts.forEach(post -> {
+            postList.add(post);
+        });
+
+        return postList;
     }
 
     @Override
