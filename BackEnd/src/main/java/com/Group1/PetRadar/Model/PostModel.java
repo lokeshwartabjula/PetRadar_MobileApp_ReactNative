@@ -101,4 +101,19 @@ public class PostModel {
                 return user;
         }
 
+        public String getUserName() {
+                return this.userName;
+        }
+
+        public void setUserName(String userName) {
+                this.userName = userName;
+        }
+
+        public String getUserProfilePicture() {
+                return this.userProfilePicture;
+        }
+
+        public void setUserProfilePicture(String userProfilePicture) {
+                this.userProfilePicture = userProfilePicture;
+        }
 }
