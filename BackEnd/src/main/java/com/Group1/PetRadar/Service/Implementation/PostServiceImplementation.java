@@ -68,7 +68,7 @@ public class PostServiceImplementation implements PostService {
                 outputStream.write(sendBytes);
 
                 int httpResponse = con.getResponseCode();
-                System.out.println("strJsonBody: " + httpResponse);
+                System.out.println("strJsonBody: " + con.toString());
                 if (httpResponse >= HttpURLConnection.HTTP_OK
                         && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
                     Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
