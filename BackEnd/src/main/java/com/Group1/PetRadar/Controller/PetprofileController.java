@@ -139,7 +139,23 @@ public class PetprofileController {
 
 
     @DeleteMapping("/delete/{id}")
-    public String deletePetprofileById(@PathVariable("id") UUID id) {
-        return petProfileService.deletePetprofileById(id);
+    public ResponseEntity<Object> deletePetprofileById(@PathVariable("id") UUID id) {
+        try {
+            Response failureResponse = null;
+            try {
+                petProfileService.deletePetprofileById(id);
+            } catch (Exception e) {
+                failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                        HttpStatus.UNAUTHORIZED.name());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+            }
+            Response response = new Response();
+            response.setData("Pet deleted succesfully");
+            response.setMessage(HttpStatus.ACCEPTED.name());
+            response.setStatus(HttpStatus.ACCEPTED.value());
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
