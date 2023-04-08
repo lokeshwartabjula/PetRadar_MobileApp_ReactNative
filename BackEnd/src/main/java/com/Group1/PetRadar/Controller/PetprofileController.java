@@ -71,24 +71,43 @@ public class PetprofileController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Response> getPetprofileId(@PathVariable("id") UUID id) {
-        PetprofileModel post = null;
+        PetprofileModel petDetails = null;
         Response failureResponse = null;
 
         try {
-            post = petProfileService.getPetprofileById(id);
+            petDetails = petProfileService.getPetprofileById(id);
         } catch (Exception e) {
             failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
                     HttpStatus.UNAUTHORIZED.name());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
         }
         Map<String, Object> data = new HashMap<>();
-        data.put("petProfile", post);
+        data.put("petProfile", petDetails);
         Response response = new Response();
         response.setData(data);
         response.setMessage(HttpStatus.ACCEPTED.name());
         response.setStatus(HttpStatus.ACCEPTED.value());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 
+    }
+
+    @GetMapping("/contact/{id}")
+    public ResponseEntity<Response> getContact(@PathVariable("id") UUID id) {
+        Response failureResponse = null;
+        Map<String, Object> petDetails = null;
+
+        try {
+            petDetails = petProfileService.getPetDetailsAndOwnerById(id);
+        } catch (Exception e) {
+            failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+        }
+        Response response = new Response();
+        response.setData(petDetails);
+        response.setMessage(HttpStatus.ACCEPTED.name());
+        response.setStatus(HttpStatus.ACCEPTED.value());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
     @PutMapping("/update")

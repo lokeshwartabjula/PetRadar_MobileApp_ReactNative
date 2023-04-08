@@ -1,5 +1,6 @@
 package com.Group1.PetRadar.Service;
 
+import java.util.Map;
 import java.util.UUID;
 
 import com.Group1.PetRadar.DTO.pet.AddPetDTO;
@@ -14,5 +15,7 @@ public interface PetProfileService {
     PetprofileModel updatePetprofile(AddPetDTO petprofileModel);
 
     String deletePetprofileById(UUID id);
+
+    Map<String,Object> getPetDetailsAndOwnerById(UUID id) throws Exception;
 
 }
