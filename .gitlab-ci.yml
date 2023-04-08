@@ -24,8 +24,8 @@ build:
     # - mvn eclipse:eclipse
     - mvn clean package
   artifacts:
-    paths:
-      - target
+  paths:
+    - target
   tags:
     - dalfcs_gitlab_docker_ci
 
