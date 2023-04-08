@@ -122,7 +122,23 @@ public class MedicalRecordController {
 
 
     @DeleteMapping("/delete/{id}")
-    public String deleteMovieById(@PathVariable("id") UUID id) {
-        return medicalRecordService.deleteMedicalById(id);
+    public ResponseEntity<Response> deleteMovieById(@PathVariable("id") UUID id) {
+        try {
+            Response failureResponse = null;
+            try {
+                medicalRecordService.deleteMedicalById(id);
+            } catch (Exception e) {
+                failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                        HttpStatus.UNAUTHORIZED.name());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+            }
+            Response response = new Response();
+            response.setData("Medical record deleted succesfully");
+            response.setMessage(HttpStatus.ACCEPTED.name());
+            response.setStatus(HttpStatus.ACCEPTED.value());
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
