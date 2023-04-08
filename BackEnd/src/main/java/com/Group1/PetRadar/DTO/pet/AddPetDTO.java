@@ -1,13 +1,15 @@
 package com.Group1.PetRadar.DTO.pet;
 
-import java.util.Date;
 import java.util.UUID;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class AddPetDTO {
 
+    private UUID petId;
     private String petName;
     private String petBreed;
-    private Date petDob;
+    private int age;
     private String petCategory;
     private String gender;
     private String bio;
@@ -16,27 +18,20 @@ public class AddPetDTO {
     private String petIdentificationMarks;
     private String allergies;
     private String userId;
+    private MultipartFile image;
 
     public AddPetDTO() {
     }
 
-    public AddPetDTO(String petName, String petBreed, Date petDob, String petCategory,
-            String gender, String bio, Float petHeightInCms, Float weightInLbs, String petIdentificationMarks,
-            String allergies, String userId) {
-        this.petName = petName;
-        this.petBreed = petBreed;
-        this.petDob = petDob;
-        this.petCategory = petCategory;
-        this.gender = gender;
-        this.bio = bio;
-        this.petHeightInCms = petHeightInCms;
-        this.weightInLbs = weightInLbs;
-        this.petIdentificationMarks = petIdentificationMarks;
-        this.allergies = allergies;
-        this.userId = userId;
+    // Getters and setters
+
+    public UUID getPetId() {
+        return this.petId;
     }
 
-    // Getters and setters
+    public void setPetId(String petId) {
+        this.petId = UUID.fromString(petId);
+    }
 
     public String getPetName() {
         return petName;
@@ -54,12 +49,12 @@ public class AddPetDTO {
         this.petBreed = petBreed;
     }
 
-    public Date getPetDob() {
-        return petDob;
+    public int getAge() {
+        return age;
     }
 
-    public void setPetDob(Date petDob) {
-        this.petDob = petDob;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getPetCategory() {
@@ -124,6 +119,14 @@ public class AddPetDTO {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public MultipartFile getImage() {
+        return this.image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 
     // Other getters and setters
