@@ -182,6 +182,7 @@ public class UserServiceImpl implements UserService {
                     new BeanPropertyRowMapper(User.class));
         } catch (EmptyResultDataAccessException e) {
             isUserFound = false;
+            throw new Exception("You have not signed up yet in our database. please sign up first");
         }
 
         if (foundUser.getEmail() != null && foundUser.getEmail().toString().length() > 0)
