@@ -11,7 +11,7 @@ public interface MedicalRecordService {
 
     MedicalHistory getmedicalById(UUID id) throws Exception;
 
-    MedicalHistory updateMedical(MedicalHistory medical);
+    MedicalHistory updateMedical(AddPetMedicalRecordDTO medical) throws Exception;
 
     String deleteMedicalById(UUID id);
 

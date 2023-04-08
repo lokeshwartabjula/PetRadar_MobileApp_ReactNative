@@ -55,16 +55,20 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     }
 
     @Override
-    public MedicalHistory updateMedical(MedicalHistory medical) {
-        MedicalHistory m = medicalRecordRepository.findById(medical.getMedicalRecordId()).orElse(null);
-        m.setMedication(medical.getMedication());
-        m.setSurgery(medical.getSurgery());
-        m.setSymptoms(medical.getSymptoms());
-        m.setVetName(medical.getVetName());
-        m.setVaccinationDate(medical.getVaccinationDate());
-        medicalRecordRepository.save(m);
-        return medical;
-        // return "Details updated!";
+    public MedicalHistory updateMedical(AddPetMedicalRecordDTO medical) throws Exception {
+        try {
+            MedicalHistory m = medicalRecordRepository.findById(medical.getMedicalRecordId()).orElse(null);
+            m.setMedication(medical.getMedication());
+            m.setSurgery(medical.getSurgery());
+            m.setSymptoms(medical.getSymptoms());
+            m.setVetName(medical.getVetName());
+            m.setVaccinationDate(medical.getVaccinationDate());
+            medicalRecordRepository.save(m);
+            return m;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error while saving medical record: " + e.getMessage());
+        }
     }
 
     public String deleteMedicalById(UUID id) {
