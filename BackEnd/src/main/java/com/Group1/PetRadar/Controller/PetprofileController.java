@@ -94,9 +94,49 @@ public class PetprofileController {
 
 
     @PutMapping("/update")
-    public PetprofileModel updatePetprofile(@RequestBody PetprofileModel petprofile) {
-        return petProfileService.updatePetprofile(petprofile);
+    public ResponseEntity<Response> updatePetprofile(@RequestParam Map<String, String> paramList,
+            @RequestParam(name = "image", required = false) MultipartFile file) {
+        Response failureResponse = null;
+        PetprofileModel petDetails = null;
+        AddPetDTO addPetDTO = new AddPetDTO();
+        paramList.forEach((String key, String value) -> {
+            switch (key) {
+                case "petName" -> addPetDTO.setPetName(value);
+                case "petBreed" -> addPetDTO.setPetBreed(value);
+                case "age" -> addPetDTO.setAge(Integer.parseInt(value));
+                case "petCategory" -> addPetDTO.setPetCategory(value);
+                case "gender" -> addPetDTO.setGender(value);
+                case "bio" -> addPetDTO.setBio(value);
+                case "petHeightInCms" -> addPetDTO.setPetHeightInCms(Float.parseFloat(value));
+                case "weightInLbs" -> addPetDTO.setWeightInLbs(Float.parseFloat(value));
+                case "petIdentificationMarks" -> addPetDTO.setPetIdentificationMarks(value);
+                case "allergies" -> addPetDTO.setAllergies(value);
+                case "petId" -> addPetDTO.setPetId(value);
+                // case "image" -> addPetDTO.setImage(value);
+                default -> throw new IllegalStateException("Unexpected value: " + key);
+            }
+        });
+
+        if (file != null && file.getOriginalFilename() != null) {
+            addPetDTO.setImage(file);
+        }
+
+        try {
+            petDetails = petProfileService.updatePetprofile(addPetDTO);
+        } catch (Exception e) {
+            failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+        }
+        Response response = new Response();
+        Map<String, Object> data = new HashMap<>();
+        data.put("PetDetails", petDetails);
+        response.setData(data);
+        response.setMessage(HttpStatus.ACCEPTED.name());
+        response.setStatus(HttpStatus.ACCEPTED.value());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
+
 
     @DeleteMapping("/delete/{id}")
     public String deletePetprofileById(@PathVariable("id") UUID id) {

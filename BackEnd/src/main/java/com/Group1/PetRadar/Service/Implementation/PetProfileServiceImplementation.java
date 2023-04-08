@@ -67,13 +67,23 @@ public class PetProfileServiceImplementation implements PetProfileService {
 
 
     @Override
-    public PetprofileModel getPetprofileById(UUID id) {
-        PetprofileModel m = petprofileRepository.findById(id).orElse(null);
-        return m;
+    public PetprofileModel getPetprofileById(UUID id) throws Exception {
+        PetprofileModel petDetails = null;
+        try {
+            if (petprofileRepository.findByUserUserId(id).isEmpty()) {
+                throw new Exception("Pet not found");
+            }
+            petDetails = petprofileRepository.findByUserUserId(id).get();
+            return petDetails;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("No pet profile found for given UUID");
+        }
     }
 
-    @Override
-    public PetprofileModel updatePetprofile(PetprofileModel petprofileModel) {
+        @Override
+    public PetprofileModel updatePetprofile(AddPetDTO petprofileModel) {
         PetprofileModel m = petprofileRepository.findById(petprofileModel.getPetId()).orElse(null);
         if (petprofileModel.getPetName() != null)
             m.setPetName(petprofileModel.getPetName());
@@ -83,8 +93,6 @@ public class PetProfileServiceImplementation implements PetProfileService {
             m.setAge(petprofileModel.getAge());
         if (petprofileModel.getPetCategory() != null)
             m.setPetCategory(petprofileModel.getPetCategory());
-        if (petprofileModel.getPetQrImage() != null)
-            m.setPetQrImage(petprofileModel.getPetQrImage());
         if (petprofileModel.getGender() != null)
             m.setGender(petprofileModel.getGender());
         if (petprofileModel.getBio() != null)
@@ -97,8 +105,12 @@ public class PetProfileServiceImplementation implements PetProfileService {
             m.setPetIdentificationMarks(petprofileModel.getPetIdentificationMarks());
         if (petprofileModel.getAllergies() != null)
             m.setAllergies(petprofileModel.getAllergies());
+        if (petprofileModel.getImage() != null) {
+            m.setImageUrl(awsService.save(petprofileModel.getImage()));
+        }
         return petprofileRepository.save(m);
     }
+
 
     @Override
     public String deletePetprofileById(UUID id) {

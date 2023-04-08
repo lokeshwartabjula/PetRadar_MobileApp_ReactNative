@@ -11,7 +11,7 @@ public interface PetProfileService {
 
     PetprofileModel getPetprofileById(UUID id) throws Exception;
 
-    PetprofileModel updatePetprofile(PetprofileModel petprofileModel);
+    PetprofileModel updatePetprofile(AddPetDTO petprofileModel);
 
     String deletePetprofileById(UUID id);
 
