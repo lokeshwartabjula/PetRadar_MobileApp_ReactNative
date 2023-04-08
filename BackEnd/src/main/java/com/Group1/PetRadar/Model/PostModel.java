@@ -97,20 +97,8 @@ public class PostModel {
                 this.user = user;
         }
 
-        public String getUserProfilePicture() {
-                return userProfilePicture;
-        }
-
-        public void setUserProfilePicture(String userProfilePicture) {
-                this.userProfilePicture = userProfilePicture;
-        }
-
-        public String getUserName() {
-                return userName;
-        }
-
-        public void setUserName(String userName) {
-                this.userName = userName;
+        public User getUser() {
+                return user;
         }
 
 }

@@ -37,7 +37,7 @@ public class PostController {
     public ResponseEntity<Response> createPost(
             @RequestParam() Map<String, String> paramList,
             @RequestParam(name = "image", required = true) MultipartFile file) throws Exception {
-        PostModel newPost = null;
+        Map<String, Object> newPost = new HashMap<>();
         Response failureResponse = null;
         try {
             // PostModelBuilder dummy = PostModel.builder();
@@ -68,9 +68,9 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
         }
         Response response = new Response();
-        Map<String, Object> data = new HashMap<>();
-        data.put("post", newPost);
-        response.setData(data);
+//        Map<String, Object> data = new HashMap<>();
+//        data.put("post", newPost);
+        response.setData(newPost);
         response.setMessage(HttpStatus.ACCEPTED.name());
         response.setStatus(HttpStatus.ACCEPTED.value());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);

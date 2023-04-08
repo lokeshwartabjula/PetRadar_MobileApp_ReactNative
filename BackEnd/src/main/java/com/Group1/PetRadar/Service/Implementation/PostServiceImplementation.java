@@ -4,11 +4,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,7 +89,7 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public PostModel savePost(AddPostDTO postmodel) throws Exception {
+    public Map<String, Object> savePost(AddPostDTO postmodel) throws Exception {
         PostModel newPost = new PostModel();
         User user = null;
         try {
@@ -109,15 +105,18 @@ public class PostServiceImplementation implements PostService {
         newPost.setLatitude(postmodel.getLatitude());
         newPost.setLongitude(postmodel.getLongitude());
         newPost.setImageUrl(awsService.save(postmodel.getImage()));
-        newPost.setUserName(postmodel.getUserName());
-        newPost.setUserProfilePicture(postmodel.getUserProfilePicture());
         newPost.setUser(user);
 
         newPost = postRepository.save(newPost);
 
+        Map<String, Object> data = new HashMap<>();
+        user = newPost.getUser();
+        data.put("userName", user.getFirstName() + " " + user.getLastName());
+        data.put("imageUrl", user.getImageUrl());
+        data.put("post", newPost);
         sendNotifications(newPost.getLatitude(), newPost.getLongitude());
 
-        return newPost;
+        return data;
     }
 
     @Override
