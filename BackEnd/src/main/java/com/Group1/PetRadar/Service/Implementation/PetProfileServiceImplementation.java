@@ -45,6 +45,7 @@ public class PetProfileServiceImplementation implements PetProfileService {
         newPet.setGender(petDetails.getGender());
         newPet.setBio(petDetails.getBio());
         newPet.setPetHeightInCms(petDetails.getPetHeightInCms());
+        newPet.setPetIdentificationMarks(petDetails.getPetIdentificationMarks());
         newPet.setWeightInLbs(petDetails.getWeightInLbs());
         newPet.setWeightInLbs(petDetails.getWeightInLbs());
         newPet.setAllergies(petDetails.getAllergies());
