@@ -24,10 +24,10 @@ build:
     # - mvn eclipse:eclipse
     - mvn clean package
   artifacts:
-  paths:
-    - target
-  tags:
-    - dalfcs_gitlab_docker_ci
+    paths:
+      - target
+    tags:
+      - dalfcs_gitlab_docker_ci
 
 test:
   stage: test
@@ -53,8 +53,8 @@ smell-backend-job:
   tags:      
     - dalfcs_gitlab_docker_ci    
   artifacts:      
-  paths:        
-    - back_end_smells
+    paths:        
+      - back_end_smells
 
 deploy_dev:
   image: docker:stable
