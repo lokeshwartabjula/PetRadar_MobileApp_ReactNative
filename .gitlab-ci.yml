@@ -27,7 +27,7 @@ build:
     paths:
       - target
     tags:
-      - dalfcs_gitlab_docker_ci
+      - ugrad
 
 test:
   stage: test
@@ -43,7 +43,7 @@ test:
     - echo "Pipeline test started"
     - mvn verify
   tags:
-    - dalfcs_gitlab_docker_ci
+    - ugrad
 
 smell-backend-job:
   stage: smells
@@ -51,7 +51,7 @@ smell-backend-job:
   script:
     - java -jar $CI_PROJECT_DIR/DesigniteJava.jar -i $CI_PROJECT_DIR/datawiz-api -o back_end_smells/
   tags:
-    - dalfcs_gitlab_docker_ci
+    - ugrad
   artifacts:
     paths:
       - back_end_smells/
@@ -60,7 +60,7 @@ deploy_dev:
   image: docker:stable
   stage: deploy
   tags:
-    - dalfcs_gitlab_docker_ci
+    - ugrad
   artifacts:
     paths:
       - target
@@ -79,7 +79,7 @@ deploy_release:
   image: docker:stable
   stage: deploy
   tags:
-    - dalfcs_gitlab_docker_ci
+    - ugrad
   artifacts:
     paths:
       - target
