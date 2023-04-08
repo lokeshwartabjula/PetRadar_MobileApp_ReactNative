@@ -8,14 +8,7 @@ import com.Group1.PetRadar.protocol.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.Group1.PetRadar.DTO.medicalRecord.AddPetMedicalRecordDTO;
 import com.Group1.PetRadar.Model.MedicalHistory;
@@ -53,10 +46,42 @@ public class MedicalRecordController {
         return medicalRecordService.updateMedical(medical);
     }
 
-    @PostMapping("/save")
-    public MedicalHistory saveMedical(@RequestBody AddPetMedicalRecordDTO medical) {
-        return medicalRecordService.saveMedical(medical);
+        @PostMapping("/save")
+    public ResponseEntity<Response> saveMedical(@RequestParam Map<String, String> paramList) throws Exception {
+        Response failureResponse = null;
+        MedicalHistory medical = null;
+        AddPetMedicalRecordDTO newMedicalRecord = new AddPetMedicalRecordDTO();
+
+        paramList.forEach((String key, String value) -> {
+            switch (key) {
+                case "vetVisitDate" -> newMedicalRecord.setVetVisitDate(value);
+                case "symptoms" -> newMedicalRecord.setSymptoms(value);
+                case "vetName" -> newMedicalRecord.setVetName(value);
+                case "vaccinationDate" -> newMedicalRecord.setVaccinationDate(value);
+                case "surgery" -> newMedicalRecord.setSurgery(value);
+                case "medication" -> newMedicalRecord.setMedication(value);
+                case "petId" -> newMedicalRecord.setPetId(value);
+                // case "image" -> addPetDTO.setImage(value);
+                default -> throw new IllegalStateException("Unexpected value: " + key);
+            }
+        });
+
+        try {
+            medical = medicalRecordService.saveMedical(newMedicalRecord);
+        } catch (Exception e) {
+            failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+        }
+        Map<String, Object> data = new HashMap<>();
+        data.put("medicalRecord", medical);
+        Response response = new Response();
+        response.setData(data);
+        response.setMessage(HttpStatus.ACCEPTED.name());
+        response.setStatus(HttpStatus.ACCEPTED.value());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
+
 
     @DeleteMapping("/delete/{id}")
     public String deleteMovieById(@PathVariable("id") UUID id) {

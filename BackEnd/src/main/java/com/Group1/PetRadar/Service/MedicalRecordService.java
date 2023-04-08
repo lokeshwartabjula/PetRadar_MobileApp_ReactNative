@@ -7,7 +7,7 @@ import com.Group1.PetRadar.Model.MedicalHistory;
 
 public interface MedicalRecordService {
 
-    MedicalHistory saveMedical(AddPetMedicalRecordDTO medical);
+    MedicalHistory saveMedical(AddPetMedicalRecordDTO medical) throws Exception;
 
     MedicalHistory getmedicalById(UUID id) throws Exception;
 

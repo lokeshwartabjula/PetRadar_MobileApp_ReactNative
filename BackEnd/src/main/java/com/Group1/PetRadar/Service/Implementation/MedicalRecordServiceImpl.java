@@ -3,6 +3,7 @@ package com.Group1.PetRadar.Service.Implementation;
 import com.Group1.PetRadar.DTO.medicalRecord.AddPetMedicalRecordDTO;
 import com.Group1.PetRadar.Model.MedicalHistory;
 import com.Group1.PetRadar.Repository.MedicalRecordRepository;
+import com.Group1.PetRadar.Repository.PetProfileRepository;
 import com.Group1.PetRadar.Service.MedicalRecordService;
 
 import java.util.UUID;
@@ -16,17 +17,25 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     @Autowired
     MedicalRecordRepository medicalRecordRepository;
 
-    @Override
-    public MedicalHistory saveMedical(AddPetMedicalRecordDTO medicalrecord) {
+    @Autowired
+    PetProfileRepository perPetProfileRepository;
 
-        MedicalHistory newRecord = new MedicalHistory();
-        newRecord.setVetVisitDate(medicalrecord.getVetVisitDate());
-        newRecord.setSymptoms(medicalrecord.getSymptoms());
-        newRecord.setVetName(medicalrecord.getVetName());
-        newRecord.setVaccinationDate(medicalrecord.getVaccinationDate());
-        newRecord.setSurgery(medicalrecord.getSurgery());
-        newRecord.setMedication(medicalrecord.getMedication());
-        return medicalRecordRepository.save(newRecord);
+    @Override
+    public MedicalHistory saveMedical(AddPetMedicalRecordDTO medicalrecord) throws Exception {
+        try {
+            MedicalHistory newRecord = new MedicalHistory();
+            newRecord.setVetVisitDate(medicalrecord.getVetVisitDate());
+            newRecord.setSymptoms(medicalrecord.getSymptoms());
+            newRecord.setVetName(medicalrecord.getVetName());
+            newRecord.setVaccinationDate(medicalrecord.getVaccinationDate());
+            newRecord.setSurgery(medicalrecord.getSurgery());
+            newRecord.setMedication(medicalrecord.getMedication());
+            newRecord.setPet(perPetProfileRepository.findById(medicalrecord.getPetId()).get());
+            return medicalRecordRepository.save(newRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error while saving medical record: " + e.getMessage());
+        }
     }
 
     @Override
