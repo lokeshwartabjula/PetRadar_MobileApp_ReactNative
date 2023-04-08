@@ -54,7 +54,7 @@ smell-backend-job:
     - dalfcs_gitlab_docker_ci    
   artifacts:      
   paths:        
-    - back_end_smells/
+    - back_end_smells
 
 deploy_dev:
   image: docker:stable
