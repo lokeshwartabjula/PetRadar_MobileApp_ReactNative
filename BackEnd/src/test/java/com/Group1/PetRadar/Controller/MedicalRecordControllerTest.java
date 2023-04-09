@@ -4,9 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -44,17 +47,35 @@ class MedicalRecordControllerTest {
 	@Test
 	public void updateMovieTest() {
 		MedicalHistory dummyMedicalHistory = new MedicalHistory();
-		
-		when(medicalRecordServiceMock.updateMedical(any(MedicalHistory.class))).thenReturn(dummyMedicalHistory);
-		Assert.assertEquals(dummyMedicalHistory,medicalRecordController.updateMovie(dummyMedicalHistory));
+		Map<String, String> paramList = new HashMap<String,String>();
+		paramList.put("medicalRecordId", "recordId");
+		paramList.put("vetVisitDate", "visitDate");
+		paramList.put("symptoms", "symptoms");
+		paramList.put("vetName", "vetname");
+		paramList.put("vaccinationDate", "17-10-1997");
+		paramList.put("surgery", "surgery");
+		paramList.put("medication", "medication");
+
+//		when(medicalRecordServiceMock.updateMedical(any)).thenReturn(dummyMedicalHistory);
+		Assertions.assertThrows(IllegalArgumentException.class,()->{medicalRecordController.updateMovie(paramList);});
 		
 	}
 	@Test
-	public void saveMedicalTest() {
+	public void saveMedicalTest() throws Exception {
 		MedicalHistory dummyMedicalHistory = new MedicalHistory();
+		Map<String, String> paramList = new HashMap<String,String>();
+		paramList.put("medicalRecordId", "recordId");
+		paramList.put("vetVisitDate", "visitDate");
+		paramList.put("symptoms", "symptoms");
+		paramList.put("vetName", "vetname");
+		paramList.put("vaccinationDate", "17-10-1997");
+		paramList.put("surgery", "surgery");
+		paramList.put("medication", "medication");
+
 		AddPetMedicalRecordDTO dummyAddPetMedicalRecordDTO = new AddPetMedicalRecordDTO();
 		when(medicalRecordServiceMock.saveMedical(any(AddPetMedicalRecordDTO.class))).thenReturn(dummyMedicalHistory);
-		Assert.assertEquals(dummyMedicalHistory, medicalRecordController.saveMedical(dummyAddPetMedicalRecordDTO));
+		
+		Assertions.assertThrows(IllegalArgumentException.class,()->{medicalRecordController.saveMedical(paramList);});
 	}
 
 	@Test

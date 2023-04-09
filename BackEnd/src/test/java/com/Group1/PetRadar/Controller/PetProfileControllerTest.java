@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import org.junit.Assert;
@@ -15,6 +18,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.Group1.PetRadar.DTO.pet.AddPetDTO;
 import com.Group1.PetRadar.Model.PetprofileModel;
@@ -31,22 +36,54 @@ class PetProfileControllerTest {
 	@Mock
 	PetProfileService petProfileServiceMock;
 	
+	@Mock
+	MultipartFile multipartFileMock;
+	
 
 	@Test
 	public void createPetprofilePositiveTest1() throws Exception {
 		AddPetDTO dummyPetProfile = new AddPetDTO();
-		Assert.assertEquals(202, petProfileController.createPetprofile(dummyPetProfile).getBody().getStatus());
+		Map<String, String> paramList = new HashMap<String,String>();
+		paramList.put("petName", "recordId");
+		paramList.put("petBreed", "visitDate");
+		paramList.put("age", "symptoms");
+		paramList.put("petCategory", "vetname");
+		paramList.put("gender", "17-10-1997");
+		paramList.put("bio", "surgery");
+		paramList.put("petHeightInCms", "medication");
+		paramList.put("weightInLbs", "3.0");
+		paramList.put("petIdentificationMarks", "4.0");
+		paramList.put("allergies", "surgery");
+		paramList.put("petId", "medication");
+		
+		byte[] b = new byte[20];
+		new Random().nextBytes(b);		
+		MultipartFile multiPartFile = new MockMultipartFile("mock", b);
+		
+		Assert.assertEquals(202, petProfileController.createPetprofile(paramList, multiPartFile));
 	}
 	
 	@Test
 	public void createPetprofileNegativeTest1() throws Exception {
 		AddPetDTO dummyPetProfile = new AddPetDTO();
+		Map<String, String> paramList = new HashMap<String,String>();
+		paramList.put("medicalRecordId", "recordId");
+		paramList.put("vetVisitDate", "visitDate");
+		paramList.put("symptoms", "symptoms");
+		paramList.put("vetName", "vetname");
+		paramList.put("vaccinationDate", "17-10-1997");
+		paramList.put("surgery", "surgery");
+		paramList.put("medication", "medication");
+		
+		byte[] b = new byte[20];
+		new Random().nextBytes(b);		
+		MultipartFile multiPartFile = new MockMultipartFile("mock", b);
 		when(petProfileServiceMock.savePetProfile(any(AddPetDTO.class))).thenThrow(new Exception());
-		Assert.assertEquals(401, petProfileController.createPetprofile(dummyPetProfile).getBody().getStatus());
+		Assert.assertEquals(401, petProfileController.createPetprofile(paramList, multiPartFile));
 	}
 	
 	@Test
-	public void getPetprofileIdTest() {
+	public void getPetprofileIdTest() throws Exception {
 		PetprofileModel dummyPetprofileModel = new PetprofileModel();
 		dummyPetprofileModel.setBio("dummyBio");
 		UUID dummyUUID = new UUID(2l,3l);
@@ -57,9 +94,21 @@ class PetProfileControllerTest {
     @Test
 	public void updatePetprofileTest() {
 		PetprofileModel dummyPetprofileModel = new PetprofileModel();
+		Map<String, String> paramList = new HashMap<String,String>();
+		paramList.put("medicalRecordId", "recordId");
+		paramList.put("vetVisitDate", "visitDate");
+		paramList.put("symptoms", "symptoms");
+		paramList.put("vetName", "vetname");
+		paramList.put("vaccinationDate", "17-10-1997");
+		paramList.put("surgery", "surgery");
+		paramList.put("medication", "medication");
+		
+		byte[] b = new byte[20];
+		new Random().nextBytes(b);		
+		MultipartFile multiPartFile = new MockMultipartFile("mock", b);
 		dummyPetprofileModel.setBio("dummyBio");
-		when(petProfileServiceMock.updatePetprofile(any(PetprofileModel.class))).thenReturn(dummyPetprofileModel);
-		Assert.assertEquals(dummyPetprofileModel, petProfileController.updatePetprofile(dummyPetprofileModel));
+		when(petProfileServiceMock.updatePetprofile(any(AddPetDTO.class))).thenReturn(dummyPetprofileModel);
+		Assert.assertEquals(dummyPetprofileModel, petProfileController.updatePetprofile(paramList, multiPartFile));
 	}
 	
 	@Test

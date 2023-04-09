@@ -130,14 +130,14 @@ public class UserControllerTest {
 	@Test
 	public void updateTestPositive1() {
 		when(multipartFileMock.getOriginalFilename()).thenReturn("dummyFileName");
-		Assert.assertEquals(202, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", "dummyUserId", multipartFileMock).getBody().getStatus());
+		Assert.assertEquals(202, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", "dummyUserId", multipartFileMock, "string", "string", "string").getBody().getStatus());
 	}
 	
 	@Test
 	public void updateTestNegative1() throws Exception {
 		when(multipartFileMock.getOriginalFilename()).thenReturn("dummyFileName");
 		when(userServiceMock.updateUser(any(updateUserDTO.class), anyString())).thenThrow(new Exception());
-		Assert.assertEquals(401, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", "dummyUserId", multipartFileMock).getBody().getStatus());
+		Assert.assertEquals(401, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", "dummyUserId", multipartFileMock, "string", "string", "string").getBody().getStatus());
 	}
 
 //Test cases for deleting the user by id

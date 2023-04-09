@@ -59,9 +59,10 @@ class PetProfileServiceImplTest {
 	
 	@Test
 	public void updatePetProfile() {
-		PetprofileModel dummyModel = new PetprofileModel();
+		AddPetDTO dummyModel = new AddPetDTO();
 		User dummyUser = new User();
-		Optional<PetprofileModel> dummyOption = Optional.of(dummyModel);
+		PetprofileModel dummyPetProfileModel = new PetprofileModel();
+		Optional<PetprofileModel> dummyOption = Optional.of(dummyPetProfileModel);
 		AddPetDTO dummyPetDTO = new AddPetDTO();
 		dummyPetDTO.setUserId("0f14d0ab-9605-4a62-a9e4-5ed26688389b");
 		dummyPetDTO.setPetHeightInCms((float) 2.0);
@@ -74,9 +75,10 @@ class PetProfileServiceImplTest {
 	
 	@Test
 	public void updatePetProfileNotNull() {
-		PetprofileModel dummyModel = new PetprofileModel();
+		AddPetDTO dummyModel = new AddPetDTO();
 		User dummyUser = new User();
-		Optional<PetprofileModel> dummyOption = Optional.of(dummyModel);
+		PetprofileModel dummyPetProfileModel = new PetprofileModel();
+		Optional<PetprofileModel> dummyOption = Optional.of(dummyPetProfileModel);
 		AddPetDTO dummyPetDTO = new AddPetDTO();
 		dummyPetDTO.setUserId("0f14d0ab-9605-4a62-a9e4-5ed26688389b");
 		dummyPetDTO.setPetHeightInCms((float) 2.0);
@@ -88,13 +90,13 @@ class PetProfileServiceImplTest {
 		dummyModel.setPetBreed("notnull");
 		dummyModel.setPetCategory("notnull");
 		Date date = new Date();
-		dummyModel.setPetDob(date);
+//		dummyModel.setPetDob(date);
 		dummyModel.setPetHeightInCms((float)3.0);
 		dummyModel.setPetIdentificationMarks("notnull");
 		dummyModel.setPetName("notnull");
 		byte[] bb = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09}; ;
-		dummyModel.setPetQrImage(bb);
-		dummyModel.setUser(dummyUser);
+//		dummyModel.setPetQrImage(bb);
+//		dummyModel.setUser(dummyUser);
 		dummyModel.setWeightInLbs((float)4.09);
 		
 		

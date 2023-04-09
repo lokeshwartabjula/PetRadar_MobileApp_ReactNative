@@ -26,14 +26,14 @@ class MedicalRecordServiceImplTest {
 	MedicalRecordServiceImpl impl;
 	
 	@Test
-	public void saveMedicalTest() {
+	public void saveMedicalTest() throws Exception {
 		AddPetMedicalRecordDTO dummyHistory = new AddPetMedicalRecordDTO();
 		Date dummyDate = new Date();
 		
-		dummyHistory.setVetVisitDate(dummyDate);
+		dummyHistory.setVetVisitDate("17-10-1997");
 		dummyHistory.setSymptoms("symptoms");
 		dummyHistory.setVetName("vetName");
-		dummyHistory.setVaccinationDate(dummyDate);
+		dummyHistory.setVaccinationDate("17-10-1997");
 		dummyHistory.setSurgery("srugery");
 		dummyHistory.setMedication("medication");
 		
