@@ -20,13 +20,13 @@ import java.time.LocalDateTime;
 @Service
 public class AwsService {
 
-    public static final Logger LOG = LoggerFactory.getLogger(AwsService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AwsService.class);
 
     @Autowired
-    public AmazonS3 amazonS3;
+    private AmazonS3 amazonS3;
 
     @Value("${s3.bucket.name}")
-    public String s3BucketName;
+    private String s3BucketName;
 
     public File convertMultiPartFileToFile(final MultipartFile multipartFile) {
         final File file = new File(multipartFile.getOriginalFilename());
@@ -48,7 +48,7 @@ public class AwsService {
 
     @Async
     public String fetchImageUrl(String s3BucketName, String filename) {
-        return amazonS3.getUrl(s3BucketName,filename).toString();
+        return amazonS3.getUrl(s3BucketName, filename).toString();
     }
 
     @Async
@@ -60,7 +60,7 @@ public class AwsService {
             final PutObjectRequest putObjectRequest = new PutObjectRequest(s3BucketName, fileName, file);
             amazonS3.putObject(putObjectRequest);
             Files.delete(file.toPath()); // Remove the file locally created in the project folder
-            return fetchImageUrl(s3BucketName,fileName);
+            return fetchImageUrl(s3BucketName, fileName);
         } catch (AmazonServiceException e) {
             LOG.error("Error {} occurred while uploading file", e.getLocalizedMessage());
         } catch (IOException ex) {
