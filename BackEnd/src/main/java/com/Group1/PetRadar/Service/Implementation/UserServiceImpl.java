@@ -292,4 +292,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public List<PostModel> findPostsByUserId(UUID userId) throws Exception {
+        try {
+            User user = findById(userId.toString());
+            System.out.println(user.getPosts());
+            return user.getPosts();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Exception occurred while retrieving pets");
+        }
+    }
+
 }

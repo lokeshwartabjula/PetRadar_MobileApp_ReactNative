@@ -62,6 +62,28 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
+	@GetMapping("/allPost")
+	public ResponseEntity<Response> getAllPostsByUserId(@RequestParam(name = "userId") String id) {
+
+		System.out.println(id);
+		Response failureResponse = null;
+		List<PostModel> posts = null;
+		try {
+			posts = userService.findPostsByUserId(UUID.fromString(id));
+		} catch (Exception e) {
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put("posts", posts);
+		Response response = new Response();
+		response.setData(data);
+		response.setMessage(HttpStatus.ACCEPTED.name());
+		response.setStatus(HttpStatus.ACCEPTED.value());
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Response> getUserById(@PathVariable String id) {
 		Response failureResponse = null;

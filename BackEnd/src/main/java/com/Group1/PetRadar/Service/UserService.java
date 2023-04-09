@@ -37,4 +37,6 @@ public interface UserService {
 	Boolean registerAppUser(AuthReqDTO authReqDTO) throws Exception;
 
 	List<PetprofileModel> findPetsByUserId(UUID id) throws Exception;
+
+	List<PostModel> findPostsByUserId(UUID id) throws Exception;
 }
