@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 import com.Group1.PetRadar.DTO.user.updateUserDTO;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -48,6 +49,8 @@ public class UserControllerTest {
 		Assert.assertEquals(401, mockUserController.getUserById("34").getBody().getStatus());
 		
 	}
+
+	//Test cases for user  register,login & save
 
 	@Test
 	public void googleRegisterLoginNewUserPositive1() throws Exception {
@@ -119,5 +122,22 @@ public class UserControllerTest {
 	
 	}
 	
+	//test cases for updating the user
+	
+    @Mock
+	MultipartFile multipartFileMock;
+	
+	@Test
+	public void updateTestPositive1() {
+		when(multipartFileMock.getOriginalFilename()).thenReturn("dummyFileName");
+		Assert.assertEquals(202, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", "dummyUserId", multipartFileMock).getBody().getStatus());
+	}
+	
+	@Test
+	public void updateTestNegative1() throws Exception {
+		when(multipartFileMock.getOriginalFilename()).thenReturn("dummyFileName");
+		when(userServiceMock.updateUser(any(updateUserDTO.class), anyString())).thenThrow(new Exception());
+		Assert.assertEquals(401, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", "dummyUserId", multipartFileMock).getBody().getStatus());
+	}
 
 }
