@@ -12,26 +12,10 @@ public class AddPetMedicalRecordDTO {
     private String surgery;
     private String medication;
 
+    private UUID petId;
+
     // default constructor
     public AddPetMedicalRecordDTO() {
-    }
-
-    // parameterized constructor
-    public void MedicalRecordDto(
-            UUID medicalRecordId,
-            Date vetVisitDate,
-            String symptoms,
-            String vetName,
-            Date vaccinationDate,
-            String surgery,
-            String medication) {
-        this.medicalRecordId = medicalRecordId;
-        this.vetVisitDate = vetVisitDate;
-        this.symptoms = symptoms;
-        this.vetName = vetName;
-        this.vaccinationDate = vaccinationDate;
-        this.surgery = surgery;
-        this.medication = medication;
     }
 
     // getter and setter methods
@@ -39,16 +23,16 @@ public class AddPetMedicalRecordDTO {
         return medicalRecordId;
     }
 
-    public void setMedicalRecordId(UUID medicalRecordId) {
-        this.medicalRecordId = medicalRecordId;
+    public void setMedicalRecordId(String medicalRecordId) {
+        this.medicalRecordId = UUID.fromString(medicalRecordId);
     }
 
     public Date getVetVisitDate() {
         return vetVisitDate;
     }
 
-    public void setVetVisitDate(Date vetVisitDate) {
-        this.vetVisitDate = vetVisitDate;
+    public void setVetVisitDate(String vetVisitDate) {
+        this.vetVisitDate = new Date(vetVisitDate);
     }
 
     public String getSymptoms() {
@@ -71,8 +55,8 @@ public class AddPetMedicalRecordDTO {
         return vaccinationDate;
     }
 
-    public void setVaccinationDate(Date vaccinationDate) {
-        this.vaccinationDate = vaccinationDate;
+    public void setVaccinationDate(String vaccinationDate) {
+        this.vaccinationDate = new Date(vaccinationDate);
     }
 
     public String getSurgery() {
@@ -89,5 +73,13 @@ public class AddPetMedicalRecordDTO {
 
     public void setMedication(String medication) {
         this.medication = medication;
+    }
+
+    public UUID getPetId() {
+        return petId;
+    }
+
+    public void setPetId(String petId) {
+        this.petId = UUID.fromString(petId);
     }
 }
