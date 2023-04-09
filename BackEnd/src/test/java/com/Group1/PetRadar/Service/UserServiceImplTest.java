@@ -1,7 +1,10 @@
 package com.Group1.PetRadar.Service;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -54,4 +57,13 @@ public class UserServiceImplTest {
         Assert.assertEquals(dummyUser, userServiceImpl.saveUser(dummyUser));
 
     }
+
+    @Test
+    public void getUserEmailTest() {
+        User dummyUser = new User();
+        Optional<User> dummyOption = Optional.of(dummyUser);
+        when(userRepoMock.findByEmail(anyString())).thenReturn(dummyOption);
+        Assert.assertEquals(dummyUser, userServiceImpl.getUserEmail("email"));
+    }
+
 }
