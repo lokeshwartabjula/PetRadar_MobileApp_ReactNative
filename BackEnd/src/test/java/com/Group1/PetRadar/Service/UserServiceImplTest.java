@@ -265,4 +265,46 @@ public class UserServiceImplTest {
         });
     }
 
+    @Test
+    public void registerAppUserProfileUrlNotnull() throws Exception {
+        AuthReqDTO dummyUser = new AuthReqDTO();
+        dummyUser.setEmail("dummyemail.com");
+        User dummyUser2 = new User();
+        dummyUser2.setPassword("notnull");
+        dummyUser2.setProfileUrl("notnull");
+        when(passwordEncoderMock.matches(any(), any())).thenReturn(true);
+        when(namedParameterJdbcTemplateMock.queryForObject(anyString(), any(MapSqlParameterSource.class),
+                any(BeanPropertyRowMapper.class))).thenReturn(dummyUser2);
+        Assertions.assertThrows(Exception.class, () -> {
+            userServiceImpl.registerAppUser(dummyUser);
+        });
+    }
+
+    @Test
+    public void registerAppUserTest() throws Exception {
+        AuthReqDTO dummyUser = new AuthReqDTO();
+        dummyUser.setEmail("dummyemail.com");
+        User dummyUser2 = new User();
+        dummyUser2.setEmail("notnull");
+
+        when(passwordEncoderMock.matches(any(), any())).thenReturn(true);
+        when(namedParameterJdbcTemplateMock.queryForObject(anyString(), any(MapSqlParameterSource.class),
+                any(BeanPropertyRowMapper.class))).thenReturn(dummyUser2);
+        Assertions.assertThrows(Exception.class, () -> {
+            userServiceImpl.registerAppUser(dummyUser);
+        });
+    }
+
+    @Test
+    public void registerAppUserTest2() throws Exception {
+        AuthReqDTO dummyUser = new AuthReqDTO();
+        dummyUser.setEmail("dummyemail.com");
+        User dummyUser2 = new User();
+        dummyUser2.setPassword("notnull");
+        when(passwordEncoderMock.matches(any(), any())).thenReturn(true);
+        when(namedParameterJdbcTemplateMock.queryForObject(anyString(), any(MapSqlParameterSource.class),
+                any(BeanPropertyRowMapper.class))).thenReturn(dummyUser2);
+        Assert.assertEquals(true, userServiceImpl.registerAppUser(dummyUser));
+    }
+
 }
