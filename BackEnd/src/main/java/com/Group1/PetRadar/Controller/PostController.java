@@ -2,6 +2,7 @@ package com.Group1.PetRadar.Controller;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -66,9 +67,27 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
-    @GetMapping("/get/{id}")
-    public PostModel getPostById(@PathVariable("id") UUID id) {
-        return postService.getPostById(id);
+    @GetMapping("/{latitude}/{longitude}")
+    public ResponseEntity<Response> getPostByLocation(
+            @PathVariable("latitude") BigDecimal latitude,
+            @PathVariable("longitude") BigDecimal longitude) {
+        List<PostModel> post = null;
+        Response failureResponse = null;
+
+        try {
+            post = postService.getNearByPostsBasedOnLocation(latitude, longitude);
+        } catch (Exception e) {
+            failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+        }
+        Response response = new Response();
+        Map<String, Object> data = new HashMap<>();
+        data.put("posts", post);
+        response.setData(data);
+        response.setMessage(HttpStatus.ACCEPTED.name());
+        response.setStatus(HttpStatus.ACCEPTED.value());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
     @PutMapping("/update")

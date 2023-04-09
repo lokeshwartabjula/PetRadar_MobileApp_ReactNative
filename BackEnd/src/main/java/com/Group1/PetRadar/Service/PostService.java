@@ -1,5 +1,7 @@
 package com.Group1.PetRadar.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -11,7 +13,7 @@ public interface PostService {
 
     Map<String, Object> savePost(AddPostDTO postmodel) throws Exception;
 
-    PostModel getPostById(UUID id);
+    List<PostModel> getNearByPostsBasedOnLocation(BigDecimal latitude, BigDecimal longitude);
 
     PostModel updatePost(UdpatePostDTO postmodel, UUID id);
 

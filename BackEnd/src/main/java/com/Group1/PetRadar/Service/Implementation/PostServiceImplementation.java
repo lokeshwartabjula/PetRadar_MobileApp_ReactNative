@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
@@ -125,9 +126,19 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public PostModel getPostById(UUID id) {
-        PostModel m = postRepository.findById(id).orElse(null);
-        return m;
+    public List<PostModel> getNearByPostsBasedOnLocation(BigDecimal latitude, BigDecimal longitude) {
+        Collection<PostModel> posts = postRepository.findPostByLocation(latitude, longitude);
+        List<PostModel> data = new ArrayList<>();
+        posts.forEach(post -> {
+            System.out.println(post);
+            User user = post.getUser();
+            post.setUserName(user.getFirstName() + " " + user.getLastName());
+            post.setUserProfilePicture(user.getImageUrl());
+            post.setUserId(user.getUserId());
+            data.add(post);
+        });
+
+        return data;
     }
 
     @Override
