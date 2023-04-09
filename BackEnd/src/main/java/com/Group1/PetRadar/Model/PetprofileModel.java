@@ -36,16 +36,17 @@ public class PetprofileModel {
     String petBreed;
     int age;
     String petCategory;
-    @Lob
-    @Column(name = "image_bytes", columnDefinition = "BLOB")
-    byte[] petQrImage;
     String gender;
     String bio;
     Float petHeightInCms;
     Float weightInLbs;
     String petIdentificationMarks;
     String allergies;
-    private String ImageUrl;
+    String ImageUrl;
+
+    @Lob
+    @Column(name = "image_bytes", columnDefinition = "BLOB")
+    byte[] petQrImage;
 
     @ManyToOne
     @JsonIgnore
@@ -56,6 +57,7 @@ public class PetprofileModel {
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MedicalHistory> medicalHistories;
 
+    // Getters and setters
     public UUID getPetId() {
         return petId;
     }

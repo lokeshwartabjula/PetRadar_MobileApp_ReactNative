@@ -26,11 +26,8 @@ public class User {
 	@Id()
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID userId;
-
 	private String email;
-
 	private String firstName;
-
 	private String lastName;
 	private String profileUrl;
 	private String address;
@@ -57,6 +54,7 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PostModel> posts;
 
+	// Getters and setters
 	public UUID getUserId() {
 		return userId;
 	}
