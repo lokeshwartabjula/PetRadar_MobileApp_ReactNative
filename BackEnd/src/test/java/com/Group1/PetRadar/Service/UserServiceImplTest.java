@@ -225,4 +225,44 @@ public class UserServiceImplTest {
         Assert.assertEquals(true, userServiceImpl.appLogin(dummyUser));
     }
 
+    @Test
+    public void registerAppUser() throws Exception {
+        AuthReqDTO dummyUser = new AuthReqDTO();
+        dummyUser.setEmail("dummyemail.com");
+        User dummyUser2 = new User();
+        dummyUser2.setPassword("notnull");
+        when(passwordEncoderMock.matches(any(), any())).thenReturn(true);
+        when(namedParameterJdbcTemplateMock.queryForObject(anyString(), any(MapSqlParameterSource.class),
+                any(BeanPropertyRowMapper.class))).thenReturn(dummyUser2);
+        Assert.assertEquals(true, userServiceImpl.registerAppUser(dummyUser));
+    }
+
+    @Test
+    public void registerAppUserEmptyException() throws Exception {
+        AuthReqDTO dummyUser = new AuthReqDTO();
+        dummyUser.setEmail("dummyemail.com");
+        User dummyUser2 = new User();
+        dummyUser2.setPassword("notnull");
+        when(passwordEncoderMock.matches(any(), any())).thenReturn(true);
+        when(namedParameterJdbcTemplateMock.queryForObject(anyString(), any(MapSqlParameterSource.class),
+                any(BeanPropertyRowMapper.class))).thenThrow(new EmptyResultDataAccessException("", 0) {
+                });
+        Assert.assertEquals(true, userServiceImpl.registerAppUser(dummyUser));
+    }
+
+    @Test
+    public void registerAppUser2() throws Exception {
+        AuthReqDTO dummyUser = new AuthReqDTO();
+        dummyUser.setEmail("dummyemail.com");
+        User dummyUser2 = new User();
+        dummyUser2.setPassword("notnull");
+        dummyUser2.setEmail("notnjull");
+        when(passwordEncoderMock.matches(any(), any())).thenReturn(true);
+        when(namedParameterJdbcTemplateMock.queryForObject(anyString(), any(MapSqlParameterSource.class),
+                any(BeanPropertyRowMapper.class))).thenReturn(dummyUser2);
+        Assertions.assertThrows(Exception.class, () -> {
+            userServiceImpl.registerAppUser(dummyUser);
+        });
+    }
+
 }
