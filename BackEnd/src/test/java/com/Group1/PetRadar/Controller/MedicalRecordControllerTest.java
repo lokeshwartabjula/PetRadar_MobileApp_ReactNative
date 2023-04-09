@@ -45,19 +45,11 @@ class MedicalRecordControllerTest {
 	}
 	
 	@Test
-	public void updateMovieTest() {
+	public void updateMedicalTest() {
 		MedicalHistory dummyMedicalHistory = new MedicalHistory();
-		Map<String, String> paramList = new HashMap<String,String>();
-		paramList.put("medicalRecordId", "recordId");
-		paramList.put("vetVisitDate", "visitDate");
-		paramList.put("symptoms", "symptoms");
-		paramList.put("vetName", "vetname");
-		paramList.put("vaccinationDate", "17-10-1997");
-		paramList.put("surgery", "surgery");
-		paramList.put("medication", "medication");
-
-//		when(medicalRecordServiceMock.updateMedical(any)).thenReturn(dummyMedicalHistory);
-		Assertions.assertThrows(IllegalArgumentException.class,()->{medicalRecordController.updateMovie(paramList);});
+		
+		when(medicalRecordServiceMock.updateMedical(any(MedicalHistory.class))).thenReturn(dummyMedicalHistory);
+		Assert.assertEquals(dummyMedicalHistory,medicalRecordController.updateMedical(dummyMedicalHistory));
 		
 	}
 	@Test
@@ -79,11 +71,11 @@ class MedicalRecordControllerTest {
 	}
 
 	@Test
-	public void deleteMovieById() {
+	public void deleteMedicalById() {
 		UUID dummyUUID = new UUID(2l,3l);
 		when(medicalRecordServiceMock.deleteMedicalById(any(UUID.class))).thenReturn("expectedString");
 
-		Assert.assertEquals("expectedString", medicalRecordController.deleteMovieById(dummyUUID));
+		Assert.assertEquals("expectedString", medicalRecordController.deleteMedicalById(dummyUUID));
 	}
 	
 

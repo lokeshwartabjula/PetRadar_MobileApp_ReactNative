@@ -19,7 +19,7 @@ public class MainController {
     }
 
     @DeleteMapping("deleteSomething/{id}")
-    public String deleteMovieById(@PathVariable("id") int id) {
+    public String deleteMedicalById(@PathVariable("id") int id) {
 
         return "dummy";
     }
