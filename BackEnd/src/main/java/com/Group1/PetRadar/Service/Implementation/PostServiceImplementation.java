@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Group1.PetRadar.DTO.post.AddPostDTO;
+import com.Group1.PetRadar.DTO.post.UdpatePostDTO;
 import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.PostRepository;
@@ -130,12 +131,15 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public PostModel updatePost(PostModel postmodel) {
-        PostModel existingpost = postRepository.findById(postmodel.getPostId()).orElse(null);
+    public PostModel updatePost(UdpatePostDTO postmodel, UUID id) {
+        PostModel existingpost = postRepository.findById(id).orElse(null);
         if (postmodel.getPostDate() != null)
             existingpost.setPostDate(postmodel.getPostDate());
         if (postmodel.getDescription() != null)
             existingpost.setDescription(postmodel.getDescription());
+        if (postmodel.getImage() != null) {
+            existingpost.setImageUrl(awsService.save(postmodel.getImage()));
+        }
 
         return postRepository.save(existingpost);
     }
