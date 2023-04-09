@@ -70,7 +70,8 @@ public class PostServiceImplementation implements PostService {
                         + "\"app_id\": \"89e439d6-260c-4aba-900c-347009c530e5\","
                         + "\"include_player_ids\":" + "[\"" + String.join("\",\"", userOSID) + "\"]" + ","
                         + "\"contents\": {\"en\": \"URGENT!!! Pet Missing, Help!!!\"},"
-                        + "\"android_channel_id\": \"39c7e4cb-f83e-40b7-991e-e41e980fa8d0\""
+                        + "\"android_channel_id\": \"39c7e4cb-f83e-40b7-991e-e41e980fa8d0\"" + ","
+                        + "\"headings\": {\"en\": \"Pet Radar\"},"
                         + "}";
                 byte[] sendBytes = strJsonBody.getBytes("UTF-8");
                 con.setFixedLengthStreamingMode(sendBytes.length);
