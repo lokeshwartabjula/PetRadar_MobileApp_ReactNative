@@ -6,14 +6,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -33,6 +26,9 @@ public class PostModel {
         String ImageUrl;
         String userName;
         String userProfilePicture;
+
+        @Transient
+        UUID userId;
 
         @JsonIgnore
         @ManyToOne
@@ -99,6 +95,14 @@ public class PostModel {
 
         public User getUser() {
                 return user;
+        }
+
+        public UUID getUserId() {
+                return userId;
+        }
+
+        public void setUserId(UUID userId) {
+                this.userId = userId;
         }
 
         public String getUserName() {

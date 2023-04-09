@@ -13,7 +13,7 @@ public interface PostService {
 
     Map<String, Object> savePost(AddPostDTO postmodel) throws Exception;
 
-    List<PostModel> getPostById(BigDecimal latitude, BigDecimal longitude);
+    List<PostModel> getNearByPostsBasedOnLocation(BigDecimal latitude, BigDecimal longitude);
 
     PostModel updatePost(UdpatePostDTO postmodel, UUID id);
 

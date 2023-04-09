@@ -10,6 +10,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface PostRepository extends CrudRepository<PostModel, UUID> {
-    @Query(value = "SELECT * FROM post u WHERE (6371 * acos(cos(radians(?1)) * cos(radians(u.latitude)) * cos(radians(u.longitude) - radians(?2)) + sin(radians(?1)) * sin(radians(u.latitude)))) < 20", nativeQuery = true)
+    @Query(value = "SELECT\n" +
+            "    u.*, us.user_id as USERID\n" +
+            "FROM\n" +
+            "    post u\n" +
+            "LEFT JOIN `user` us ON `us`.`user_id` = `u`.`user_id`\n" +
+            "WHERE\n" +
+            "    (\n" +
+            "        6371 * ACOS(\n" +
+            "            COS(RADIANS(?1)) * COS(RADIANS(u.latitude)) * COS(\n" +
+            "                RADIANS(u.longitude) - RADIANS(?2)\n" +
+            "            ) + SIN(RADIANS(?1)) * SIN(RADIANS(u.latitude))\n" +
+            "        )\n" +
+            "    ) < 20;\n" +
+            ";", nativeQuery = true)
     Collection<PostModel> findPostByLocation(BigDecimal latitude, BigDecimal longitude);
 }

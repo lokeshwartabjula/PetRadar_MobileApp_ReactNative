@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -120,13 +121,15 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public List<PostModel> getPostById(BigDecimal latitude, BigDecimal longitude) {
+    public List<PostModel> getNearByPostsBasedOnLocation(BigDecimal latitude, BigDecimal longitude) {
         Collection<PostModel> posts = postRepository.findPostByLocation(latitude, longitude);
         List<PostModel> data = new ArrayList<>();
         posts.forEach(post -> {
+            System.out.println(post);
             User user = post.getUser();
             post.setUserName(user.getFirstName() + " " + user.getLastName());
             post.setUserProfilePicture(user.getImageUrl());
+            post.setUserId(user.getUserId());
             data.add(post);
         });
 
