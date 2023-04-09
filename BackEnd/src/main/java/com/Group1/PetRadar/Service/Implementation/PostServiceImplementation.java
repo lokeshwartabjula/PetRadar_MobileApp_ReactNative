@@ -49,7 +49,8 @@ public class PostServiceImplementation implements PostService {
                 System.out.println(
                         user.getOnesignalUserId() + " " + currentUserId.toString() + " " + user.getUserId().toString());
                 System.out.println("usernid ==>" + (currentUserId.toString().equals(user.getUserId().toString())));
-                if (user.getOnesignalUserId() != null && !(currentUserId.toString().equals(user.getUserId())))
+                if (user.getOnesignalUserId() != null
+                        && !(currentUserId.toString().equals(user.getUserId().toString())))
                     userOSID.add(user.getOnesignalUserId());
             });
             try {
