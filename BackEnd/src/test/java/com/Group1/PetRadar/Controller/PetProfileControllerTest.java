@@ -54,5 +54,19 @@ class PetProfileControllerTest {
 		Assert.assertEquals(dummyPetprofileModel, petProfileController.getPetprofileId(dummyUUID));
 	}
 	
+    @Test
+	public void updatePetprofileTest() {
+		PetprofileModel dummyPetprofileModel = new PetprofileModel();
+		dummyPetprofileModel.setBio("dummyBio");
+		when(petProfileServiceMock.updatePetprofile(any(PetprofileModel.class))).thenReturn(dummyPetprofileModel);
+		Assert.assertEquals(dummyPetprofileModel, petProfileController.updatePetprofile(dummyPetprofileModel));
+	}
+	
+	@Test
+	public void deletePetprofileByIdTest() {
+		UUID dummyUUID = new UUID(2l,3l);
+		when(petProfileServiceMock.deletePetprofileById(any(UUID.class))).thenReturn("expectedString");
+		Assert.assertEquals("expectedString", petProfileController.deletePetprofileById(dummyUUID));
+	}
 
 }
