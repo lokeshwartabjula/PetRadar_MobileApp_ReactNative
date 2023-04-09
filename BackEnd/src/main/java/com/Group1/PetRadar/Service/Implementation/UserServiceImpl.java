@@ -141,16 +141,18 @@ public class UserServiceImpl implements UserService {
         if (foundUser.getEmail() != null)
             isUserFound = true;
 
-        if (!isUserFound && isLogin)
-            throw new Exception("You have not registered through google yet, Please sign up first and try again");
-
+        if (!isUserFound && isLogin){
+            //chnaged for long sattement implementation
+            String exception_msg="You have not registered through google yet, Please sign up first and try again";
+            throw new Exception(exception_msg);
+        }
         if (foundUser.getEmail() != null && foundUser.getPassword() == null)
             isGoogleUser = true;
         if (!isUserFound && !isGoogleLoginFlow) {
             user.setPassword(null);
             saveGoogleUser(user);
             return true;
-        } else if (isUserFound && isGoogleUser && !isGoogleLoginFlow) {
+        } else if (isUserFound && isGoogleUser(isGoogleUser, isGoogleLoginFlow)) {
             throw new Exception("You have already signed up as a google User");
         } else {
             if (isGoogleUser) // if user has the password as dummy return token
@@ -160,6 +162,11 @@ public class UserServiceImpl implements UserService {
                 throw new Exception("Please login through app as you have already registered as a google user");
         }
 
+    }
+    //refactoring for complex conditional
+    public boolean isGoogleUser(boolean isGoogleUser, boolean isGoogleLoginFlow)
+    {
+        return (isGoogleUser && !isGoogleLoginFlow);
     }
 
     @Override
@@ -223,9 +230,10 @@ public class UserServiceImpl implements UserService {
         if (isGoogleUser)
             throw new Exception("You have registered already as a google user, please login through google");
 
-        if (isUserFound == true && isGoogleUser == false)
-            throw new Exception("You have registered already in our application. Please proceed to login");
-
+        if (isUserFound == true && isGoogleUser == false){
+            String existingUser="You have registered already in our application. Please proceed to login";
+            throw new Exception(existingUser);
+        }
         User newUser = new User();
         newUser.setEmail(authReqDTO.getEmail());
         newUser.setPassword(authReqDTO.getPassword());

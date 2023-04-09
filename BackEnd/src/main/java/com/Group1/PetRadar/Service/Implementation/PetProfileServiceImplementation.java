@@ -141,8 +141,9 @@ public class PetProfileServiceImplementation implements PetProfileService {
     public static BufferedImage generateQRCodeImage(String barcodeText) throws Exception {
         QRCodeWriter barcodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = null;
+        int qrPixelSize=300;
         try {
-            bitMatrix = barcodeWriter.encode(barcodeText, BarcodeFormat.QR_CODE, 75, 75);
+            bitMatrix = barcodeWriter.encode(barcodeText, BarcodeFormat.QR_CODE, qrPixelSize, qrPixelSize);
         } catch (WriterException e) {
             throw new RuntimeException(e);
         }
