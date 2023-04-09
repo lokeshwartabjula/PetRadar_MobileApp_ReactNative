@@ -20,9 +20,11 @@ public class AddPetDTO {
     private String userId;
     private MultipartFile image;
 
+    // No argument constructor
     public AddPetDTO() {
     }
 
+    // Getters and setters
     public UUID getPetId() {
         return this.petId;
     }
