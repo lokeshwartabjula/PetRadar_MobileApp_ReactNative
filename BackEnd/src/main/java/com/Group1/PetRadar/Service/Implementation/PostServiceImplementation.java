@@ -40,13 +40,13 @@ public class PostServiceImplementation implements PostService {
     @Autowired
     AwsService awsService;
 
-    private void sendNotifications(BigDecimal bigDecimal, BigDecimal bigDecimal2) {
+    private void sendNotifications(BigDecimal bigDecimal, BigDecimal bigDecimal2, UUID currentUserId) {
         try {
             Collection<User> nearByUsers = userRepository.findUserByLocation(bigDecimal, bigDecimal2);
 
             ArrayList<String> userOSID = new ArrayList<String>();
             nearByUsers.forEach(user -> {
-                if (user.getOnesignalUserId() != null)
+                if (user.getOnesignalUserId() != null && currentUserId != user.getUserId())
                     userOSID.add(user.getOnesignalUserId());
             });
             try {
@@ -97,10 +97,10 @@ public class PostServiceImplementation implements PostService {
     @Override
     public Map<String, Object> savePost(AddPostDTO postmodel) throws Exception {
         PostModel newPost = new PostModel();
+        UUID userId  = postmodel.getUserId();
         User user = null;
         try {
-            String userId = postmodel.getUserId().toString();
-            user = userService.findById(userId);
+            user = userService.findById(userId.toString());
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Please enter valid user ID");
@@ -120,7 +120,7 @@ public class PostServiceImplementation implements PostService {
         data.put("userName", user.getFirstName() + " " + user.getLastName());
         data.put("imageUrl", user.getImageUrl());
         data.put("post", newPost);
-        sendNotifications(newPost.getLatitude(), newPost.getLongitude());
+        sendNotifications(newPost.getLatitude(), newPost.getLongitude(),userId);
 
         return data;
     }
