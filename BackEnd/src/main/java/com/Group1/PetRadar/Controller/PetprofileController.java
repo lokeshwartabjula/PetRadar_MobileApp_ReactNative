@@ -30,30 +30,12 @@ public class PetprofileController {
     @Autowired
     PetProfileService petProfileService;
 
-       @PostMapping("/create")
-        public ResponseEntity<Response> createPetprofile(@RequestParam Map<String, String> paramList,
+    @PostMapping("/create")
+    public ResponseEntity<Response> createPetprofile(@RequestParam Map<String, String> paramList,
             @RequestParam("image") MultipartFile file) throws Exception {
         Response failureResponse = null;
         PetprofileModel petDetails = null;
-        AddPetDTO addPetDTO = new AddPetDTO();
-        paramList.forEach((String key, String value) -> {
-            switch (key) {
-                case "petName" -> addPetDTO.setPetName(value);
-                case "petBreed" -> addPetDTO.setPetBreed(value);
-                case "age" -> addPetDTO.setAge(Integer.parseInt(value));
-                case "petCategory" -> addPetDTO.setPetCategory(value);
-                case "gender" -> addPetDTO.setGender(value);
-                case "bio" -> addPetDTO.setBio(value);
-                case "petHeightInCms" -> addPetDTO.setPetHeightInCms(Float.parseFloat(value));
-                case "weightInLbs" -> addPetDTO.setWeightInLbs(Float.parseFloat(value));
-                case "petIdentificationMarks" -> addPetDTO.setPetIdentificationMarks(value);
-                case "allergies" -> addPetDTO.setAllergies(value);
-                case "userId" -> addPetDTO.setUserId(value);
-                default -> throw new IllegalStateException("Unexpected value: " + key);
-            }
-        });
-        addPetDTO.setImage(file);
-
+        AddPetDTO addPetDTO = BuildPetDTO(paramList, file);
         try {
             petDetails = petProfileService.savePetProfile(addPetDTO);
         } catch (Exception e) {
@@ -131,34 +113,12 @@ public class PetprofileController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
-
     @PutMapping("/update")
     public ResponseEntity<Response> updatePetprofile(@RequestParam Map<String, String> paramList,
             @RequestParam(name = "image", required = false) MultipartFile file) {
         Response failureResponse = null;
         PetprofileModel petDetails = null;
-        AddPetDTO addPetDTO = new AddPetDTO();
-        paramList.forEach((String key, String value) -> {
-            switch (key) {
-                case "petName" -> addPetDTO.setPetName(value);
-                case "petBreed" -> addPetDTO.setPetBreed(value);
-                case "age" -> addPetDTO.setAge(Integer.parseInt(value));
-                case "petCategory" -> addPetDTO.setPetCategory(value);
-                case "gender" -> addPetDTO.setGender(value);
-                case "bio" -> addPetDTO.setBio(value);
-                case "petHeightInCms" -> addPetDTO.setPetHeightInCms(Float.parseFloat(value));
-                case "weightInLbs" -> addPetDTO.setWeightInLbs(Float.parseFloat(value));
-                case "petIdentificationMarks" -> addPetDTO.setPetIdentificationMarks(value);
-                case "allergies" -> addPetDTO.setAllergies(value);
-                case "petId" -> addPetDTO.setPetId(value);
-                default -> throw new IllegalStateException("Unexpected value: " + key);
-            }
-        });
-
-        if (file != null && file.getOriginalFilename() != null) {
-            addPetDTO.setImage(file);
-        }
-
+        AddPetDTO addPetDTO = BuildPetDTO(paramList, file);
         try {
             petDetails = petProfileService.updatePetprofile(addPetDTO);
         } catch (Exception e) {
@@ -174,7 +134,6 @@ public class PetprofileController {
         response.setStatus(HttpStatus.ACCEPTED.value());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
-
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deletePetprofileById(@PathVariable("id") UUID id) {
@@ -195,5 +154,31 @@ public class PetprofileController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    private AddPetDTO BuildPetDTO(Map<String, String> paramList, MultipartFile file) {
+        AddPetDTO addPetDTO = new AddPetDTO();
+        paramList.forEach((String key, String value) -> {
+            switch (key) {
+                case "petName" -> addPetDTO.setPetName(value);
+                case "petBreed" -> addPetDTO.setPetBreed(value);
+                case "age" -> addPetDTO.setAge(Integer.parseInt(value));
+                case "petCategory" -> addPetDTO.setPetCategory(value);
+                case "gender" -> addPetDTO.setGender(value);
+                case "bio" -> addPetDTO.setBio(value);
+                case "petHeightInCms" -> addPetDTO.setPetHeightInCms(Float.parseFloat(value));
+                case "weightInLbs" -> addPetDTO.setWeightInLbs(Float.parseFloat(value));
+                case "petIdentificationMarks" -> addPetDTO.setPetIdentificationMarks(value);
+                case "allergies" -> addPetDTO.setAllergies(value);
+                case "petId" -> addPetDTO.setPetId(value);
+                case "userId" -> addPetDTO.setUserId(value);
+                default -> throw new IllegalStateException("Unexpected value: " + key);
+            }
+        });
+
+        if (file != null && file.getOriginalFilename() != null) {
+            addPetDTO.setImage(file);
+        }
+        return addPetDTO;
     }
 }
