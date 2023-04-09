@@ -1,11 +1,9 @@
-package com.Group1.PetRadar.config;
+package com.Group1.PetRadar.Model;
 
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.Group1.PetRadar.Model.User;
 
 public class SecurityUser implements UserDetails {
 
