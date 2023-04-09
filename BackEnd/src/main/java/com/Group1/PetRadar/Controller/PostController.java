@@ -82,7 +82,7 @@ public class PostController {
         Response failureResponse = null;
 
         try {
-            post = postService.getPostById(latitude, longitude);
+            post = postService.getNearByPostsBasedOnLocation(latitude, longitude);
         } catch (Exception e) {
             failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
                     HttpStatus.UNAUTHORIZED.name());
