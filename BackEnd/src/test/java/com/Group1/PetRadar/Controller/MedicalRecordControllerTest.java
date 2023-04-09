@@ -45,11 +45,19 @@ class MedicalRecordControllerTest {
 	}
 	
 	@Test
-	public void updateMedicalTest() {
+	public void updateMedicalTest() throws Exception {
 		MedicalHistory dummyMedicalHistory = new MedicalHistory();
+		Map<String, String> paramList = new HashMap<String,String>();
+		paramList.put("medicalRecordId", "recordId");
+		paramList.put("vetVisitDate", "visitDate");
+		paramList.put("symptoms", "symptoms");
+		paramList.put("vetName", "vetname");
+		paramList.put("vaccinationDate", "17-10-1997");
+		paramList.put("surgery", "surgery");
+		paramList.put("medication", "medication");
 		
-		when(medicalRecordServiceMock.updateMedical(any(MedicalHistory.class))).thenReturn(dummyMedicalHistory);
-		Assert.assertEquals(dummyMedicalHistory,medicalRecordController.updateMedical(dummyMedicalHistory));
+		when(medicalRecordServiceMock.updateMedical(any(AddPetMedicalRecordDTO.class))).thenReturn(dummyMedicalHistory);
+		Assert.assertEquals(dummyMedicalHistory,medicalRecordController.updateMedical(paramList));
 		
 	}
 	@Test
