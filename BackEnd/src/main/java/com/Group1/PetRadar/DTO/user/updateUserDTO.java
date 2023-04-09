@@ -1,8 +1,12 @@
 package com.Group1.PetRadar.DTO.user;
 
+import java.math.BigDecimal;
+
 import org.springframework.web.multipart.MultipartFile;
 
-public class updateUserDTO {
+import com.Group1.PetRadar.Model.Location;
+
+public class updateUserDTO extends Location {
 
     private String firstName;
     private String lastName;
@@ -10,8 +14,9 @@ public class updateUserDTO {
     private String city;
     private String Pincode;
     private Long mobileNumber;
-    private double latitude;
-    private double longitude;
+    private MultipartFile file;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
     private String oneSignalUserId;
 
     public String getFirstName() {
@@ -62,19 +67,27 @@ public class updateUserDTO {
         this.mobileNumber = mobileNumber;
     }
 
-    public double getLatitude() {
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 

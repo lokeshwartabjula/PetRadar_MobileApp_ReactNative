@@ -1,13 +1,19 @@
 package com.Group1.PetRadar.Model;
 
-import java.util.HashSet;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -31,15 +37,25 @@ public class User {
 	private String city;
 	private String pincode;
 	private Long phoneNumber;
+	private String ImageUrl;
+
 	@JsonIgnore
 	private String password;
-	private double latitude;
-	private double longitude;
 	private String onesignalUserId;
+
+	@Column(precision = 10, scale = 6)
+	private BigDecimal latitude;
+
+	@Column(precision = 10, scale = 6)
+	private BigDecimal longitude;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PetprofileModel> pets;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PostModel> posts;
 
 	public UUID getUserId() {
 		return userId;
@@ -125,19 +141,35 @@ public class User {
 		this.pets = pets;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setImageUrl(String imagexUrl) {
+		ImageUrl = imagexUrl;
+	}
+
+	public String getImageUrl() {
+		return this.ImageUrl;
+	}
+
+	public List<PostModel> getPosts() {
+		return this.posts;
+	}
+
+	public void setPosts(List<PostModel> posts) {
+		this.posts = posts;
+	}
+
+	public void setLatitude(BigDecimal latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLatitude() {
+	public BigDecimal getLatitude() {
 		return latitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
 	}
 
-	public double getLongitude() {
+	public BigDecimal getLongitude() {
 		return longitude;
 	}
 
