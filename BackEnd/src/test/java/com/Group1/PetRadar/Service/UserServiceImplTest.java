@@ -8,11 +8,13 @@ import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
+import com.Group1.PetRadar.DTO.user.updateUserDTO;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.UserRepository;
 import com.Group1.PetRadar.Service.Implementation.UserServiceImpl;
@@ -64,6 +66,35 @@ public class UserServiceImplTest {
         Optional<User> dummyOption = Optional.of(dummyUser);
         when(userRepoMock.findByEmail(anyString())).thenReturn(dummyOption);
         Assert.assertEquals(dummyUser, userServiceImpl.getUserEmail("email"));
+    }
+
+    @Test
+    public void updateUserTest() throws Exception {
+        User dummyUser = new User();
+        Optional<User> dummyOption = Optional.of(dummyUser);
+        dummyOption.get();
+
+        when(userRepoMock.findById(any())).thenReturn(dummyOption);
+
+        updateUserDTO dummyUpdateUserDto = new updateUserDTO();
+        Assert.assertEquals(dummyUser,
+                userServiceImpl.updateUser(dummyUpdateUserDto, "0f14d0ab-9605-4a62-a9e4-5ed26688389b"));
+
+    }
+
+    @Test
+    public void updateUserTestNegative() throws Exception {
+        User dummyUser = new User();
+        Optional<User> dummyOption = Optional.of(dummyUser);
+        dummyOption.get();
+
+        when(userRepoMock.findById(any())).thenReturn(dummyOption);
+
+        updateUserDTO dummyUpdateUserDto = new updateUserDTO();
+        Assertions.assertThrows(Exception.class, () -> {
+            userServiceImpl.updateUser(dummyUpdateUserDto, "345");
+        });
+
     }
 
 }
