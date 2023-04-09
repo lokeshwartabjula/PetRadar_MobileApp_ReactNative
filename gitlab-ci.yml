@@ -1,0 +1,116 @@
+stages:
+  - build
+  - test
+  # - deploy
+  - smells
+
+build:
+  stage: build
+  image: maven:latest
+  script:
+    - cd BackEnd
+    - echo "Building the pipeline"
+    # - mvn eclipse:eclipse
+    - mvn clean package
+  artifacts:
+    paths:
+      - target
+  tags:
+    - dalfcs_gitlab_docker_ci
+
+
+smell-backend-job:
+    stage: smells
+    image: openjdk:11
+    script:
+      - java -jar $CI_PROJECT_DIR/DesigniteJava.jar -i $CI_PROJECT_DIR/BackEnd -o target/
+    tags:
+      - dalfcs_gitlab_docker_ci
+    artifacts:
+      paths:
+        - target
+
+test:
+  stage: test
+  image: maven:latest
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - target/ProjectReports/TEST_*.xml
+
+  script:
+    - cd BackEnd
+    - echo "Pipeline test started"
+    - mvn verify
+  tags:
+    - dalfcs_gitlab_docker_ci
+
+# deploy_dev:
+#   image: docker:stable
+#   stage: deploy
+#   tags:
+#     - dalfcs_gitlab_docker_ci
+#   artifacts:
+#     paths:
+#       - target
+#   script:
+#     - cd BackEnd
+#     - apk update && apk add openssh
+#     - echo "dbURL=$DATABASE_TEST_URL" > config.properties
+#     - echo "dbUserName=$DATABASE_TEST_USERNAME" >> config.properties
+#     - echo "dbPassword=$DATABASE_TEST_PASSWORD" >> config.properties
+#     - echo "dbDriver=$DATABASE_DRIVER" >> config.properties
+#     - echo "Deploying the development pipeline"
+#     - chmod og-rwx ${DEPLOY_SSH_KEY}
+#     - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" target/*.jar "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/final_image.jar"
+
+# deploy_release:
+#   image: docker:stable
+#   stage: deploy
+#   tags:
+#     - dalfcs_gitlab_docker_ci
+#   artifacts:
+#     paths:
+#       - target
+#   before_script:
+#     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+#     - mkdir -p ~/.ssh
+#     - eval $(ssh-agent -s)
+#     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+#   script:
+#     - apk update && apk add openssh
+#     # - bash docker_install.sh > /dev/null
+#     - apk add sshpass
+#     - echo "dbURL=$DATABASE_PROD_URL" > config.properties
+#     - echo "dbUserName=$DATABASE_PROD_USERNAME" >> config.properties
+#     - echo "dbPassword=$DATABASE_PROD_PASSWORD" >> config.properties
+#     - echo "dbDriver=$DATABASE_DRIVER" >> config.properties
+#     - echo "Deploying the release pipeline"
+#     # - chmod a+x ${DEPLOY_PROD_SSH_KEY}
+#     # - zip -r ${CI_COMMIT_SHORT_SHA}.zip target
+#     - pwd
+#     - echo ${CI_COMMIT_SHORT_SHA}    
+#     - echo | ssh-keygen -P '' -t rsa
+#     - chmod 600 ${DEPLOY_SSH_KEY}
+#     - chmod 700 ~/.ssh
+#     # - chmod 644 ~/.ssh/authorized_keys
+
+#     # - sshpass -p aengooB4oe8raehe ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no csci5308vm1@csci5308vm1.research.cs.dal.ca
+#     # - ssh -o 'StrictHostKeyChecking=no' 'csci5308vm1@csci5308vm1.research.cs.dal.ca'
+#     - pwd
+#     # - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" ${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}.zip"
+#     - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" ${CI_COMMIT_SHORT_SHA}.zip "csci5308vm1@129.173.67.181:${DEPLOY_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}.zip"
+#     - echo ${DEPLOY_SSH_PASSWORD}
+#     # - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_PASSWORD}" ${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}.zip"
+#     - scp ${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}.zip"
+#     - echo ${DEPLOY_SSH_KEY}
+#     - echo ${CI_COMMIT_SHORT_SHA}
+#     - echo ${DEPLOY_USER}
+#     - echo ${DEPLOY_HOST}
+#     - echo ${DEPLOY_DIR}
+#     - echo ${CI_PROJECT_NAME}
+#     - echo ${CI_COMMIT_REF_NAME}
+#     - echo ${CI_COMMIT_SHORT_SHA}
+#     # - sshpass -p aengooB4oe8raehe ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no csci5308vm1@csci5308vm1.research.cs.dal.ca
+
