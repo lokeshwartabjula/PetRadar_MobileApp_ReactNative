@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -305,6 +306,32 @@ public class UserServiceImplTest {
         when(namedParameterJdbcTemplateMock.queryForObject(anyString(), any(MapSqlParameterSource.class),
                 any(BeanPropertyRowMapper.class))).thenReturn(dummyUser2);
         Assert.assertEquals(true, userServiceImpl.registerAppUser(dummyUser));
+    }
+
+    @Test
+    public void findByIdTest() throws Exception {
+        Assertions.assertThrows(Exception.class, () -> {
+            userServiceImpl.findById("sss");
+        });
+    }
+
+    @Test
+    public void findByIdTest2() throws Exception {
+        when(userRepoMock.existsById(any())).thenReturn(false);
+        Assertions.assertThrows(Exception.class, () -> {
+            userServiceImpl.findById("sss");
+        });
+    }
+
+    @Test
+    public void findByIdTest3() throws Exception {
+        User dummyUser = new User();
+        Optional<User> dummyOption = Optional.of(dummyUser);
+
+        when(userRepoMock.findById(any(UUID.class))).thenReturn(dummyOption);
+        Assertions.assertThrows(Exception.class, () -> {
+            userServiceImpl.findById("sss");
+        });
     }
 
 }
