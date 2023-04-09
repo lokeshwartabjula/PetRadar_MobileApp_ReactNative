@@ -49,7 +49,7 @@ public class MedicalRecordController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Response> updateMovie(@RequestParam Map<String, String> paramList) {
+    public ResponseEntity<Response> updateMedical(@RequestParam Map<String, String> paramList) {
         Response failureResponse = null;
         MedicalHistory medical = null;
         AddPetMedicalRecordDTO newMedicalRecord = new AddPetMedicalRecordDTO();
@@ -120,7 +120,7 @@ public class MedicalRecordController {
 
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Response> deleteMovieById(@PathVariable("id") UUID id) {
+    public ResponseEntity<Response> deleteMedicalById(@PathVariable("id") UUID id) {
         try {
             Response failureResponse = null;
             try {

@@ -8,10 +8,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -25,6 +30,9 @@ import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.UserRepository;
 import com.Group1.PetRadar.Service.Implementation.UserServiceImpl;
 
+@RunWith(MockitoJUnitRunner.class)
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+@DataJpaTest
 public class UserServiceImplTest {
     @Mock
     PasswordEncoder passwordEncoderMock;

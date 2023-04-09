@@ -39,20 +39,7 @@ public class PostController {
         Map<String, Object> newPost = new HashMap<>();
         Response failureResponse = null;
         try {
-            AddPostDTO newPostDTO = new AddPostDTO();
-            paramList.forEach((String key, String value) -> {
-                switch (key) {
-                    case "description" -> newPostDTO.setDescription(value);
-                    case "postDate" -> newPostDTO.setPostDate(value);
-                    case "userId" -> newPostDTO.setUserId(value);
-                    case "latitude" -> newPostDTO.setLatitude(new BigDecimal(value));
-                    case "longitude" -> newPostDTO.setLongitude(new BigDecimal(value));
-                    case "userName" -> newPostDTO.setUserName(value);
-                    case "userProfilePicture" -> newPostDTO.setUserProfilePicture(value);
-                    default -> throw new IllegalStateException("Unexpected value: " + key);
-                }
-            });
-            newPostDTO.setImage(file);
+            AddPostDTO newPostDTO = buildAddPostDTO(paramList, file);
 
             newPost = postService.savePost(newPostDTO);
         } catch (Exception e) {
@@ -65,6 +52,24 @@ public class PostController {
         response.setMessage(HttpStatus.ACCEPTED.name());
         response.setStatus(HttpStatus.ACCEPTED.value());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+    }
+
+    private AddPostDTO buildAddPostDTO(Map<String, String> paramList, MultipartFile file) {
+        AddPostDTO newPostDTO = new AddPostDTO();
+        paramList.forEach((String key, String value) -> {
+            switch (key) {
+                case "description" -> newPostDTO.setDescription(value);
+                case "postDate" -> newPostDTO.setPostDate(value);
+                case "userId" -> newPostDTO.setUserId(value);
+                case "latitude" -> newPostDTO.setLatitude(new BigDecimal(value));
+                case "longitude" -> newPostDTO.setLongitude(new BigDecimal(value));
+                case "userName" -> newPostDTO.setUserName(value);
+                case "userProfilePicture" -> newPostDTO.setUserProfilePicture(value);
+                default -> throw new IllegalStateException("Unexpected value: " + key);
+            }
+        });
+        newPostDTO.setImage(file);
+        return newPostDTO;
     }
 
     @GetMapping("/{latitude}/{longitude}")
