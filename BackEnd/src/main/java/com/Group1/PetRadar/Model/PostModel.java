@@ -1,15 +1,19 @@
 package com.Group1.PetRadar.Model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
+import lombok.NoArgsConstructor;
 
 @Entity()
+@Transactional
+@NoArgsConstructor
+@Table(name = "post")
 public class PostModel {
 
         @Id()
@@ -19,8 +23,51 @@ public class PostModel {
 
         String description;
         Date postDate;
-        Double latitude;
-        Double longitude;
+        String ImageUrl;
+        String userName;
+        String userProfilePicture;
+
+        @Transient
+        UUID userId;
+
+        @JsonIgnore
+        @ManyToOne
+        @JoinColumn(name = "user_id", referencedColumnName = "userId")
+        private User user;
+
+        @Column(precision = 10, scale = 6)
+        private BigDecimal latitude;
+
+        @Column(precision = 10, scale = 6)
+        private BigDecimal longitude;
+
+        public BigDecimal getLatitude() {
+                return this.latitude;
+        }
+
+        public void setLatitude(BigDecimal latitude) {
+                this.latitude = latitude;
+        }
+
+        public BigDecimal getLongitude() {
+                return this.longitude;
+        }
+
+        public void setLongitude(BigDecimal longitude) {
+                this.longitude = longitude;
+        }
+
+        public void setPostId(UUID postId) {
+                this.postId = postId;
+        }
+
+        public String getImageUrl() {
+                return ImageUrl;
+        }
+
+        public void setImageUrl(String imagexUrl) {
+                ImageUrl = imagexUrl;
+        }
 
         public UUID getPostId() {
                 return postId;
@@ -42,20 +89,35 @@ public class PostModel {
                 this.postDate = postDate;
         }
 
-        public Double getLatitude() {
-                return latitude;
+        public void setUser(User user) {
+                this.user = user;
         }
 
-        public void setLatitude(Double latitude) {
-                this.latitude = latitude;
+        public User getUser() {
+                return user;
         }
 
-        public Double getLongitude() {
-                return longitude;
+        public UUID getUserId() {
+                return userId;
         }
 
-        public void setLongitude(Double longitude) {
-                this.longitude = longitude;
+        public void setUserId(UUID userId) {
+                this.userId = userId;
         }
 
+        public String getUserName() {
+                return this.userName;
+        }
+
+        public void setUserName(String userName) {
+                this.userName = userName;
+        }
+
+        public String getUserProfilePicture() {
+                return this.userProfilePicture;
+        }
+
+        public void setUserProfilePicture(String userProfilePicture) {
+                this.userProfilePicture = userProfilePicture;
+        }
 }
