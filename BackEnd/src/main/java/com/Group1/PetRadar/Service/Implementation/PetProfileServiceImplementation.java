@@ -11,7 +11,9 @@ import com.Group1.PetRadar.utils.AwsService;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -146,5 +148,25 @@ public class PetProfileServiceImplementation implements PetProfileService {
             throw new RuntimeException(e);
         }
         return MatrixToImageWriter.toBufferedImage(bitMatrix);
+    }
+
+    @Override
+    public Map<String, Object> getPetDetailsAndOwnerById(UUID id) throws Exception {
+        PetprofileModel petDetails = null;
+        try {
+            if (!petprofileRepository.existsById(id)) {
+                throw new Exception("Pet not found");
+            }
+            petDetails = petprofileRepository.findById(id).get();
+            petDetails.getUser();
+            Map<String, Object> data = new HashMap<>();
+            data.put("OwnerPhoneNumber", petDetails.getUser().getPhoneNumber());
+            data.put("petDetails", petDetails);
+            return data;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("No pet profile found for given UUID");
+        }
     }
 }
