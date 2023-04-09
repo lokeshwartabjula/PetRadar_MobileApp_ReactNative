@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests().requestMatchers("/user/*").permitAll().and()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/login").permitAll()
+                        .requestMatchers("/petprofile/contact/{id}").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .userDetailsService(userService)

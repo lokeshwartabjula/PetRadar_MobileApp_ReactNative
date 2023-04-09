@@ -82,7 +82,7 @@ public class MedicalHistory {
     public void setMedication(String medication) {
         this.medication = medication;
     }
-    
+
     public PetprofileModel getPet() {
         return pet;
     }

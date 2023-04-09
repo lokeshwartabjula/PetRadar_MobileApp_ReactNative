@@ -1,11 +1,27 @@
 package com.Group1.PetRadar.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
+import lombok.NoArgsConstructor;
+
+@Transactional
+@NoArgsConstructor
+@Table(name = "pet_profile")
 @Entity()
 public class PetprofileModel {
     @Id()
@@ -14,7 +30,7 @@ public class PetprofileModel {
     UUID petId;
     String petName;
     String petBreed;
-    Date petDob;
+    int age;
     String petCategory;
     @Lob
     @Column(name = "image_bytes", columnDefinition = "BLOB")
@@ -25,23 +41,16 @@ public class PetprofileModel {
     Float weightInLbs;
     String petIdentificationMarks;
     String allergies;
+    private String ImageUrl;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
 
-    public List<MedicalHistory> getMedicalHistories() {
-        return medicalHistories;
-    }
-
-    public void setMedicalHistories(List<MedicalHistory> medicalHistories) {
-        this.medicalHistories = medicalHistories;
-    }
-
     @JsonIgnore
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MedicalHistory> medicalHistories;
-
 
     public UUID getPetId() {
         return petId;
@@ -63,12 +72,12 @@ public class PetprofileModel {
         this.petBreed = petBreed;
     }
 
-    public Date getPetDob() {
-        return petDob;
+    public int getAge() {
+        return age;
     }
 
-    public void setPetDob(Date petDob) {
-        this.petDob = petDob;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getPetCategory() {
@@ -141,5 +150,17 @@ public class PetprofileModel {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<MedicalHistory> getMedicalHistories() {
+        return medicalHistories;
+    }
+
+    public String getImageUrl() {
+        return this.ImageUrl;
+    }
+
+    public void setImageUrl(String ImageUrl) {
+        this.ImageUrl = ImageUrl;
     }
 }
