@@ -25,16 +25,14 @@ import com.Group1.PetRadar.Controller.*;
 import com.Group1.PetRadar.Service.*;
 import static org.junit.Assert.assertEquals;
 
-
 @RunWith(MockitoJUnitRunner.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @DataJpaTest
-//@ContextConfiguration(classes = {PostController.class, PostService.class})
 class PostControllerTest {
-	
+
 	@InjectMocks
 	PostController postController;
-	
+
 	@Mock
 	PostService postServiceMock;
 
@@ -42,31 +40,31 @@ class PostControllerTest {
 	public void createPostTest() throws Exception {
 		AddPostDTO dummyAddPostDto = new AddPostDTO();
 		PostModel dummyPostModel = new PostModel();
-		
+
 		dummyPostModel.setDescription("notNullDesc");
 		when(postServiceMock.savePost(any(AddPostDTO.class))).thenReturn(dummyPostModel);
 		Assert.assertEquals(dummyPostModel, postController.createPost(dummyAddPostDto));
 	}
-	
+
 	@Test
 	public void getPostByIdTest() {
 		PostModel dummyPostModel = new PostModel();
 		UUID dummyUUID = new UUID(2l, 3l);
-		
+
 		dummyPostModel.setDescription("notNulDesc");
 		when(postServiceMock.getPostById(any(UUID.class))).thenReturn(dummyPostModel);
 		Assert.assertEquals(dummyPostModel, postController.getPostById(dummyUUID));
 	}
-	
+
 	@Test
 	public void updatePostTest1() {
 		PostModel dummyPostModel = new PostModel();
-		
+
 		dummyPostModel.setDescription("notNulDesc");
 		when(postServiceMock.updatePost(any(PostModel.class))).thenReturn(dummyPostModel);
 		Assert.assertEquals(dummyPostModel, postController.updatePost(dummyPostModel));
 	}
-	
+
 	@Test
 	public void deletePostByIdTest() {
 		UUID dummyUUID = new UUID(2l, 3l);

@@ -23,8 +23,6 @@ public class AddPetDTO {
     public AddPetDTO() {
     }
 
-    // Getters and setters
-
     public UUID getPetId() {
         return this.petId;
     }
@@ -129,5 +127,4 @@ public class AddPetDTO {
         this.image = image;
     }
 
-    // Other getters and setters
 }

@@ -108,7 +108,6 @@ public class UserController {
 		Boolean isLoginSuccessful = false;
 		Response failureResponse = null;
 
-		// Boolean isLogin = isLoginFlow=="true"?true:false;
 		try {
 			isLoginSuccessful = userService.googleLogin(user, isLogin);
 		} catch (Exception e) {
@@ -133,8 +132,6 @@ public class UserController {
 		} else
 			throw new Exception("Login is not successful");
 
-		// Response response = new Response(token, HttpStatus.ACCEPTED.value(),
-		// HttpStatus.ACCEPTED.name());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 

@@ -63,7 +63,6 @@ public class MedicalRecordController {
                 case "vaccinationDate" -> newMedicalRecord.setVaccinationDate(value);
                 case "surgery" -> newMedicalRecord.setSurgery(value);
                 case "medication" -> newMedicalRecord.setMedication(value);
-                // case "image" -> addPetDTO.setImage(value);
                 default -> throw new IllegalStateException("Unexpected value: " + key);
             }
         });
@@ -99,7 +98,6 @@ public class MedicalRecordController {
                 case "surgery" -> newMedicalRecord.setSurgery(value);
                 case "medication" -> newMedicalRecord.setMedication(value);
                 case "petId" -> newMedicalRecord.setPetId(value);
-                // case "image" -> addPetDTO.setImage(value);
                 default -> throw new IllegalStateException("Unexpected value: " + key);
             }
         });

@@ -38,7 +38,6 @@ public class PetProfileServiceImplementation implements PetProfileService {
         User user = userRepository.findById(petDetails.getUserId()).get();
         PetprofileModel newPet = new PetprofileModel();
 
-        // Building Pet object
         newPet.setPetName(petDetails.getPetName());
         newPet.setPetBreed(petDetails.getPetBreed());
         newPet.setAge(petDetails.getAge());

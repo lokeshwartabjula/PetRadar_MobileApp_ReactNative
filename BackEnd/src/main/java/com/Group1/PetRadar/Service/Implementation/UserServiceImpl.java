@@ -123,7 +123,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean googleLogin(User user, Boolean isLogin) throws Exception {
-        // TODO Auto-generated method stub
         Boolean isUserFound = false;
         Boolean isGoogleUser = false;
         Boolean isGoogleLoginFlow = isLogin;
@@ -161,8 +160,6 @@ public class UserServiceImpl implements UserService {
                 throw new Exception("Please login through app as you have already registered as a google user");
         }
 
-        // //add encrypted password inside user object
-        // return true;
     }
 
     @Override
@@ -198,23 +195,10 @@ public class UserServiceImpl implements UserService {
                 throw new Exception("Incorrect Password. Please try again");
         }
 
-        // insert into user_model (email, first_name, last_name, password, profile_url,
-        // user_id) values (?, ?, ?, ?, ?, ?)
-        // with the given email, check if user exists
-        // check if user is a google user
-        // if user is a google user, then ask user to login through app
-        // else
-        // check password
-        // else throw an exception that wrong password
-
-        // TODO Auto-generated method stub
     }
 
     @Override
     public Boolean registerAppUser(AuthReqDTO authReqDTO) throws Exception {
-        // TODO Auto-generated method stub
-        // insert into user_model (email, first_name, last_name, password, profile_url,
-        // user_id) values (?, ?, ?, ?, ?, ?)
 
         Boolean isGoogleUser = false;
         Boolean isUserFound = false;

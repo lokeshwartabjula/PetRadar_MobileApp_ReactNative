@@ -11,7 +11,7 @@ import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Model.User;
 
 public interface UserService {
-	// public UserModel registerUser(UserModel user) throws Exception;
+
 	User saveUser(RegisterUserDTO user);
 
 	User saveGoogleUser(User user);
@@ -19,8 +19,6 @@ public interface UserService {
 	User saveUser(User user);
 
 	String generateToken(String tokenSubject);
-
-	// int getUserId(String userName);
 
 	User updateUser(updateUserDTO userDetails, String userId) throws Exception;
 
