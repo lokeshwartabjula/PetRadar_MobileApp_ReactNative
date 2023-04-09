@@ -48,7 +48,7 @@ public class PostServiceImplementation implements PostService {
             nearByUsers.forEach(user -> {
                 System.out.println(
                         user.getOnesignalUserId() + " " + currentUserId.toString() + " " + user.getUserId().toString());
-                System.out.println("usernid ==>" + (currentUserId != user.getUserId()));
+                System.out.println("usernid ==>" + (currentUserId.toString().equals(user.getUserId().toString())));
                 if (user.getOnesignalUserId() != null && (currentUserId != user.getUserId()))
                     userOSID.add(user.getOnesignalUserId());
             });
