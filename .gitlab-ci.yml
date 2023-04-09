@@ -1,19 +1,7 @@
 stages:
   - build
   - test
-  - smells
   - deploy
-
-# include:
-#   - template: Code-Quality.gitlab-ci.yml
-
-# code_quality_html:
-#   extends: code_quality
-#   variables:
-#     REPORT_FORMAT: html
-#   artifacts:
-#     paths: [gl-code-quality-report.html]
-
 
 build:
   stage: build
@@ -26,8 +14,8 @@ build:
   artifacts:
     paths:
       - target
-    tags:
-      - ugrad
+  tags:
+    - dalfcs_gitlab_docker_ci
 
 test:
   stage: test
@@ -43,24 +31,13 @@ test:
     - echo "Pipeline test started"
     - mvn verify
   tags:
-    - ugrad
-
-smell-backend-job:
-  stage: smells
-  image: openjdk:11
-  script:
-    - java -jar $CI_PROJECT_DIR/DesigniteJava.jar -i $CI_PROJECT_DIR/datawiz-api -o back_end_smells/
-  tags:
-    - ugrad
-  artifacts:
-    paths:
-      - back_end_smells/
+    - dalfcs_gitlab_docker_ci
 
 deploy_dev:
   image: docker:stable
   stage: deploy
   tags:
-    - ugrad
+    - dalfcs_gitlab_docker_ci
   artifacts:
     paths:
       - target
@@ -79,7 +56,7 @@ deploy_release:
   image: docker:stable
   stage: deploy
   tags:
-    - ugrad
+    - dalfcs_gitlab_docker_ci
   artifacts:
     paths:
       - target
@@ -123,3 +100,4 @@ deploy_release:
     - echo ${CI_COMMIT_REF_NAME}
     - echo ${CI_COMMIT_SHORT_SHA}
     # - sshpass -p aengooB4oe8raehe ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no csci5308vm1@csci5308vm1.research.cs.dal.ca
+
