@@ -113,6 +113,26 @@ public class PetprofileController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
+    @GetMapping("/contact/{id}")
+    public ResponseEntity<Response> getContact(@PathVariable("id") UUID id) {
+        Response failureResponse = null;
+        Map<String, Object> petDetails = null;
+
+        try {
+            petDetails = petProfileService.getPetDetailsAndOwnerById(id);
+        } catch (Exception e) {
+            failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+        }
+        Response response = new Response();
+        response.setData(petDetails);
+        response.setMessage(HttpStatus.ACCEPTED.name());
+        response.setStatus(HttpStatus.ACCEPTED.value());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+    }
+
+
     @PutMapping("/update")
     public ResponseEntity<Response> updatePetprofile(@RequestParam Map<String, String> paramList,
             @RequestParam(name = "image", required = false) MultipartFile file) {
