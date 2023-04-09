@@ -40,17 +40,18 @@ public class PostServiceImplementation implements PostService {
     @Autowired
     AwsService awsService;
 
+    private boolean checkNotsCondition(String currentUserId, String user) {
+        return currentUserId.equals(user);
+    }
+
     private void sendNotifications(BigDecimal bigDecimal, BigDecimal bigDecimal2, UUID currentUserId) {
         try {
             Collection<User> nearByUsers = userRepository.findUserByLocation(bigDecimal, bigDecimal2);
 
             ArrayList<String> userOSID = new ArrayList<String>();
             nearByUsers.forEach(user -> {
-                System.out.println(
-                        user.getOnesignalUserId() + " " + currentUserId.toString() + " " + user.getUserId().toString());
-                System.out.println("usernid ==>" + (currentUserId.toString().equals(user.getUserId().toString())));
                 if (user.getOnesignalUserId() != null
-                        && !(currentUserId.toString().equals(user.getUserId().toString())))
+                        && !(checkNotsCondition(currentUserId.toString(), user.getUserId().toString())))
                     userOSID.add(user.getOnesignalUserId());
             });
             try {
