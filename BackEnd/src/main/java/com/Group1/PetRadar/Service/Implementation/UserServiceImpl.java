@@ -102,7 +102,6 @@ public class UserServiceImpl implements UserService {
 
     public User updateUser(updateUserDTO userDetails, String userId) throws Exception {
         try {
-            System.out.println(userId);
             User user = userRepository.findById(UUID.fromString(userId)).get();
             user.setFirstName(userDetails.getFirstName());
             user.setLastName(userDetails.getLastName());
@@ -263,7 +262,6 @@ public class UserServiceImpl implements UserService {
                 throw new Exception("User not found");
             }
             user = userRepository.findById(UUID.fromString(id)).get();
-            System.out.println(user.getLatitude());
             return user;
         } catch (Exception e) {
             e.printStackTrace();
@@ -284,7 +282,6 @@ public class UserServiceImpl implements UserService {
     public List<PetprofileModel> findPetsByUserId(UUID userId) throws Exception {
         try {
             User user = findById(userId.toString());
-            System.out.println(user.getPets());
             return user.getPets();
         } catch (Exception e) {
             e.printStackTrace();
@@ -295,7 +292,6 @@ public class UserServiceImpl implements UserService {
     public List<PostModel> findPostsByUserId(UUID userId) throws Exception {
         try {
             User user = findById(userId.toString());
-            System.out.println(user.getPosts());
             return user.getPosts();
         } catch (Exception e) {
             e.printStackTrace();

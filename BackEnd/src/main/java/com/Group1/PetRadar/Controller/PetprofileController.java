@@ -49,7 +49,6 @@ public class PetprofileController {
                 case "petIdentificationMarks" -> addPetDTO.setPetIdentificationMarks(value);
                 case "allergies" -> addPetDTO.setAllergies(value);
                 case "userId" -> addPetDTO.setUserId(value);
-                // case "image" -> addPetDTO.setImage(value);
                 default -> throw new IllegalStateException("Unexpected value: " + key);
             }
         });

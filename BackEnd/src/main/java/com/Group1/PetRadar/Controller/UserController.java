@@ -43,7 +43,6 @@ public class UserController {
 	@GetMapping("/allPet")
 	public ResponseEntity<Response> getAllPetsByUserId(@RequestParam(name = "userId") String id) {
 
-		System.out.println(id);
 		Response failureResponse = null;
 		List<PetprofileModel> pets = null;
 		try {
@@ -65,7 +64,6 @@ public class UserController {
 	@GetMapping("/allPost")
 	public ResponseEntity<Response> getAllPostsByUserId(@RequestParam(name = "userId") String id) {
 
-		System.out.println(id);
 		Response failureResponse = null;
 		List<PostModel> posts = null;
 		try {

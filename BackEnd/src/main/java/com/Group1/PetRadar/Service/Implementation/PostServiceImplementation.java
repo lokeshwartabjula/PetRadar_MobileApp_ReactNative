@@ -130,7 +130,6 @@ public class PostServiceImplementation implements PostService {
         Collection<PostModel> posts = postRepository.findPostByLocation(latitude, longitude);
         List<PostModel> data = new ArrayList<>();
         posts.forEach(post -> {
-            System.out.println(post);
             User user = post.getUser();
             post.setUserName(user.getFirstName() + " " + user.getLastName());
             post.setUserProfilePicture(user.getImageUrl());
