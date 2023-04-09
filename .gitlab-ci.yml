@@ -2,6 +2,7 @@ stages:
   - build
   - test
   - deploy
+  - smells
 
 build:
   stage: build
@@ -16,6 +17,18 @@ build:
       - target
   tags:
     - dalfcs_gitlab_docker_ci
+
+
+smell-backend-job:
+    stage: smells
+    image: openjdk:11
+    script:
+      - java -jar $CI_PROJECT_DIR/DesigniteJava.jar -i $CI_PROJECT_DIR/BackEnd -o target/
+    tags:
+      - dalfcs_gitlab_docker_ci
+    artifacts:
+      paths:
+        - target
 
 test:
   stage: test
