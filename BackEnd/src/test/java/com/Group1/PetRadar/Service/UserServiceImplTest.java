@@ -17,6 +17,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
 import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
 import com.Group1.PetRadar.DTO.user.updateUserDTO;
 import com.Group1.PetRadar.Model.User;
@@ -159,6 +160,30 @@ public class UserServiceImplTest {
         when(namedParameterJdbcTemplateMock.queryForObject(anyString(), any(MapSqlParameterSource.class),
                 any(BeanPropertyRowMapper.class))).thenReturn(dummyUser);
         Assert.assertEquals(true, userServiceImpl.googleLogin(dummyUser, false));
+    }
+
+    @Test
+    public void appLoginTest() throws Exception {
+        AuthReqDTO dummyUser = new AuthReqDTO();
+        User dummyUser2 = new User();
+        dummyUser.setEmail("dummyemail.com");
+        when(namedParameterJdbcTemplateMock.queryForObject(anyString(), any(MapSqlParameterSource.class),
+                any(BeanPropertyRowMapper.class))).thenReturn(dummyUser2);
+        Assertions.assertThrows(Exception.class, () -> {
+            userServiceImpl.appLogin(dummyUser);
+        });
+    }
+
+    @Test
+    public void appLoginTest2() throws Exception {
+        AuthReqDTO dummyUser = new AuthReqDTO();
+        dummyUser.setEmail("dummyemail.com");
+        when(namedParameterJdbcTemplateMock.queryForObject(anyString(), any(MapSqlParameterSource.class),
+                any(BeanPropertyRowMapper.class))).thenThrow(new EmptyResultDataAccessException("", 0) {
+                });
+        Assertions.assertThrows(Exception.class, () -> {
+            userServiceImpl.appLogin(dummyUser);
+        });
     }
 
 }
