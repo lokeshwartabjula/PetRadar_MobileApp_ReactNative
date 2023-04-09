@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.Group1.PetRadar.Model.SecurityUser;
 import com.Group1.PetRadar.Repository.UserRepository;
-import com.Group1.PetRadar.config.SecurityUser;
 
 
 @Service
