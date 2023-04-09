@@ -334,4 +334,18 @@ public class UserServiceImplTest {
         });
     }
 
+    @Test
+    public void deleteUserById() throws Exception {
+        Assertions.assertThrows(Exception.class, () -> {
+            userServiceImpl.deleteUserById("345");
+        });
+    }
+
+    @Test
+    public void deleteUserById2() throws Exception {
+        Assertions.assertThrows(Exception.class, () -> {
+            userServiceImpl.deleteUserById("345");
+        });
+    }
+
 }
