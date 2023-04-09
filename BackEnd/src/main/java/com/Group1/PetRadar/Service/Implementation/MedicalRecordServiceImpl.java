@@ -63,8 +63,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
             m.setSymptoms(medical.getSymptoms());
             m.setVetName(medical.getVetName());
             m.setVaccinationDate(medical.getVaccinationDate());
-            medicalRecordRepository.save(m);
-            return m;
+            return medicalRecordRepository.save(m);
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Error while saving medical record: " + e.getMessage());
