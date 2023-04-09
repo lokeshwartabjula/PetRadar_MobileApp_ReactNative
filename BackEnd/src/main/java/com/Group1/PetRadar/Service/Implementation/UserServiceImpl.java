@@ -1,17 +1,10 @@
 package com.Group1.PetRadar.Service.Implementation;
 
-import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
-import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
-import com.Group1.PetRadar.DTO.user.updateUserDTO;
-import com.Group1.PetRadar.Model.User;
-import com.Group1.PetRadar.Repository.UserRepository;
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
-import com.Group1.PetRadar.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -25,6 +18,16 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
+import com.Group1.PetRadar.DTO.user.RegisterUserDTO;
+import com.Group1.PetRadar.DTO.user.updateUserDTO;
+import com.Group1.PetRadar.Model.PetprofileModel;
+import com.Group1.PetRadar.Model.PostModel;
+import com.Group1.PetRadar.Model.User;
+import com.Group1.PetRadar.Repository.UserRepository;
+import com.Group1.PetRadar.Service.UserService;
+import com.Group1.PetRadar.utils.AwsService;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -33,23 +36,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    // @Override
-    // public UserModel registerUser(UserModel user) throws Exception {
-    // Integer registeredUser = 0;
-    // registeredUser = jdbcTemplate.update("insert into IMDB.UserTable
-    // values(1,?,?,?,?) ",new Object[]{
-    // user.getUserName(),
-    // user.getFirstName(),
-    // user.getLastname(),
-    // user.getUserEmail()
-    // });
-    //
-    //
-    // if(registeredUser==0)
-    // throw new Exception("Error in inserting record");
-    //
-    // return user;
-    // }
 
     @Autowired
     UserRepository userRepository;
@@ -59,6 +45,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    AwsService awsService;
 
     @Override
     public User saveUser(RegisterUserDTO registerUserDTO) {
@@ -121,6 +110,7 @@ public class UserServiceImpl implements UserService {
             user.setCity(userDetails.getCity());
             user.setPincode(userDetails.getPincode());
             user.setPhoneNumber(userDetails.getMobileNumber());
+            user.setImageUrl(awsService.save(userDetails.getFile()));
             user.setLatitude(userDetails.getLatitude());
             user.setLongitude(userDetails.getLongitude());
             user.setOnesignalUserId(userDetails.getOneSignalUserId());
@@ -191,6 +181,7 @@ public class UserServiceImpl implements UserService {
                     new BeanPropertyRowMapper(User.class));
         } catch (EmptyResultDataAccessException e) {
             isUserFound = false;
+            throw new Exception("You have not signed up yet in our database. please sign up first");
         }
 
         if (foundUser.getEmail() != null && foundUser.getEmail().toString().length() > 0)
@@ -272,6 +263,7 @@ public class UserServiceImpl implements UserService {
                 throw new Exception("User not found");
             }
             user = userRepository.findById(UUID.fromString(id)).get();
+            System.out.println(user.getLatitude());
             return user;
         } catch (Exception e) {
             e.printStackTrace();
@@ -286,6 +278,17 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Unable to Delete the user");
+        }
+    }
+
+    public List<PetprofileModel> findPetsByUserId(UUID userId) throws Exception {
+        try {
+            User user = findById(userId.toString());
+            System.out.println(user.getPets());
+            return user.getPets();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Exception occurred while retrieving pets");
         }
     }
 

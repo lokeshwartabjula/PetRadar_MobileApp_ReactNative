@@ -2,7 +2,9 @@ package com.Group1.PetRadar.Controller;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.Group1.PetRadar.DTO.auth.AuthReqDTO;
 import com.Group1.PetRadar.DTO.user.updateUserDTO;
+import com.Group1.PetRadar.Model.PetprofileModel;
+import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Service.UserService;
 import com.Group1.PetRadar.protocol.Response;
@@ -34,6 +38,28 @@ public class UserController {
 	@GetMapping("/message")
 	public String home() {
 		return "Never give up!!";
+	}
+
+	@GetMapping("/allPet")
+	public ResponseEntity<Response> getAllPetsByUserId(@RequestParam(name = "userId") String id) {
+
+		System.out.println(id);
+		Response failureResponse = null;
+		List<PetprofileModel> pets = null;
+		try {
+			pets = userService.findPetsByUserId(UUID.fromString(id));
+		} catch (Exception e) {
+			failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+					HttpStatus.UNAUTHORIZED.name());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put("pets", pets);
+		Response response = new Response();
+		response.setData(data);
+		response.setMessage(HttpStatus.ACCEPTED.name());
+		response.setStatus(HttpStatus.ACCEPTED.value());
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}
 
 	@GetMapping("/{id}")
