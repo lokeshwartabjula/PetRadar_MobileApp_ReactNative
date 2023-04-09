@@ -17,11 +17,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Transactional
 @NoArgsConstructor
 @Table(name = "pet_profile")
+@Getter
+@Setter
 @Entity()
 public class PetprofileModel {
     @Id()
@@ -56,94 +60,6 @@ public class PetprofileModel {
     // Getters and setters
     public UUID getPetId() {
         return petId;
-    }
-
-    public String getPetName() {
-        return petName;
-    }
-
-    public void setPetName(String petName) {
-        this.petName = petName;
-    }
-
-    public String getPetBreed() {
-        return petBreed;
-    }
-
-    public void setPetBreed(String petBreed) {
-        this.petBreed = petBreed;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getPetCategory() {
-        return petCategory;
-    }
-
-    public void setPetCategory(String petCategory) {
-        this.petCategory = petCategory;
-    }
-
-    public byte[] getPetQrImage() {
-        return petQrImage;
-    }
-
-    public byte[] setPetQrImage(byte[] petQrImage) {
-        return this.petQrImage = petQrImage;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public Float getPetHeightInCms() {
-        return petHeightInCms;
-    }
-
-    public void setPetHeightInCms(float petHeightInCms) {
-        this.petHeightInCms = petHeightInCms;
-    }
-
-    public Float getWeightInLbs() {
-        return weightInLbs;
-    }
-
-    public void setWeightInLbs(float weightInLbs) {
-        this.weightInLbs = weightInLbs;
-    }
-
-    public String getPetIdentificationMarks() {
-        return petIdentificationMarks;
-    }
-
-    public void setPetIdentificationMarks(String petIdentificationMarks) {
-        this.petIdentificationMarks = petIdentificationMarks;
-    }
-
-    public String getAllergies() {
-        return allergies;
-    }
-
-    public void setAllergies(String allergies) {
-        this.allergies = allergies;
     }
 
     public User getUser() {

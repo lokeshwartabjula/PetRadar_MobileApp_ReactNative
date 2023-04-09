@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
             user.setAddress(userDetails.getAddress());
             user.setCity(userDetails.getCity());
             user.setPincode(userDetails.getPincode());
-            user.setPhoneNumber(userDetails.getMobileNumber());
+            user.setPhoneNumber(userDetails.getPhoneNumber());
             user.setImageUrl(awsService.save(userDetails.getFile()));
             user.setLatitude(userDetails.getLatitude());
             user.setLongitude(userDetails.getLongitude());
@@ -284,6 +284,8 @@ public class UserServiceImpl implements UserService {
     public List<PostModel> findPostsByUserId(UUID userId) throws Exception {
         try {
             User user = findById(userId.toString());
+            System.out.println(user.getEmail());
+
             return user.getPosts();
         } catch (Exception e) {
             e.printStackTrace();
