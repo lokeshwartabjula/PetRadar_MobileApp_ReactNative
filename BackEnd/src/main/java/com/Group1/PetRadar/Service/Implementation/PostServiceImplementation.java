@@ -1,10 +1,13 @@
 package com.Group1.PetRadar.Service.Implementation;
 
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -17,6 +20,8 @@ import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.PostRepository;
 import com.Group1.PetRadar.Repository.UserRepository;
 import com.Group1.PetRadar.Service.PostService;
+import com.Group1.PetRadar.Service.UserService;
+import com.Group1.PetRadar.utils.AwsService;
 
 @Service
 public class PostServiceImplementation implements PostService {
@@ -27,9 +32,15 @@ public class PostServiceImplementation implements PostService {
     @Autowired
     UserRepository userRepository;
 
-    private void sendNotifications(double latitude, double longitude) {
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    AwsService awsService;
+
+    private void sendNotifications(BigDecimal bigDecimal, BigDecimal bigDecimal2) {
         try {
-            Collection<User> nearByUsers = userRepository.findUserByLocation(latitude, longitude);
+            Collection<User> nearByUsers = userRepository.findUserByLocation(bigDecimal, bigDecimal2);
 
             ArrayList<String> userOSID = new ArrayList<String>();
             nearByUsers.forEach(user -> {
@@ -82,18 +93,34 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public PostModel savePost(AddPostDTO postmodel) {
+    public Map<String, Object> savePost(AddPostDTO postmodel) throws Exception {
         PostModel newPost = new PostModel();
+        User user = null;
+        try {
+            String userId = postmodel.getUserId().toString();
+            user = userService.findById(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Please enter valid user ID");
+        }
+
         newPost.setDescription(postmodel.getDescription());
         newPost.setPostDate(postmodel.getPostDate());
         newPost.setLatitude(postmodel.getLatitude());
         newPost.setLongitude(postmodel.getLongitude());
+        newPost.setImageUrl(awsService.save(postmodel.getImage()));
+        newPost.setUser(user);
 
         newPost = postRepository.save(newPost);
 
+        Map<String, Object> data = new HashMap<>();
+        user = newPost.getUser();
+        data.put("userName", user.getFirstName() + " " + user.getLastName());
+        data.put("imageUrl", user.getImageUrl());
+        data.put("post", newPost);
         sendNotifications(newPost.getLatitude(), newPost.getLongitude());
 
-        return newPost;
+        return data;
     }
 
     @Override
