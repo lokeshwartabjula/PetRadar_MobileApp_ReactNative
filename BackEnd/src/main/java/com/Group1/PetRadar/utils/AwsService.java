@@ -19,15 +19,15 @@ import java.time.LocalDateTime;
 @Service
 public class AwsService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AwsService.class);
+    public static final Logger LOG = LoggerFactory.getLogger(AwsService.class);
 
     @Autowired
-    private AmazonS3 amazonS3;
+    public AmazonS3 amazonS3;
 
     @Value("${s3.bucket.name}")
-    private String s3BucketName;
+    public String s3BucketName;
 
-    private File convertMultiPartFileToFile(final MultipartFile multipartFile) {
+    public File convertMultiPartFileToFile(final MultipartFile multipartFile) {
         final File file = new File(multipartFile.getOriginalFilename());
         try (final FileOutputStream outputStream = new FileOutputStream(file)) {
             outputStream.write(multipartFile.getBytes());
