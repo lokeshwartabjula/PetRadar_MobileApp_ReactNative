@@ -1,6 +1,7 @@
 package com.Group1.PetRadar.Controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Group1.PetRadar.DTO.pet.AddPetDTO;
+import com.Group1.PetRadar.Model.MedicalHistory;
 import com.Group1.PetRadar.Model.PetprofileModel;
 import com.Group1.PetRadar.Service.PetProfileService;
 import com.Group1.PetRadar.protocol.Response;
@@ -92,6 +93,25 @@ public class PetprofileController {
 
     }
 
+    @GetMapping("/medical/{id}")
+    public ResponseEntity<Response> getmedicalByPetId(@PathVariable("id") UUID id) throws Exception {
+        List<MedicalHistory> medicalHistory = null;
+        Response failureResponse = null;
+        try {
+            medicalHistory = petProfileService.getmedicalByPetId(id);
+        } catch (Exception e) {
+            failureResponse = new Response(e.getMessage(), HttpStatus.UNAUTHORIZED.value(),
+                    HttpStatus.UNAUTHORIZED.name());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
+        }
+        Map<String, Object> data = new HashMap<>();
+        data.put("medicalHistory", medicalHistory);
+        Response response = new Response();
+        response.setData(data);
+        response.setMessage(HttpStatus.ACCEPTED.name());
+        response.setStatus(HttpStatus.ACCEPTED.value());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+    }
 
     @PutMapping("/update")
     public ResponseEntity<Response> updatePetprofile(@RequestParam Map<String, String> paramList,
