@@ -195,7 +195,7 @@ If you click on the third icon it will direct you to the profile settings page, 
 ### Contributors
 - [Jeet Mehta](mailto:jt429386@dal.ca) Banner Id: B00945900
 - [Sankeerth Rani](mailto:sn501304@dal.ca) Banner Id: B00932027
-- [Dhruvin Dhankara](mailto:dh793203@dal.ca) Banner Id: B00926164
+- [Dhruvin Dankhara](mailto:dh793203@dal.ca) Banner Id: B00926164
 - [Parshva Shah](mailto:pr371441@dal.ca) Banner Id: B00928689
 - [Lokeshwar Tabjula](mailto:lk544219@dal.ca) Banner Id: B00936909
 
