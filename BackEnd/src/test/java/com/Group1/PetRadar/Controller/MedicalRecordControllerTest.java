@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.Group1.PetRadar.utils.Constants;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -37,11 +38,11 @@ class MedicalRecordControllerTest {
 	
 	@Test
 	public void getMedicalByIdTest() throws Exception {
-		UUID dummyUUID = new UUID(2l,3l);
+		UUID dummyUUID = new UUID(Constants.EXPECTED_INT,Constants.UNEXPECTED_INT);
 		MedicalHistory dummyMedicalHistory = new MedicalHistory();
 		
 		when(medicalRecordServiceMock.getmedicalById(any(UUID.class))).thenReturn(dummyMedicalHistory);
-		Assert.assertEquals(202, medicalRecordController.getmedicalById(dummyUUID).getStatusCode().value());
+		Assert.assertEquals(Constants.expectedStatusCode, medicalRecordController.getmedicalById(dummyUUID).getStatusCode().value());
 	}
 	
 	@Test
@@ -57,7 +58,7 @@ class MedicalRecordControllerTest {
 		paramList.put("medication", "medication");
 		
 		when(medicalRecordServiceMock.updateMedical(any(AddPetMedicalRecordDTO.class))).thenReturn(dummyMedicalHistory);
-		Assert.assertEquals(202,medicalRecordController.updateMedical(paramList).getStatusCode().value());
+		Assert.assertEquals(Constants.expectedStatusCode,medicalRecordController.updateMedical(paramList).getStatusCode().value());
 		
 	}
 	@Test
@@ -83,7 +84,7 @@ class MedicalRecordControllerTest {
 		UUID dummyUUID = new UUID(2l,3l);
 		when(medicalRecordServiceMock.deleteMedicalById(any(UUID.class))).thenReturn("expectedString");
 
-		Assert.assertEquals(202, medicalRecordController.deleteMedicalById(dummyUUID).getStatusCode().value());
+		Assert.assertEquals(Constants.expectedStatusCode, medicalRecordController.deleteMedicalById(dummyUUID).getStatusCode().value());
 	}
 	
 

@@ -111,14 +111,14 @@ class PostControllerTest {
 		
 		dummyPostModel.setDescription("notNulDesc");
 		when(postServiceMock.updatePost(any(),any())).thenReturn(dummyPostModel);
-		Assert.assertEquals(401, postController.updatePost(paramList,multiPartFile).getStatusCode().value());
+		Assert.assertEquals(Constants.updatedExpectedValue, postController.updatePost(paramList,multiPartFile).getStatusCode().value());
 	}
 
 	@Test
 	public void deletePostByIdTest() {
-		UUID dummyUUID = new UUID(Constants.DUMMY_LONG, Constants.DUMMY_LONG);
+		UUID dummyUUID = new UUID(Constants.EXPECTED_INT, Constants.UNEXPECTED_INT);
 		when(postServiceMock.deletePostById(any(UUID.class))).thenReturn("deleteString");
-		Assert.assertEquals(202, postController.deletePostById(dummyUUID).getStatusCode().value());
+		Assert.assertEquals(Constants.expectedStatusCode, postController.deletePostById(dummyUUID).getStatusCode().value());
 	}
 
 }

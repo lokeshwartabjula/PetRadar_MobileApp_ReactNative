@@ -47,12 +47,12 @@ public class UserControllerTest {
 	}
 	@Test
 	public void getUserByIdPositiveTestcase1() {
-		Assert.assertEquals(202, mockUserController.getUserById("34").getBody().getStatus());
+		Assert.assertEquals(Constants.expectedStatusCode, mockUserController.getUserById("34").getBody().getStatus());
 	}
 	@Test
 	public void getUserByIdNegativeTestcase1() throws Exception {
 		when(userServiceMock.findById(anyString())).thenThrow(new Exception());
-		Assert.assertEquals(401, mockUserController.getUserById("34").getBody().getStatus());
+		Assert.assertEquals(Constants.updatedExpectedValue, mockUserController.getUserById("34").getBody().getStatus());
 		
 	}
 
@@ -63,7 +63,7 @@ public class UserControllerTest {
 		User dummyUser = new User();
 		//returning true assuming its a valid new user
 		when(userServiceMock.googleLogin(any(User.class), anyBoolean())).thenReturn(true);
-		Assert.assertEquals(202, mockUserController.googleRegisterLogin(dummyUser, true).getBody().getStatus());
+		Assert.assertEquals(Constants.expectedStatusCode, mockUserController.googleRegisterLogin(dummyUser, true).getBody().getStatus());
 	}
 	
 	@Test
@@ -71,7 +71,7 @@ public class UserControllerTest {
 		User dummyUser = new User();
 		//throwing an exception assuming an error in googleLogin function
 		when(userServiceMock.googleLogin(any(User.class), anyBoolean())).thenThrow(new Exception());
-		Assert.assertEquals(401, mockUserController.googleRegisterLogin(dummyUser, true).getBody().getStatus());
+		Assert.assertEquals(Constants.updatedExpectedValue, mockUserController.googleRegisterLogin(dummyUser, true).getBody().getStatus());
 	}
 
 	@Test
@@ -86,7 +86,7 @@ public class UserControllerTest {
 	public void saveUserPositiveCase1() throws Exception {
 		AuthReqDTO dummyAuthReqDTO = new AuthReqDTO();
 		when(userServiceMock.registerAppUser(any(AuthReqDTO.class))).thenReturn(true);
-		Assert.assertEquals(202, mockUserController.saveUser(dummyAuthReqDTO).getBody().getStatus());
+		Assert.assertEquals(Constants.expectedStatusCode, mockUserController.saveUser(dummyAuthReqDTO).getBody().getStatus());
 	}
 
 
@@ -101,14 +101,14 @@ public class UserControllerTest {
 	public void saveUserNegativeCase2() throws Exception {
 		AuthReqDTO dummyAuthReqDTO = new AuthReqDTO();
 		when(userServiceMock.registerAppUser(any(AuthReqDTO.class))).thenThrow(new Exception());
-		Assert.assertEquals(401, mockUserController.saveUser(dummyAuthReqDTO).getBody().getStatus());
+		Assert.assertEquals(Constants.updatedExpectedValue, mockUserController.saveUser(dummyAuthReqDTO).getBody().getStatus());
 	}
 	
 	@Test
 	public void loginPositive1() throws Exception {
 		AuthReqDTO dummyAuthReqDTO = new AuthReqDTO();
 		when(userServiceMock.appLogin(any(AuthReqDTO.class))).thenReturn(true);
-		Assert.assertEquals(202, mockUserController.login(dummyAuthReqDTO).getBody().getStatus());
+		Assert.assertEquals(Constants.expectedStatusCode, mockUserController.login(dummyAuthReqDTO).getBody().getStatus());
 	
 	}
 	
@@ -124,7 +124,7 @@ public class UserControllerTest {
 	public void loginNegative2() throws Exception {
 		AuthReqDTO dummyAuthReqDTO = new AuthReqDTO();
 		when(userServiceMock.appLogin(any(AuthReqDTO.class))).thenThrow(new Exception());
-		Assert.assertEquals(401, mockUserController.login(dummyAuthReqDTO).getBody().getStatus());
+		Assert.assertEquals(Constants.updatedExpectedValue, mockUserController.login(dummyAuthReqDTO).getBody().getStatus());
 	
 	}
 	
@@ -136,27 +136,27 @@ public class UserControllerTest {
 	@Test
 	public void updateTestPositive1() {
 //		when(multipartFileMock.getOriginalFilename()).thenReturn("dummyFileName");
-		Assert.assertEquals(202, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", "0f14d0ab-9605-4a62-a9e4-5ed26688389b", multipartFileMock, Constants.DUMMY_LATITUDE, Constants.DUMMY_LATITUDE, "string").getBody().getStatus());
+		Assert.assertEquals(Constants.expectedStatusCode, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", "0f14d0ab-9605-4a62-a9e4-5ed26688389b", multipartFileMock, Constants.DUMMY_LATITUDE, Constants.DUMMY_LATITUDE, "string").getBody().getStatus());
 	}
 	
 	@Test
 	public void updateTestNegative1() throws Exception {
 //		when(multipartFileMock.getOriginalFilename()).thenReturn("dummyFileName");
 //		when(userServiceMock.updateUser(any(updateUserDTO.class), anyString())).thenThrow(new Exception());
-		Assert.assertEquals(202, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", Constants.DUMMY_UUID, multipartFileMock, Constants.DUMMY_LATITUDE, Constants.DUMMY_LATITUDE, "string").getBody().getStatus());
+		Assert.assertEquals(Constants.expectedStatusCode, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", Constants.DUMMY_UUID, multipartFileMock, Constants.DUMMY_LATITUDE, Constants.DUMMY_LATITUDE, "string").getBody().getStatus());
 	}
 
 //Test cases for deleting the user by id
 
 @Test
 	public void deleteUserByIdPositiveTest1() {
-		Assert.assertEquals(202, mockUserController.deleteUserById("34").getBody().getStatus());
+		Assert.assertEquals(Constants.expectedStatusCode, mockUserController.deleteUserById("34").getBody().getStatus());
 	}
 	
 	@Test
 	public void deleteUserByIdNegativeTest1() throws Exception {
 		when(userServiceMock.deleteUserById(anyString())).thenThrow(new Exception());
-		Assert.assertEquals(401, mockUserController.deleteUserById("34").getBody().getStatus());
+		Assert.assertEquals(Constants.updatedExpectedValue, mockUserController.deleteUserById("34").getBody().getStatus());
 	}
 
 }

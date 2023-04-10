@@ -7,6 +7,8 @@ import static org.mockito.Mockito.when;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.Group1.PetRadar.utils.Constants;
+import com.mysql.cj.exceptions.CJOperationNotSupportedException;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -345,14 +347,14 @@ public class UserServiceImplTest {
     @Test
     public void deleteUserById() throws Exception {
         Assertions.assertThrows(Exception.class, () -> {
-            userServiceImpl.deleteUserById("345");
+            userServiceImpl.deleteUserById(Constants.sampleUserId);
         });
     }
 
     @Test
     public void deleteUserById2() throws Exception {
         Assertions.assertThrows(Exception.class, () -> {
-            userServiceImpl.deleteUserById("345");
+            userServiceImpl.deleteUserById(Constants.sampleUserId);
         });
     }
 

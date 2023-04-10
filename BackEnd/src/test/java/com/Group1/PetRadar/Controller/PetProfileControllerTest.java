@@ -62,7 +62,7 @@ class PetProfileControllerTest {
 		new Random().nextBytes(b);		
 		MultipartFile multiPartFile = new MockMultipartFile("mock", b);
 		
-		Assert.assertEquals(202, petProfileController.createPetprofile(paramList, multiPartFile).getStatusCode().value());
+		Assert.assertEquals(Constants.expectedStatusCode, petProfileController.createPetprofile(paramList, multiPartFile).getStatusCode().value());
 	}
 	
 	@Test
@@ -91,9 +91,9 @@ class PetProfileControllerTest {
 		PetprofileModel dummyPetprofileModel = new PetprofileModel();
 		dummyPetprofileModel.setImageUrl("img");
 //		dummyPetprofileModel.setBio("dummyBio");
-		UUID dummyUUID = new UUID(2l,3l);
+		UUID dummyUUID = new UUID(Constants.EXPECTED_INT,Constants.UNEXPECTED_INT);
 		when(petProfileServiceMock.getPetprofileById(any(UUID.class))).thenReturn(dummyPetprofileModel);
-		Assert.assertEquals(202, petProfileController.getPetprofileId(dummyUUID).getStatusCode().value());
+		Assert.assertEquals(Constants.expectedStatusCode, petProfileController.getPetprofileId(dummyUUID).getStatusCode().value());
 	}
 	
     @Test
@@ -118,9 +118,9 @@ class PetProfileControllerTest {
 	
 	@Test
 	public void deletePetprofileByIdTest() {
-		UUID dummyUUID = new UUID(Constants.DUMMY_LONG,Constants.DUMMY_LONG);
+		UUID dummyUUID = new UUID(Constants.EXPECTED_INT,Constants.UNEXPECTED_INT);
 		when(petProfileServiceMock.deletePetprofileById(any(UUID.class))).thenReturn("expectedString");
-		Assert.assertEquals(202, petProfileController.deletePetprofileById(dummyUUID).getStatusCode().value());
+		Assert.assertEquals(Constants.expectedStatusCode, petProfileController.deletePetprofileById(dummyUUID).getStatusCode().value());
 	}
 
 }
