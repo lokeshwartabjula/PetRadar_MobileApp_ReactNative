@@ -86,7 +86,6 @@ You will be able to notice that the application has started to run on port 8085
 To test if the services are up and running, click on the following link:
 [Test Service](http://localhost:8085/user/message) 
 
-
 ### Use Case Scenario
 
 
@@ -141,15 +140,17 @@ Once the pet profile is created then it will be directed to adding the medical h
 
 #### Show Pet Details on Web Page
 [![Show Pet Details on Web Page](https://i.postimg.cc/L4B0b4Sg/Whats-App-Image-2023-04-09-at-7-03-58-PM-6.jpg)](https://postimg.cc/Dm0gWT87)
+[![Phone Dialer](https://i.postimg.cc/vmb0y8Kk/Whats-App-Image-2023-04-09-at-8-45-22-PM.jpg)](https://postimg.cc/jD3HQTt4)
 <br />
-If the person scans the QR code of a pet then it will pop up the pet details in the web page itself. The pet details will be displayed like this, see above figure. Here it will display the pet’s profile image, name, gender, and age. Here the person will get the call-to-action buttons for Calling pet owner, Nearby facilities and pet medical history for the pet.
+If the person scans the QR code of a pet then it will pop up the pet details in the web page itself. The pet details will be displayed like this, see above figure. Here it will display the pet’s profile image, name, gender, and age. Here the person will get the call-to-action buttons for Calling pet owner, Nearby facilities and pet medical history for the pet. Here on pressing the call to owner the native phone's dialer is shown as shown in above figure.
 <br />
 <br />
 
 #### Creating the post for lost pets
 [![Creating the post for lost pets](https://i.postimg.cc/BbL5sCyv/Whats-App-Image-2023-03-21-at-1-39-01-PM.jpg)](https://postimg.cc/vxyxt5GR)
+[![Whats-App-Image-2023-04-09-at-8-50-34-PM.jpg](https://i.postimg.cc/MZfZVzsh/Whats-App-Image-2023-04-09-at-8-50-34-PM.jpg)](https://postimg.cc/5j1MMWW3)
 <br />
-If the user losses his pet then he can upload a picture of his pet then he can upload picture of the pet and add a description along with selecting the location so that other registered users will get notified in that locality. See above figure, for the add post screen.
+If the user losses his pet then he can upload a picture of his pet then he can upload picture of the pet and add a description along with selecting the location so that other registered users will get notified in that locality. See above figure, for the add post screen. Here the location will be selected based on the user's pin drop on the map.
 <br />
 <br />
 
@@ -177,8 +178,9 @@ As it can be seen from above figure, we can edit the pet details if we have ente
 
 #### Pet Found or Not?
 [![Pet Found or Not](https://i.postimg.cc/Nf1YzW4P/Whats-App-Image-2023-04-09-at-7-03-59-PM-1.jpg)](https://postimg.cc/bsNKGV4Q)
+[![Pet QR Code](https://i.postimg.cc/jqHQxYHr/Whats-App-Image-2023-04-09-at-8-46-01-PM.jpg)](https://postimg.cc/8sCr43Xy)
 <br />
-If the user finds the pet then he can select the option ‘Found?’ and then they will get two options, see figure and they can update about the status of the pet. Once they select ‘Yes!!! Found It’ the post will be disappeared from the feed screen from all the registered users. Here a QR is also shown to the owners who are not the owner of that post/feed. This QR code helps them to easily contact the pet owner.
+If the user finds the pet then he can select the option ‘Found?’ and then they will get two options, see figure and they can update about the status of the pet. Once they select ‘Yes!!! Found It’ the post will be disappeared from the feed screen from all the registered users. Here a QR is also shown to the owners who are not the owner of that post/feed. This QR code helps them to easily contact the pet owner as shown in the above figure.
 <br />
 <br />
 
@@ -187,7 +189,7 @@ If the user finds the pet then he can select the option ‘Found?’ and then th
 <br />
 If you click on the third icon it will direct you to the profile settings page, see above figure. Here, it shows the options of updating the ‘Personal Details’, ‘Your Posts’, update ‘Pet Details’, ‘Notification’ access, and ‘Delete Account’ options. If you are not using the app frequently then you can also click on the ‘Logout’ option and it will log out of your account.
 
-### Development Team 
+### Development Team
 - Group 1
 
 ### Contributors
@@ -199,4 +201,3 @@ If you click on the third icon it will direct you to the profile settings page, 
 
 ### TA
 - [Anirudh Hosur](mailto:an516658@dal.ca)
-
