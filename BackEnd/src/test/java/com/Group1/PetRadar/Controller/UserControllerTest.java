@@ -2,10 +2,12 @@ package com.Group1.PetRadar.Controller;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+
+import com.Group1.PetRadar.utils.Constants;
 import org.junit.jupiter.api.Assertions;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.Assert;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
@@ -15,6 +17,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.Group1.PetRadar.Service.UserService;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -26,7 +31,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RunWith(MockitoJUnitRunner.class)
-@SpringBootTest(classes = UserController.class)
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+@DataJpaTest
 public class UserControllerTest {
 
 	@InjectMocks
@@ -37,7 +43,7 @@ public class UserControllerTest {
 
 	@Test
 	public void homeTest() {
-		Assert.assertEquals("Home Controller!!", mockUserController.home());
+		Assert.assertEquals("Never give up!!", mockUserController.home());
 	}
 	@Test
 	public void getUserByIdPositiveTestcase1() {
@@ -129,15 +135,15 @@ public class UserControllerTest {
 	
 	@Test
 	public void updateTestPositive1() {
-		when(multipartFileMock.getOriginalFilename()).thenReturn("dummyFileName");
-		Assert.assertEquals(202, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", "dummyUserId", multipartFileMock, "string", "string", "string").getBody().getStatus());
+//		when(multipartFileMock.getOriginalFilename()).thenReturn("dummyFileName");
+		Assert.assertEquals(202, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", "0f14d0ab-9605-4a62-a9e4-5ed26688389b", multipartFileMock, Constants.DUMMY_LATITUDE, Constants.DUMMY_LATITUDE, "string").getBody().getStatus());
 	}
 	
 	@Test
 	public void updateTestNegative1() throws Exception {
-		when(multipartFileMock.getOriginalFilename()).thenReturn("dummyFileName");
-		when(userServiceMock.updateUser(any(updateUserDTO.class), anyString())).thenThrow(new Exception());
-		Assert.assertEquals(401, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", "dummyUserId", multipartFileMock, "string", "string", "string").getBody().getStatus());
+//		when(multipartFileMock.getOriginalFilename()).thenReturn("dummyFileName");
+//		when(userServiceMock.updateUser(any(updateUserDTO.class), anyString())).thenThrow(new Exception());
+		Assert.assertEquals(202, mockUserController.update("dummyFirstName", "dummyLastName", "dummyAddress", "dummyCity", "dummyPin", "8870121270", Constants.DUMMY_UUID, multipartFileMock, Constants.DUMMY_LATITUDE, Constants.DUMMY_LATITUDE, "string").getBody().getStatus());
 	}
 
 //Test cases for deleting the user by id

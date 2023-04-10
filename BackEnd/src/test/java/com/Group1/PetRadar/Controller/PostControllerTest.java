@@ -19,6 +19,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +29,8 @@ import com.Group1.PetRadar.DTO.post.AddPostDTO;
 import com.Group1.PetRadar.DTO.user.updateUserDTO;
 import com.Group1.PetRadar.Model.PostModel;
 import com.Group1.PetRadar.Service.PostService;
+import com.Group1.PetRadar.protocol.Response;
+import com.Group1.PetRadar.utils.Constants;
 import com.Group1.PetRadar.Controller.*;
 import com.Group1.PetRadar.Service.*;
 import static org.junit.Assert.assertEquals;
@@ -71,8 +75,12 @@ class PostControllerTest {
 		MultipartFile multiPartFile = new MockMultipartFile("mock", b);
 		
 		dummyPostModel.setDescription("notNullDesc");
+		Response response = new Response();
+        response.setMessage(HttpStatus.ACCEPTED.name());
+        response.setStatus(HttpStatus.ACCEPTED.value());
+        response.setData(dummyAddPostDto);
 		when(postServiceMock.savePost(any(AddPostDTO.class))).thenReturn(paramList);
-		Assert.assertEquals(dummyPostModel, postController.createPost(paramListString,multiPartFile));
+		Assert.assertEquals(response.getStatus(), postController.createPost(paramListString,multiPartFile).getStatusCode().value());
 	}
 	
 //	@Test
@@ -103,14 +111,14 @@ class PostControllerTest {
 		
 		dummyPostModel.setDescription("notNulDesc");
 		when(postServiceMock.updatePost(any(),any())).thenReturn(dummyPostModel);
-		Assert.assertEquals(dummyPostModel, postController.updatePost(paramList,multiPartFile));
+		Assert.assertEquals(401, postController.updatePost(paramList,multiPartFile).getStatusCode().value());
 	}
 
 	@Test
 	public void deletePostByIdTest() {
-		UUID dummyUUID = new UUID(2l, 3l);
+		UUID dummyUUID = new UUID(Constants.DUMMY_LONG, Constants.DUMMY_LONG);
 		when(postServiceMock.deletePostById(any(UUID.class))).thenReturn("deleteString");
-		Assert.assertEquals("deleteString", postController.deletePostById(dummyUUID));
+		Assert.assertEquals(202, postController.deletePostById(dummyUUID).getStatusCode().value());
 	}
 
 }

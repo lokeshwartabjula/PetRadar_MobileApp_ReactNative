@@ -41,23 +41,23 @@ class MedicalRecordControllerTest {
 		MedicalHistory dummyMedicalHistory = new MedicalHistory();
 		
 		when(medicalRecordServiceMock.getmedicalById(any(UUID.class))).thenReturn(dummyMedicalHistory);
-		Assert.assertEquals(dummyMedicalHistory, medicalRecordController.getmedicalById(dummyUUID));
+		Assert.assertEquals(202, medicalRecordController.getmedicalById(dummyUUID).getStatusCode().value());
 	}
 	
 	@Test
 	public void updateMedicalTest() throws Exception {
 		MedicalHistory dummyMedicalHistory = new MedicalHistory();
 		Map<String, String> paramList = new HashMap<String,String>();
-		paramList.put("medicalRecordId", "recordId");
-		paramList.put("vetVisitDate", "visitDate");
+		paramList.put("medicalRecordId", "0f14d0ab-9605-4a62-a9e4-5ed26688389b");
+		paramList.put("vetVisitDate", "Thu Jun 18 20:56:02 EDT 2009");
 		paramList.put("symptoms", "symptoms");
 		paramList.put("vetName", "vetname");
-		paramList.put("vaccinationDate", "17-10-1997");
+		paramList.put("vaccinationDate", "Thu Jun 18 20:56:02 EDT 2009");
 		paramList.put("surgery", "surgery");
 		paramList.put("medication", "medication");
 		
 		when(medicalRecordServiceMock.updateMedical(any(AddPetMedicalRecordDTO.class))).thenReturn(dummyMedicalHistory);
-		Assert.assertEquals(dummyMedicalHistory,medicalRecordController.updateMedical(paramList));
+		Assert.assertEquals(202,medicalRecordController.updateMedical(paramList).getStatusCode().value());
 		
 	}
 	@Test
@@ -83,7 +83,7 @@ class MedicalRecordControllerTest {
 		UUID dummyUUID = new UUID(2l,3l);
 		when(medicalRecordServiceMock.deleteMedicalById(any(UUID.class))).thenReturn("expectedString");
 
-		Assert.assertEquals("expectedString", medicalRecordController.deleteMedicalById(dummyUUID));
+		Assert.assertEquals(202, medicalRecordController.deleteMedicalById(dummyUUID).getStatusCode().value());
 	}
 	
 

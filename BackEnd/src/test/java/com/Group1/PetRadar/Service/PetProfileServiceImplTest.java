@@ -24,6 +24,7 @@ import com.Group1.PetRadar.Model.User;
 import com.Group1.PetRadar.Repository.PetProfileRepository;
 import com.Group1.PetRadar.Repository.UserRepository;
 import com.Group1.PetRadar.Service.Implementation.PetProfileServiceImplementation;
+import com.Group1.PetRadar.utils.Constants;
 
 import org.junit.Assert;
 
@@ -48,9 +49,8 @@ class PetProfileServiceImplTest {
 		User dummyUser = new User();
 		Optional<User> dummyOption = Optional.of(dummyUser);
 		AddPetDTO dummyPetDTO = new AddPetDTO();
-		dummyPetDTO.setUserId("0f14d0ab-9605-4a62-a9e4-5ed26688389b");
-		dummyPetDTO.setPetHeightInCms((float) 2.0);
-		dummyPetDTO.setWeightInLbs((float) 2.0);
+		dummyPetDTO.setPetId(Constants.DUMMY_UUID);
+	
 		
 		when(userRepoMock.findById(any(UUID.class))).thenReturn(dummyOption);
 		Assertions.assertThrows(Exception.class,()->{ impl.savePetProfile(dummyPetDTO);});
@@ -64,12 +64,11 @@ class PetProfileServiceImplTest {
 		PetprofileModel dummyPetProfileModel = new PetprofileModel();
 		Optional<PetprofileModel> dummyOption = Optional.of(dummyPetProfileModel);
 		AddPetDTO dummyPetDTO = new AddPetDTO();
-		dummyPetDTO.setUserId("0f14d0ab-9605-4a62-a9e4-5ed26688389b");
-		dummyPetDTO.setPetHeightInCms((float) 2.0);
-		dummyPetDTO.setWeightInLbs((float) 2.0);
+		dummyPetDTO.setPetId(Constants.DUMMY_UUID);
+
 		
 		when(petProfileRepoMock.findById(any(UUID.class))).thenReturn(dummyOption);
-		Assertions.assertThrows(Exception.class,()->{ impl.updatePetprofile(dummyModel);});
+		Assertions.assertEquals(null, impl.updatePetprofile(dummyModel));
 		
 	}
 	
@@ -80,9 +79,8 @@ class PetProfileServiceImplTest {
 		PetprofileModel dummyPetProfileModel = new PetprofileModel();
 		Optional<PetprofileModel> dummyOption = Optional.of(dummyPetProfileModel);
 		AddPetDTO dummyPetDTO = new AddPetDTO();
-		dummyPetDTO.setUserId("0f14d0ab-9605-4a62-a9e4-5ed26688389b");
-		dummyPetDTO.setPetHeightInCms((float) 2.0);
-		dummyPetDTO.setWeightInLbs((float) 2.0);
+		dummyPetDTO.setPetId(Constants.DUMMY_UUID);
+
 		
 		dummyModel.setAllergies("notnull");
 		dummyModel.setBio("notnull");

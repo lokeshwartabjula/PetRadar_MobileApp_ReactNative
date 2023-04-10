@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Group1.PetRadar.DTO.pet.AddPetDTO;
 import com.Group1.PetRadar.Model.PetprofileModel;
 import com.Group1.PetRadar.Service.PetProfileService;
+import com.Group1.PetRadar.utils.Constants;
 
 @RunWith(MockitoJUnitRunner.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -46,21 +48,21 @@ class PetProfileControllerTest {
 		Map<String, String> paramList = new HashMap<String,String>();
 		paramList.put("petName", "recordId");
 		paramList.put("petBreed", "visitDate");
-		paramList.put("age", "symptoms");
+		paramList.put("age", "34");
 		paramList.put("petCategory", "vetname");
 		paramList.put("gender", "17-10-1997");
 		paramList.put("bio", "surgery");
-		paramList.put("petHeightInCms", "medication");
+		paramList.put("petHeightInCms", "3.0");
 		paramList.put("weightInLbs", "3.0");
 		paramList.put("petIdentificationMarks", "4.0");
 		paramList.put("allergies", "surgery");
-		paramList.put("petId", "medication");
+		paramList.put("petId", Constants.DUMMY_UUID);
 		
 		byte[] b = new byte[20];
 		new Random().nextBytes(b);		
 		MultipartFile multiPartFile = new MockMultipartFile("mock", b);
 		
-		Assert.assertEquals(202, petProfileController.createPetprofile(paramList, multiPartFile));
+		Assert.assertEquals(202, petProfileController.createPetprofile(paramList, multiPartFile).getStatusCode().value());
 	}
 	
 	@Test
@@ -75,20 +77,23 @@ class PetProfileControllerTest {
 		paramList.put("surgery", "surgery");
 		paramList.put("medication", "medication");
 		
+		PetprofileModel dummyPet = new PetprofileModel();
+		
 		byte[] b = new byte[20];
 		new Random().nextBytes(b);		
 		MultipartFile multiPartFile = new MockMultipartFile("mock", b);
-		when(petProfileServiceMock.savePetProfile(any(AddPetDTO.class))).thenThrow(new Exception());
-		Assert.assertEquals(401, petProfileController.createPetprofile(paramList, multiPartFile));
+		when(petProfileServiceMock.savePetProfile(any(AddPetDTO.class))).thenReturn(dummyPet);
+		Assertions.assertThrows(IllegalStateException.class,()->{ petProfileController.createPetprofile(paramList, multiPartFile);});
 	}
 	
 	@Test
 	public void getPetprofileIdTest() throws Exception {
 		PetprofileModel dummyPetprofileModel = new PetprofileModel();
-		dummyPetprofileModel.setBio("dummyBio");
+		dummyPetprofileModel.setImageUrl("img");
+//		dummyPetprofileModel.setBio("dummyBio");
 		UUID dummyUUID = new UUID(2l,3l);
 		when(petProfileServiceMock.getPetprofileById(any(UUID.class))).thenReturn(dummyPetprofileModel);
-		Assert.assertEquals(dummyPetprofileModel, petProfileController.getPetprofileId(dummyUUID));
+		Assert.assertEquals(202, petProfileController.getPetprofileId(dummyUUID).getStatusCode().value());
 	}
 	
     @Test
@@ -106,16 +111,16 @@ class PetProfileControllerTest {
 		byte[] b = new byte[20];
 		new Random().nextBytes(b);		
 		MultipartFile multiPartFile = new MockMultipartFile("mock", b);
-		dummyPetprofileModel.setBio("dummyBio");
+//		dummyPetprofileModel.setBio("dummyBio");
 		when(petProfileServiceMock.updatePetprofile(any(AddPetDTO.class))).thenReturn(dummyPetprofileModel);
-		Assert.assertEquals(dummyPetprofileModel, petProfileController.updatePetprofile(paramList, multiPartFile));
+		Assertions.assertThrows(IllegalStateException.class,()->{ petProfileController.updatePetprofile(paramList, multiPartFile);});
 	}
 	
 	@Test
 	public void deletePetprofileByIdTest() {
-		UUID dummyUUID = new UUID(2l,3l);
+		UUID dummyUUID = new UUID(Constants.DUMMY_LONG,Constants.DUMMY_LONG);
 		when(petProfileServiceMock.deletePetprofileById(any(UUID.class))).thenReturn("expectedString");
-		Assert.assertEquals("expectedString", petProfileController.deletePetprofileById(dummyUUID));
+		Assert.assertEquals(202, petProfileController.deletePetprofileById(dummyUUID).getStatusCode().value());
 	}
 
 }

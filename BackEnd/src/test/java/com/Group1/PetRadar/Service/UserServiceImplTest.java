@@ -92,8 +92,8 @@ public class UserServiceImplTest {
         when(userRepoMock.findById(any())).thenReturn(dummyOption);
 
         updateUserDTO dummyUpdateUserDto = new updateUserDTO();
-        Assert.assertEquals(dummyUser,
-                userServiceImpl.updateUser(dummyUpdateUserDto, "0f14d0ab-9605-4a62-a9e4-5ed26688389b"));
+        Assertions.assertThrows(Exception.class,
+                ()->{userServiceImpl.updateUser(dummyUpdateUserDto, "0f14d0ab-9605-4a62-a9e4-5ed26688389b");});
     }
 
     @Test

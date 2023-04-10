@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -30,14 +31,14 @@ class MedicalRecordServiceImplTest {
 		AddPetMedicalRecordDTO dummyHistory = new AddPetMedicalRecordDTO();
 		Date dummyDate = new Date();
 		
-		dummyHistory.setVetVisitDate("17-10-1997");
+		dummyHistory.setVetVisitDate("Thu Jun 18 20:56:02 EDT 2009");
 		dummyHistory.setSymptoms("symptoms");
 		dummyHistory.setVetName("vetName");
-		dummyHistory.setVaccinationDate("17-10-1997");
+		dummyHistory.setVaccinationDate("Thu Jun 18 20:56:02 EDT 2009");
 		dummyHistory.setSurgery("srugery");
 		dummyHistory.setMedication("medication");
 		
-		impl.saveMedical(dummyHistory);
+		Assertions.assertThrows(Exception.class,()->{impl.saveMedical(dummyHistory);});
 	}
 
 	
