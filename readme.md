@@ -1,5 +1,5 @@
 # Pet Radar (Backend Application) - Group 1
-This repository contains the code of backend application for the project PETRADAR (Client Team - 4 and Development Team - 1). For this project we have used Bare React Native Workflow for developing this application.
+This repository contains the code of backend application for the project PETRADAR (Client Team - 4 and Development Team - 1). For this project we have used Springboot, mysql & AWS for developing this application.
 
 To access the Frontend (Mobile Application) of this application here is the link to that repository [PetRadar FrontEnd](https://git.cs.dal.ca/jeet/petradar-fn.git)
 
