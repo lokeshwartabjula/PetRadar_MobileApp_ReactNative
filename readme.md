@@ -189,6 +189,15 @@ If the user finds the pet then he can select the option ‘Found?’ and then th
 <br />
 If you click on the third icon it will direct you to the profile settings page, see above figure. Here, it shows the options of updating the ‘Personal Details’, ‘Your Posts’, update ‘Pet Details’, ‘Notification’ access, and ‘Delete Account’ options. If you are not using the app frequently then you can also click on the ‘Logout’ option and it will log out of your account.
 
+### Coverage Information
+[![Code Coverage](https://i.postimg.cc/pr8vL7fK/Whats-App-Image-2023-04-09-at-10-45-09-PM.jpg)](https://postimg.cc/T5RFktHP)
+
+### Unit Test Cases 
+[![Unit Test Cases](https://i.postimg.cc/httYC6XM/Whats-App-Image-2023-04-09-at-10-45-25-PM.jpg)](https://postimg.cc/Cz9J5vHf)
+
+### Integration Test Suite
+[![Integration Test Suite](https://i.postimg.cc/gJFNPT2C/Whats-App-Image-2023-04-09-at-11-15-05-PM.jpg)](https://postimg.cc/Ty0rVQm0)
+
 ### Development Team
 - Group 1
 
